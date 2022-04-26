@@ -1,6 +1,8 @@
-import React from "react";
-import App from "../App";
+import React from 'react';
+import App from '../App';
 
-const Root = () => <App />;
+function Root() {
+  return <App />;
+}
 
 export default Root;
