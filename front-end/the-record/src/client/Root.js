@@ -1,9 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Route, withRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from '../App';
 import Login from '../pages/User/Login';
 import '../styles/common/app.css';
 import '../styles/common/background.css';
+import store from '../store';
+
+const persistor = persistStore(store);
 
 const RootRouter = withRouter(({ location }) => {
   return (
@@ -17,7 +23,11 @@ const RootRouter = withRouter(({ location }) => {
 function Root() {
   return (
     <BrowserRouter>
-      <RootRouter />
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <RootRouter />
+        </PersistGate>
+      </Provider>
     </BrowserRouter>
   );
 }
