@@ -1,23 +1,14 @@
 import React from 'react';
-import '../styles/home/home.css';
 import Navigation from '../components/Navigation';
-import HomeHeader from '../components/Home/HomeHeader';
+import '../styles/home/home.css';
 
 function Home() {
   return (
     <div id="home">
-      <div className="bg-green-box">
-        <div className="bg-dot-box">
-          <div className="bg-gray-box">
-            <HomeHeader />
-            <div className="bg-inner-box">
-              <div className="bg-white-left" />
-              <div className="bg-white-right">
-                <Navigation />
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="bg-white-left">왼쪽</div>
+      <div className="bg-white-right">
+        Home
+        <Navigation />
       </div>
     </div>
   );
