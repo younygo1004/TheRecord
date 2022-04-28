@@ -32,7 +32,7 @@ pipeline {
                 
                 sh 'docker run -itd -v /home/ubuntu/deploy/data/record:/home/ubuntu/deploy/data/record \
                     -p 8080:8080 --name backend backend \
-                    -e profile=prod'
+                    -e profile="prod"'
 
                 sh 'docker run -d --name frontend \
 						-p 80:80 \
