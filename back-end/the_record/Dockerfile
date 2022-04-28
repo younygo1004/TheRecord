@@ -14,5 +14,4 @@ COPY --from=builder /the_record/build/libs/*.jar ./
 
 EXPOSE 8080
 # ENTRYPOINT ["java", "-jar", "./the_record-0.0.1-SNAPSHOT.jar"]
-RUN chmod +x ./entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT /the_record/entrypoint.sh
