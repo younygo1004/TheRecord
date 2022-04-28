@@ -1,4 +1,5 @@
 pipeline {
+    echo 'start'
 	agent none
 	options { skipDefaultCheckout(false) }
 	stages {
