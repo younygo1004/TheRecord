@@ -9,7 +9,7 @@ FROM nginx:stable-alpine as production-stage
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
-COPY --from=build-stage ./build /the-record/build
+# COPY --from=build-stage ./build /the-record/build
 
 
 EXPOSE 3000
