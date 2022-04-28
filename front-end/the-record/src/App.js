@@ -5,14 +5,18 @@ import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import DiaryMain from './pages/Diary/DiaryMain';
 import Album from './pages/Photo/Album';
+import SignUp from './pages/User/SignUp';
 
 const BaseRouter = withRouter(({ location }) => {
   return (
-    <div className="app">
+    <div id="app">
       <Route path="/" exact component={Login} />
+      <Route path="/signup" exact component={SignUp} />
 
       {/* 예외처리 */}
-      {location.pathname !== '/' && <Navigation />}
+      {location.pathname !== '/' && location.pathname !== '/signup' && (
+        <Navigation />
+      )}
 
       <Route path="/home" component={Home} />
       <Route path="/diary" component={DiaryMain} />
