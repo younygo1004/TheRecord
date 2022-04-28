@@ -7,6 +7,8 @@ RUN rm -rf src/test
 RUN ./gradlew clean build
 RUN ls build/libs
 
+ENV profile=${profile}
+
 FROM adoptopenjdk:8-jdk
 COPY --from=builder /the_record/build/libs/*.jar ./
 
