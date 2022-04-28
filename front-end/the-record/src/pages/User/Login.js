@@ -21,7 +21,7 @@ function Login() {
 
       sessionStorage.setItem('jwt', JWT);
     } catch (error) {
-      window.alert(error);
+      // window.alert(error);
     }
   };
   return (
@@ -73,11 +73,19 @@ export default Login;
 const Container = styled.div`
   // display: inline-flex;
   // flex-flow: row-reverse wrap;
+  width: 100%;
+  height: 100%;
+  max-width: 1200px;
+  max-height: 700px;
+  min-height: 600px;
+  min-width: 1200px;
   border: solid 1px #dadada;
   border-radius: 10px;
   margin: 190px 389px;
   padding: 83px 253px;
   background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Input = styled.input`
@@ -104,6 +112,7 @@ const DivStyle2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 const LoginButton = styled.button`
