@@ -1,26 +1,26 @@
 import React from 'react';
 import { Route, withRouter } from 'react-router-dom';
-import Login from './pages/User/Login';
-import Navigation from './components/Navigation';
+// import Login from './pages/User/Login';
 import Home from './pages/Home';
 import DiaryMain from './pages/Diary/DiaryMain';
 import Album from './pages/Photo/Album';
-import SignUp from './pages/User/SignUp';
+import HomeHeader from './components/Home/HomeHeader';
 
-const BaseRouter = withRouter(({ location }) => {
+const BaseRouter = withRouter(() => {
   return (
     <div id="app">
-      <Route path="/" exact component={Login} />
-      <Route path="/signup" exact component={SignUp} />
-
-      {/* 예외처리 */}
-      {location.pathname !== '/' && location.pathname !== '/signup' && (
-        <Navigation />
-      )}
-
-      <Route path="/home" component={Home} />
-      <Route path="/diary" component={DiaryMain} />
-      <Route path="/album" component={Album} />
+      <div className="bg-green-box">
+        <div className="bg-dot-box">
+          <div className="bg-gray-box">
+            <HomeHeader />
+            <div className="bg-inner-box">
+              <Route path="/home" component={Home} />
+              <Route path="/diary" component={DiaryMain} />
+              <Route path="/album" component={Album} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 });
