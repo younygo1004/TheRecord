@@ -7,11 +7,6 @@ RUN rm -rf src/test
 RUN ./gradlew clean build
 RUN ls build/libs
 
-ENV profile=$profile \
-    MYSQL_DATABASE_URL=$MYSQL_DATABASE_URL \
-    MYSQL_DATABASE_USERNAME=$MYSQL_DATABASE_USERNAME \
-    MYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD
-
 FROM adoptopenjdk:8-jdk
 COPY --from=builder /the_record/build/libs/*.jar ./
 

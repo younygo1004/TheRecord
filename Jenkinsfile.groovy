@@ -31,7 +31,11 @@ pipeline {
 				sh 'docker images -f dangling=true && docker rmi $(docker images -f dangling=true -q)' 	
                 
                 sh 'docker run -itd -v /home/ubuntu/deploy/data/record:/home/ubuntu/deploy/data/record \
-                    -p 8080:8080 --name backend backend'
+                    -p 8080:8080 --name backend backend \
+                    -e profile=${profile} \
+                    -e MYSQL_DATABASE_URL=${MYSQL_DATABASE_URL} \
+                    -e MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
+                    -e MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
 
                 sh 'docker run -d --name frontend \
 						-p 80:80 \
