@@ -1,4 +1,5 @@
 pipeline {
+
     echo 'start'
 	agent none
 	options { skipDefaultCheckout(false) }
@@ -10,6 +11,7 @@ pipeline {
 				checkout scm
 			}
 		}
+
 		stage('Docker build') {
 			agent any
 			steps {
@@ -18,6 +20,7 @@ pipeline {
                 sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record' 
 			}
 		}
+        
 		stage('Docker run') {
 			agent any
 			steps {
