@@ -424,4 +424,7 @@ gradle-app.setting
 # Eclipse Core
 # JDT-specific (Eclipse Java Development Tools)
 
+# Develop
+application-develop.yml
+
 # End of https://www.toptal.com/developers/gitignore/api/react,node,java,windows,macos,intellij,visualstudiocode,git,gradle,maven
