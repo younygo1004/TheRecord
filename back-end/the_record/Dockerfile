@@ -11,4 +11,4 @@ FROM adoptopenjdk:8-jdk
 COPY --from=builder /the_record/build/libs/*.jar ./
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "./the_record-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "-Dprofile=echo $profile", "-DMYSQL_DATABASE_URL=echo $MYSQL_DATABASE_URL", "-DMYSQL_DATABASE_USERNAME=echo $MYSQL_DATABASE_USERNAME", "-DMYSQL_DATABASE_PASSWORD=echo $MYSQL_DATABASE_PASSWORD", "./the_record-0.0.1-SNAPSHOT.jar"]
