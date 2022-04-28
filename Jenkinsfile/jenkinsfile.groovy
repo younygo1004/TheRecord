@@ -5,12 +5,14 @@ pipeline {
 		stage('git pull') {
 			agent any
 			steps {
+                echo 'git pulling...'
 				checkout scm
 			}
 		}
 		stage('Docker build') {
 			agent any
 			steps {
+                echo 'docker build...'
 				sh 'docker build -t backend:latest /var/jenkins_home/workspace/record/back-end/the_record'
                 sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record' 
 			}
@@ -18,6 +20,7 @@ pipeline {
 		stage('Docker run') {
 			agent any
 			steps {
+                echo 'docker run...'
 				sh 'docker ps -f name=backend -q \
 		        | xargs --no-run-if-empty docker container stop'
                 sh 'docker ps -f name=frontend -q | xargs --no-run-if-empty docker container stop'
