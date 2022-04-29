@@ -7,7 +7,7 @@ RUN rm -rf src/test
 RUN ./gradlew clean build
 RUN ls build/libs
 
-RUN echo "java -jar -Dprofile=$profile -DMYSQL_DATABASE_URL=$MYSQL_DATABASE_URL -DMYSQL_DATABASE_USERNAME=$MYSQL_DATABASE_USERNAME -DMYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD ./the_record-0.0.1-SNAPSHOT.jar" > /entrypoint.sh
+RUN echo "java -jar -Dprofile=$profile -DMYSQL_DATABASE_URL=$MYSQL_DATABASE_URL -DMYSQL_DATABASE_USERNAME=$MYSQL_DATABASE_USERNAME -DMYSQL_DATABASE_PASSWORD=$MYSQL_DATABASE_PASSWORD ./the_record-0.0.1-SNAPSHOT.jar" > entrypoint.sh
 
 ENV profile=$profile \
     MYSQL_DATABASE_URL=$MYSQL_DATABASE_URL \
@@ -19,4 +19,4 @@ COPY --from=builder /the_record/build/libs/*.jar ./
 
 EXPOSE 8080
 # ENTRYPOINT ["java", "-jar", "./the_record-0.0.1-SNAPSHOT.jar"]
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
