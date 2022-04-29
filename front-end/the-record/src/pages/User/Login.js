@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-// import { useHistory } from 'react-router-dom';
-import fetchLogin from './service';
+import { useHistory } from 'react-router-dom';
+// import fetchLogin from './service';
 
 function Login() {
-  // const history = useHistory();
+  const history = useHistory();
 
   const [account, setAccount] = useState({
     id: '',
@@ -17,9 +17,10 @@ function Login() {
 
   const onSubmitAccount = async () => {
     try {
-      const JWT = await fetchLogin(account);
+      // const JWT = await fetchLogin(account);
 
-      sessionStorage.setItem('jwt', JWT);
+      // sessionStorage.setItem('jwt', JWT);
+      history.replace('/home');
     } catch (error) {
       window.alert(error);
     }
@@ -32,7 +33,7 @@ function Login() {
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
-            padding: '20px',
+            paddingBottom: '60px',
             width: '400px',
           }}
         >
@@ -54,6 +55,7 @@ function Login() {
           <ForgotPwd>비밀번호를 잊으셨나요?</ForgotPwd>
         </div>
       </DivStyle>
+
       <DivStyle2>
         <hr style={{ width: '300px' }} />
         <OrDiv>또는</OrDiv>
@@ -137,6 +139,7 @@ const GoogleLoginButton = styled.button`
 `;
 
 const ForgotPwd = styled.div`
+  margin: 24px 0px 24px 0px;
   font-size: 16px;
   text-align: right;
 `;
