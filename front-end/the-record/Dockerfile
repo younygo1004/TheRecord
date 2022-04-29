@@ -14,5 +14,5 @@ COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3000
 
-VOLUME [ "/home/ubuntu/data/nginx:/etc/nginx/conf.d", "/home/ubuntu/data/certbot/conf:/etc/letsencrypt", "/home/ubuntu/data/certbot/www:/var/www/certbot", "home/ubuntu/data/certbot/www:/var/www/certbot" ]
+VOLUME [ "/home/ubuntu/deploy/data/nginx:/etc/nginx/conf.d", "/home/ubuntu/deploy/data/certbot/conf:/etc/letsencrypt", "/home/ubuntu/deploy/data/certbot/www:/var/www/certbot", "home/ubuntu/deploy/data/certbot/www:/var/www/certbot" ]
 CMD ["nginx", "-g", "daemon off;"]
