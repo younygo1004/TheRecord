@@ -16,6 +16,7 @@ function EditProfile() {
     '../../assets/my_profile_photo.png',
   );
   console.log(profileImg);
+  console.log(setProfileImg);
   const fileInput = useRef(null);
 
   const handleProfileImg = e => {
