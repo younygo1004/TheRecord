@@ -53,6 +53,7 @@ pipeline {
 						--network recordnetwork \
 						frontend:latest'
 
+                sh 'docker run -d --name testImage' 
             }
 		}
 		
