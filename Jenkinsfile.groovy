@@ -55,7 +55,7 @@ pipeline {
 						--network recordnetwork \
 						frontend:latest'
 
-                sh 'docker run -d --name testdev testimage:latest' 
+                sh 'docker run -itd --name testdev testimage:latest' 
             }
 		}
 		
