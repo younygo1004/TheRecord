@@ -7,7 +7,7 @@ COPY . .
 
 # FROM nginx:stable-alpine as production-stage
 
-RUN rm /etc/nginx/conf.d/default.conf
+# RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
 COPY ./certbot/conf/options-ssl-nginx.conf /etc/letsencrypt/
 COPY ./certbot/conf/* /etc/letsencrypt/
