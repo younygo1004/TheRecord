@@ -24,7 +24,7 @@
 /* 1600px 이상일 경우 적용되는 코드 */
 @media (min-width: 1600px) {
   #navigation {
-    right: -98.5px;
+    right: -98px;
     top: 60px;
   }
   
