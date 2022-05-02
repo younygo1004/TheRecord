@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     @PostMapping("/login")
-    public ResponseEntity<User> loginTest(@RequestBody User user) {
+    public ResponseEntity<String> loginTest(@RequestBody User user) {
 
         System.out.println(user);
         user.setUserId("성태 바보");
         System.out.println(user);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body("성태 바보");
     }
 
 }
