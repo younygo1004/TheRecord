@@ -18,7 +18,7 @@ pipeline {
                     --build-arg MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
                     --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
                 
-                sh 'cp -r /home/ubuntu/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record'
+                sh 'cp -r /home/ubuntu/deploy/data/certbot/* /var/jenkins_home/workspace/record/front-end/the-record/'
 
                 sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record' 
 			}
