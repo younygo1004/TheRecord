@@ -30,6 +30,7 @@ function HomeHeader() {
     if (loginUser !== homePageHost) {
       return (
         <button
+          className="header-right-button"
           type="button"
           onClick={() => {
             moveMyPage();
@@ -46,11 +47,15 @@ function HomeHeader() {
     };
 
     return (
-      <div>
-        <button type="button">
+      <div className="header-right">
+        <div className="header-right-button">
           <EditProfile />
-        </button>
-        <button type="button" onClick={() => logOut()}>
+        </div>
+        <button
+          className="header-right-button"
+          type="button"
+          onClick={() => logOut()}
+        >
           로그아웃
         </button>
       </div>
@@ -60,7 +65,7 @@ function HomeHeader() {
   return (
     <div id="home-header">
       <p className="header-left">{userName()} 님의 미니홈피</p>
-      <div className="header-right">{headerProfileButton()}</div>
+      <div>{headerProfileButton()}</div>
     </div>
   );
 }

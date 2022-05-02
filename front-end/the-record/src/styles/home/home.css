@@ -18,16 +18,9 @@
 
 #home #profile .profile-info {
   margin-top: 20px;
-}
-
-#home #profile .profile-info .profile-text {
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-#home #profile .profile-info .profile-text > p{
-  margin-bottom: 15px;
-  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #home #profile img {
@@ -37,13 +30,26 @@
   margin-bottom: 10px;
 }
 
+#home #profile .profile-info .profile-text {
+  max-height: 260px;
+  max-width: 220px;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+}
+
+#home #profile .profile-info .profile-text > p{
+  margin-bottom: 15px;
+  font-size: 13px;
+}
+
+
 #home #profile .ilchon-button {
   width: 200px;
   height: 36px;
   background: #E9F2FF;
   border: 3px solid #848484;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,35 +58,208 @@
   cursor: pointer;
 }
 
+#home #updated-news {
+  width: 100%;
+  height: 100%;
+  padding: 30px 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+#updated-news .updated-news-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#updated-news .updated-news-top .updated-diary-list {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#updated-news .updated-news-top .updated-diary-list > p {
+  font-size: 18px;
+  color: #1D8EAE;
+}
+
+#updated-news .updated-news-top .updated-diary-list > hr {
+  margin: 10px 0;
+  width: 100%;
+  height: 1px;
+  background-color: black;
+  border: none;
+}
+
+#updated-news .updated-news-top .updated-diary-list .diary-list-box {
+  width: 100%;
+}
+
+#updated-news .updated-news-top .updated-diary-list li {
+  margin-bottom: 7px;
+  width: 100%;
+}
+
+#updated-news .updated-news-top .updated-diary-list li > button {
+  background-color: transparent;
+  border: none;
+  font-size: 15px;
+  font-family: 'dunggeunmo';
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space:nowrap;
+  width: 90%;
+  text-align: left;
+  cursor: pointer;
+}
+
+#updated-news table {
+  border-collapse: collapse;
+  border: 1px solid black;
+  margin-right: 20px;
+}
+
+#updated-news td {
+  width: 120px;
+  height: 36px;
+  border-collapse: collapse;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 14px;
+}
+
+#updated-news .updated-news-bottom {
+  width: 100%;
+  height: 100%;
+  padding-top: 30px;
+}
+
+#updated-news .updated-news-bottom > p {
+  font-size: 18px;
+  color: #1D8EAE;
+  margin-bottom: 10px;
+}
+
+#updated-news .updated-news-bottom .updated-photo-zone {
+  background: rgba(196, 196, 196, 0.23);
+  border-radius: 10px;
+  height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-top: 15px;
+}
+
+#updated-news .updated-news-bottom .photo-preview {
+  width: 130px;
+  object-fit: contain;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p{
+  width: 100%;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  white-space:nowrap;
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img{
+  width: fit-content;
+  height: 270px;
+  margin-bottom: 5px;
+}
 
 @media (min-width: 1600px) {
   #home #profile .profile-info {
-    margin-top: 50px;
+    margin-top: 25px;
+  }
+  
+  #home #profile img {
+    width: 230px;
+    height: 220px;
+    object-fit: contain;
   }
   
   #home #profile .profile-info .profile-text > p{
     margin-bottom: 20px;
-    font-size: 18px;
+    font-size: 16px;
   }
 
   #home #profile .profile-info .profile-text {
-    max-height: 300px;
     overflow-y: auto;
+    max-width: 260px;
   }
 
-  #home #profile img {
-    margin-bottom: 30px;
-    width: 290px;
-    height: 260px;
-    object-fit: contain;
-  }
   
   #home #profile .ilchon-button {
-    width: 310px;
+    width: 270px;
     height: 44px;
     margin-bottom: 30px;
     font-size: 18px;
   }
 
+  #updated-news .updated-news-top .updated-diary-list {
+    width: 340px;
+  }
 
+  #updated-news .updated-news-top .updated-diary-list > p {
+    font-size: 20px;
+  }
+  
+  #updated-news .updated-news-top .updated-diary-list li {
+    margin-bottom: 11px;
+  }
+
+  #updated-news .updated-news-top .updated-diary-list li > button {
+    font-size: 16px;
+  }
+
+  #updated-news table {
+    margin-right: 30px;
+  }
+
+  #updated-news td {
+    width: 157px;
+    height: 43px;
+    font-size: 16px;
+  }
+
+  #updated-news .updated-news-bottom {
+    width: 100%;
+    padding-top: 30px;
+  }
+
+  #updated-news .updated-news-bottom > p {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  #updated-news .updated-news-bottom .updated-photo-zone {
+    height: 360px;
+    padding-top: 20px;
+  }
+
+  #updated-news .updated-news-bottom .photo-preview {
+    width: 160px;
+  }
+
+  #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p{
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img{
+    width: fit-content;
+    height: 290px;
+    margin-bottom: 5px;
+  }
+  
 }

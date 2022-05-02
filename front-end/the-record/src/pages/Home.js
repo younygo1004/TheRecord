@@ -1,5 +1,6 @@
 import React from 'react';
 import Profile from '../components/Home/Profile';
+import UpdatedNews from '../components/Home/UpdatedNews';
 import Navigation from '../components/Navigation';
 import '../styles/home/home.css';
 import '../styles/home/neighbor-button.css';
@@ -11,7 +12,7 @@ function Home() {
         <Profile />
       </div>
       <div className="bg-white-right">
-        Home
+        <UpdatedNews />
         <Navigation />
       </div>
     </div>

@@ -66,10 +66,10 @@ function MyNeighborList() {
     <div id="my-neighbor-list">
       <button type="button" onClick={() => setListOpen(!ListOpen)}>
         <div />
-        <p>
+        <div className="ilchon-surf-button">
           <StarIcon />
           <p>일촌 파도타기</p>
-        </p>
+        </div>
         {ListOpen ? (
           <ArrowDropUpIcon color="action" />
         ) : (
