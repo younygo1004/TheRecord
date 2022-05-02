@@ -17,6 +17,9 @@ pipeline {
                     --build-arg MYSQL_DATABASE_URL=${MYSQL_DATABASE_URL} \
                     --build-arg MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
                     --build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
+                
+                sh 'cp -r /home/ubuntu/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record'
+
                 sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record' 
 			}
 		}
@@ -35,11 +38,7 @@ pipeline {
 				sh 'docker images -f dangling=true && docker rmi $(docker images -f dangling=true -q)' 	
                 
                 sh 'docker run -itd -v /home/ubuntu/deploy/data/record:/home/ubuntu/deploy/data/record \
-                    -p 8080:8080 --name backend backend \
-                    --profile=${profile} \
-                    --MYSQL_DATABASE_URL=${MYSQL_DATABASE_URL} \
-                    --MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
-                    --MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
+                    -p 8080:8080 --name backend backend'
 
                 sh 'docker run -d --name frontend \
 						-p 80:80 \
