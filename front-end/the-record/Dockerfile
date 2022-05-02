@@ -2,12 +2,12 @@ FROM node:lts-alpine as build-stage
 WORKDIR /the-record
 
 COPY . .
-# RUN npm install
-# RUN npm run build
+RUN npm install
+RUN npm run build
 
-# FROM nginx:stable-alpine as production-stage
+FROM nginx:stable-alpine as production-stage
 
-# RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
 COPY ./certbot/conf/options-ssl-nginx.conf /etc/letsencrypt/
 COPY ./certbot/conf/* /etc/letsencrypt/
