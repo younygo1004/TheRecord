@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import '../../styles/home/home-header.css';
+import store from '../../store';
+import { ADD_NAVPAGE } from '../../actions/navigation';
 
 function HomeHeader() {
   const history = useHistory();
@@ -21,8 +23,9 @@ function HomeHeader() {
 
   const moveMyPage = () => {
     sessionStorage.setItem('homePageHost', loginUser);
+    store.dispatch({ type: ADD_NAVPAGE, data: 'nav-home' });
     history.push({
-      path: '/home',
+      pathname: '/home',
     });
   };
 
