@@ -9,10 +9,11 @@ FROM nginx:stable-alpine as production-stage
 
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
+COPY ./certbot /etc/letsencrypt/
 # COPY --from=build-stage ./build /the-record/build
 
 
 EXPOSE 3000
 
-VOLUME [ "/home/ubuntu/deploy/data/nginx:/etc/nginx/conf.d", "/home/ubuntu/deploy/data/certbot/conf:/etc/letsencrypt", "/home/ubuntu/deploy/data/certbot/www:/var/www/certbot", "home/ubuntu/deploy/data/certbot/www:/var/www/certbot" ]
+VOLUME [ "/home/ubuntu/dockerMount/frontendVol/nginx:/etc/nginx/conf.d", "/home/ubuntu/dockerMount/frontendVol/certbot/conf:/etc/letsencrypt", "/home/ubuntu/dockerMount/frontendVol/certbot/www:/var/www/certbot" ]
 CMD ["nginx", "-g", "daemon off;"]
