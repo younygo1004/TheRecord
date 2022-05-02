@@ -486,7 +486,7 @@ function SignUp() {
             {signupButton()}
             <div className="login-text">
               <span>이미 계정이 있으신가요? &nbsp;</span>
-              <a className="text-go" href="/login">
+              <a className="text-go" href="/">
                 로그인 하러가기
               </a>
             </div>
