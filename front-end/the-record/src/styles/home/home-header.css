@@ -1,0 +1,36 @@
+#home-header {
+  margin-top: 20px;
+  margin-left: 25px;
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+
+#home-header .header-right button {
+  margin-right: 20px;
+  background-color: transparent;
+  border: none;
+  font-family: 'dunggeunmo';
+  font-size: 13px;
+  cursor: pointer;
+}
+
+
+@media (min-width: 1600px) {
+  #home-header {
+    margin-top: 25px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  
+  #home-header .header-right button {
+    margin-left: 5px;
+    margin-right: 30px;
+    font-size: 16px;
+  }
+}

@@ -7,7 +7,6 @@ import '../styles/common/navigation.css';
 function Navigation() {
   const switchNav = navPage => {
     store.dispatch({ type: ADD_NAVPAGE, data: navPage });
-    console.log(store.getState().navigation.navPage);
   };
 
   useEffect(() => {
@@ -15,6 +14,7 @@ function Navigation() {
     const navBar = document.querySelector(`#${nowPage}`);
     navBar.style.backgroundColor = 'white';
     navBar.style.color = 'black';
+    navBar.style.borderLeft = '2px solid white';
   }, []);
 
   return (

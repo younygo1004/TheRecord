@@ -19,6 +19,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
+    'global-require': 0,
     'react/jsx-filename-extension': [
       'error',
       {
