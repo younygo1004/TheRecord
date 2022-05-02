@@ -1,0 +1,112 @@
+.signup-page {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signup-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    width: 60%;
+    border-radius: 13px;
+    background-color: white;
+    max-width: 1000px;
+    min-width: 400px;
+    max-height: 700px;
+    min-height: 600px;
+}
+
+.signup-div .signup-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.signup-div .signup-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.signup-div .signup-textfield {
+    margin: 10px 0px;
+}
+
+.signup-div .signup-numberfield {
+    margin: 20px 0px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signup-div .signup-emailfield {
+    margin: 10px 0px 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signup-div .signup-btn {
+    padding: 15px 0px;
+    cursor: pointer;
+    background: rgba(75, 182, 209, 0.87);
+    border: none;
+    border-radius: 7px;
+    color: white;
+}
+
+.signup-div .signup-btn:hover {
+    background: #1D8EAE;
+}
+
+.signup-div .grey-signup-btn {
+    padding: 15px 0px;
+    background: #A0A0A0;
+    border: none;
+    border-radius: 7px;
+    color: white;
+}
+
+
+.signup-div .check-btn {
+    width: 17%;
+    height: 40px;
+    cursor: pointer;
+    background: rgba(75, 182, 209, 0.87);
+    border: none;
+    border-radius: 7px;
+    color: white;
+}
+
+.signup-div .check-btn:hover {
+    background: #1D8EAE;
+}
+
+.signup-div .grey-check-btn{
+    width: 17%;
+    height: 40px;
+    background: #A0A0A0;
+    border: none;
+    border-radius: 7px;
+    color: white;
+}
+
+
+.signup-div .signup-line {
+    width: 95%;
+    margin-bottom: 20px;
+}
+
+.signup-div .login-text {
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.signup-div .text-go {
+    cursor: pointer;
+    color: #4BB6D1;
+    font-size: 13px;
+}

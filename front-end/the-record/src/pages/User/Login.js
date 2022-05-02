@@ -5,6 +5,13 @@ import { useHistory } from 'react-router-dom';
 
 function Login() {
   const history = useHistory();
+  const moveHome = () => {
+    // 로그인한 사람의 정보를 세션에 올려놓음
+    sessionStorage.setItem('homePageHost', '5_waterglass');
+    history.push({
+      pathname: '/home',
+    });
+  };
 
   const [account, setAccount] = useState({
     id: '',
@@ -22,49 +29,61 @@ function Login() {
       // sessionStorage.setItem('jwt', JWT);
       history.replace('/home');
     } catch (error) {
-      window.alert(error);
+      // window.alert(error);
     }
   };
+
   return (
     <Container>
-      <DivStyle>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            paddingBottom: '60px',
-            width: '400px',
-          }}
-        >
-          <Input
-            id="id"
-            name="id"
-            placeholder="아이디"
-            onChange={onChangeAccount}
-          />
-          <Input
-            id="password"
-            name="password"
-            placeholder="비밀번호"
-            onChange={onChangeAccount}
-          />
-        </div>
-        <div>
-          <LoginButton onClick={onSubmitAccount}>로그인</LoginButton>
-          <ForgotPwd>비밀번호를 잊으셨나요?</ForgotPwd>
-        </div>
-      </DivStyle>
-
-      <DivStyle2>
-        <hr style={{ width: '300px' }} />
-        <OrDiv>또는</OrDiv>
-        <hr width="300px" />
-      </DivStyle2>
-      <GoogleLoginButton>구글 로그인</GoogleLoginButton>
-      <JoinText>
-        아직계정이 없으신가요? <Join>가입하기</Join>
-      </JoinText>
+      <Container2>
+        <DivStyle>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start',
+              padding: '20px',
+              width: '400px',
+            }}
+          >
+            <Input
+              id="id"
+              name="id"
+              placeholder="아이디"
+              onChange={onChangeAccount}
+            />
+            <Input
+              id="password"
+              name="password"
+              placeholder="비밀번호"
+              onChange={onChangeAccount}
+            />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <LoginButton onClick={onSubmitAccount}>로그인</LoginButton>
+            <ForgotPwd>비밀번호를 잊으셨나요?</ForgotPwd>
+          </div>
+        </DivStyle>
+        <DivStyle2>
+          <hr style={{ width: '300px' }} />
+          <OrDiv>또는</OrDiv>
+          <hr width="300px" />
+        </DivStyle2>
+        <GoogleLoginButton>구글 로그인</GoogleLoginButton>
+        <JoinText>
+          아직 계정이 없으신가요? <Join>가입하기</Join>
+        </JoinText>
+        <button type="button" onClick={() => moveHome()}>
+          click
+        </button>
+      </Container2>
     </Container>
   );
 }
@@ -73,19 +92,35 @@ export default Login;
 
 /* CSS */
 const Container = styled.div`
-  // display: inline-flex;
-  // flex-flow: row-reverse wrap;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Container2 = styled.div`
+  width: 60%;
+  max-width: 1200px;
+  min-width: 1000px;
+  height: 60%;
+  max-height: 700px;
+  min-height: 600px;
+  background-color: #ffffff;
   border: solid 1px #dadada;
   border-radius: 10px;
-  margin: 190px 389px;
-  padding: 83px 253px;
-  background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Input = styled.input`
   width: 100%;
-  height: 40px;
+  height: 45px;
   padding: 20px;
+  margin-bottom: 20px;
 
   border: solid 1px #dadada;
   background: #fff;
@@ -98,23 +133,26 @@ const Input = styled.input`
 `;
 const DivStyle = styled.div`
   display: flex;
-  // flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 180px;
 `;
 
 const DivStyle2 = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  margin-top: 30px;
 `;
 
 const LoginButton = styled.button`
   font-size: 21px;
   font-weight: 600;
-  margin-left: 43px;
+  margin-bottom: 10px;
 
-  width: 174px;
-  height: 145px;
+  width: 155px;
+  height: 140px;
 
   cursor: pointer;
   text-align: center;
@@ -142,6 +180,7 @@ const ForgotPwd = styled.div`
   margin: 24px 0px 24px 0px;
   font-size: 16px;
   text-align: right;
+  cursor: pointer;
 `;
 
 const OrDiv = styled.div`
@@ -156,4 +195,5 @@ const JoinText = styled.div`
 const Join = styled.a`
   color: rgba(75, 182, 209, 0.87);
   text-decoration: none;
+  cursor: pointer;
 `;

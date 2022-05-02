@@ -4,6 +4,7 @@ spring:
     url: ${MYSQL_DATABASE_URL}
     username: ${MYSQL_DATABASE_USERNAME}
     password: ${MYSQL_DATABASE_PASSWORD}
+
   jpa:
     open-in-view: false
     hibernate:
@@ -12,12 +13,14 @@ spring:
     show-sql: true
     properties:
       hibernate.format_sql: true
-    servlet:
-      multipart:
-        max-file-size: 100MB
-        max-request-size: 100MB
+    database: mysql
 
-  logging:
-    level:
-      root: info
-      com.record.the_record: info
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+logging:
+  level:
+    root: info
+    com.record.the_record: info
