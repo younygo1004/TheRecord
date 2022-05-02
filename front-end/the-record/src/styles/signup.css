@@ -13,8 +13,12 @@
     padding-top: 2%;
     padding-bottom: 2%;
     width: 60%;
-    border: 1px solid black;
     border-radius: 13px;
+    background-color: white;
+    max-width: 1000px;
+    min-width: 400px;
+    max-height: 700px;
+    min-height: 600px;
 }
 
 .signup-div .signup-content {
@@ -95,7 +99,7 @@
 }
 
 .signup-div .login-text {
-    font-size: 16px;
+    font-size: 13px;
     display: flex;
     justify-content: center;
     margin-top: 20px;
@@ -104,4 +108,5 @@
 .signup-div .text-go {
     cursor: pointer;
     color: #4BB6D1;
+    font-size: 13px;
 }
