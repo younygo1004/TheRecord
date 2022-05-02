@@ -1,0 +1,22 @@
+#dialog .edit-profile-dialog-body {
+  width: 594px;
+  height: 478px;
+  border-radius: 24px;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+#dialog .edit-profile-dialog-body .edit-profile-img {
+  display: flex;
+  flex-direction: column;
+}
+
+#dialog .edit-profile-dialog-body .edit-profile-img > img {
+  width: 300px;
+  height: 200px;
+  object-fit: contain;
+}
