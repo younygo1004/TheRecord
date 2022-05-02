@@ -12,7 +12,7 @@ COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
 COPY ./certbot/conf/options-ssl-nginx.conf /etc/letsencrypt/
 COPY ./certbot/conf/live/k6b204.p.ssafy.io/*.pem /etc/letsencrypt/live/k6b204.p.ssafy.io/
 COPY ./certbot/conf/*.pem /etc/letsencrypt/
-# COPY --from=build-stage ./build /the-record/build
+COPY --from=build-stage ./build /the-record/build
 
 
 EXPOSE 3000
