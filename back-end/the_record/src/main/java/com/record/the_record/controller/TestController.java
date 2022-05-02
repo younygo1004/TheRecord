@@ -12,7 +12,9 @@ public class TestController {
     @PostMapping("/login")
     public ResponseEntity<User> loginTest(@RequestBody User user) {
 
+        System.out.println(user);
         user.setUserId("성태 바보");
+        System.out.println(user);
         return ResponseEntity.ok().body(user);
     }
 
