@@ -31,7 +31,7 @@
 }
 
 #home #profile .profile-info .profile-text {
-  max-height: 260px;
+  max-height: 230px;
   max-width: 220px;
   overflow-y: auto;
   overflow-wrap: break-word;
@@ -145,7 +145,7 @@
 #updated-news .updated-news-bottom .updated-photo-zone {
   background: rgba(196, 196, 196, 0.23);
   border-radius: 10px;
-  height: 340px;
+  height: 310px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -166,14 +166,14 @@
   text-overflow:ellipsis;
   overflow: hidden;
   white-space:nowrap;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 5px;
   text-align: center;
 }
 
 #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img{
   width: fit-content;
-  height: 270px;
+  height: 250px;
   margin-bottom: 5px;
 }
 
