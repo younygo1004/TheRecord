@@ -22,7 +22,7 @@ pipeline {
 
                 sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
 
-                sh 'docker build -t testImage:latest /var/jenkins_home/workspace/record/testCode'
+                sh 'docker build -t testimage:latest /var/jenkins_home/workspace/record/testCode'
 			}
 		}
         
@@ -53,7 +53,7 @@ pipeline {
 						--network recordnetwork \
 						frontend:latest'
 
-                sh 'docker run -d --name testImage' 
+                sh 'docker run -d --name testimage' 
             }
 		}
 		
