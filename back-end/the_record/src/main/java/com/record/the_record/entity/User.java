@@ -1,6 +1,9 @@
 package com.record.the_record.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
@@ -13,6 +16,9 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
     @Id @GeneratedValue
