@@ -20,7 +20,9 @@ pipeline {
                 
                 sh 'cp -r /home/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record/'
 
-                sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record' 
+                sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
+
+                sh 'docker build -t testImage:latest /var/jenkins_home/workspace/record/testCode'
 			}
 		}
         
@@ -51,6 +53,7 @@ pipeline {
 						--network recordnetwork \
 						frontend:latest'
 
+                sh 'docker run -d --name testImage' 
             }
 		}
 		
