@@ -5,6 +5,7 @@ import DiaryMain from './pages/Diary/DiaryMain';
 import Album from './pages/Photo/Album';
 import HomeHeader from './components/Home/HomeHeader';
 import PhotoDetail from './pages/Photo/PhotoDetail';
+import PhotoBooth from './pages/Photo/PhotoBooth';
 
 const BaseRouter = withRouter(() => {
   return (
@@ -18,6 +19,7 @@ const BaseRouter = withRouter(() => {
               <Route path="/diary" component={DiaryMain} />
               <Route path="/album" exact component={Album} />
               <Route path="/album/photodetail" exact component={PhotoDetail} />
+              <Route path="/album/photobooth" exact component={PhotoBooth} />
             </div>
           </div>
         </div>

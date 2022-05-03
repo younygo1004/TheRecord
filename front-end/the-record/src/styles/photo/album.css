@@ -17,12 +17,12 @@
   display: flex;
   justify-content: space-between;
   padding: 0 10%;
-  margin: 4% 0;
+  margin: 4% 0 3%;
 }
 
 #album .album-btn {
-  width: 180px;
-  height: 40px;
+  width: 150px;
+  height: 30px;
   cursor:pointer;
   background-color: #E9F2FF;
   border-color: #848484;
@@ -31,6 +31,7 @@
   justify-content: center;
   align-items: center;
   font-family: 'dunggeunmo';
+  font-size: 13px;
 }
 
 #album .album-btn-icon {
@@ -60,6 +61,7 @@
 }
 
 .photolist .photolist-title{
+  font-size: 13px;
   max-width: 50%;
   display: inline;
   text-overflow:ellipsis;
@@ -73,6 +75,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0% 5%;
+  height: 70%;
 }
 
 .photopreview .preview-item {
@@ -83,9 +86,9 @@
 }
 
 .photopreview .preview-img {
-  width: 100%;
+  width: 70%;
   object-fit: cover;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .photopreview .preview-title {
@@ -95,4 +98,120 @@
   overflow:hidden;
   white-space:nowrap;
   margin-bottom: 10px;
+  font-size: 15px;
 }
+
+.photopreview .preview-date {
+  font-size: 11px;
+  padding-left: 20%;
+}
+
+.preview-pagebtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.photopreview .preview-arrow-btn {
+  background-color: transparent;
+  border: transparent;
+  cursor: pointer;
+}
+
+.photopreview .preview-no-btn {
+  visibility:hidden;
+}
+
+.photobooth-dialog .photobooth-dialog-body {
+  width: 594px;
+  height: 450px;
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.photobooth-dialog .photobooth-dialog-title {
+  margin: 4%;
+  font-size: 28px;
+}
+
+.photobooth-dialog .enter-dialog-input{
+  margin: 7% 0 5%;
+  background-color: #E9F2FF;
+  border: 3px solid #848484;
+  line-height: 35px;
+  width: 40%;
+  font-family: 'dunggeunmo';
+  padding-left: 10px;
+  font-size: 18px;
+}
+
+.photobooth-dialog .photobooth-dialog-btn {
+  width: 33%;
+  height: 10%;
+  font-size: 15px;
+  cursor:pointer;
+  color: white;
+  background-color: #4EB6D9;
+  border: transparent;
+  border-radius: 5px;
+  font-family: 'dunggeunmo';
+}
+
+.photobooth-dialog .grey-photobooth-dialog-btn {
+  width: 33%;
+  height: 10%;
+  font-size: 15px;
+  color: white;
+  background-color: #A0A0A0;
+  border: transparent;
+  border-radius: 5px;
+  font-family: 'dunggeunmo';
+}
+
+.photobooth-dialog .make-dialog-input-box {
+  position: relative;
+  width: 40%;
+  display: flex;
+  justify-content: center;
+}
+
+.photobooth-dialog .make-dialog-input{
+  margin: 30px 0 0;
+  background-color: #E9F2FF;
+  border: 3px solid #848484;
+  line-height: 35px;
+  width: 100%;
+  font-family: 'dunggeunmo';
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.photobooth-dialog .make-dialog-input-btn {
+  margin-left: 40%;
+}
+
+.photobooth-dialog .photobooth-num-list{
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  position: absolute;
+  top: 70px;
+}
+
+.photobooth-dialog .photobooth-num-listitem {
+  background-color: transparent;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  font-family: 'dunggeunmo';
+  font-size: 18px;
+  line-height: 30px;
+  padding-right: 15px;
+  background-color: white;
+  cursor: pointer;
+}
+
