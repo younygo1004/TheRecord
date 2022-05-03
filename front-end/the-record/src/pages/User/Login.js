@@ -26,9 +26,12 @@ function Login() {
     try {
       const JWT = await fetchLogin(account);
 
-      sessionStorage.setItem('jwt', JWT);
+      console.log(JWT);
+
+      // sessionStorage.setItem('jwt', JWT);
+      history.replace('/home');
     } catch (error) {
-      // window.alert(error);
+      alert(error);
     }
   };
 
@@ -176,6 +179,7 @@ const GoogleLoginButton = styled.button`
 `;
 
 const ForgotPwd = styled.div`
+  margin: 24px 0px 24px 0px;
   font-size: 16px;
   text-align: right;
   cursor: pointer;
