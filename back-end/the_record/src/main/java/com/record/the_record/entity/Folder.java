@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,4 +24,8 @@ public class Folder {
     private User user;
 
     private String name;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "folder", cascade = CascadeType.ALL)
+    private List<Diary> diaryList = new ArrayList<>();
 }
