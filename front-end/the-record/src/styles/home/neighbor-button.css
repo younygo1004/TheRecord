@@ -63,6 +63,7 @@
 }
 
 
+/* 일촌 파도타기 */
 #dialog #my-neighbor-list {
   margin-top: 40px;
 }
@@ -77,6 +78,11 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
+}
+
+
+#dialog #my-neighbor-list .ilchon-surf-button {
+  display: flex;
 }
 
 #dialog #my-neighbor-list > button p {

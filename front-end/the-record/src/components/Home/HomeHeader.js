@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import '../../styles/home/home-header.css';
+import store from '../../store';
+import { ADD_NAVPAGE } from '../../actions/navigation';
 
 function HomeHeader() {
   const history = useHistory();
@@ -21,8 +23,9 @@ function HomeHeader() {
 
   const moveMyPage = () => {
     sessionStorage.setItem('homePageHost', loginUser);
+    store.dispatch({ type: ADD_NAVPAGE, data: 'nav-home' });
     history.push({
-      path: '/home',
+      pathname: '/home',
     });
   };
 
@@ -30,6 +33,7 @@ function HomeHeader() {
     if (loginUser !== homePageHost) {
       return (
         <button
+          className="header-right-button"
           type="button"
           onClick={() => {
             moveMyPage();
@@ -46,11 +50,15 @@ function HomeHeader() {
     };
 
     return (
-      <div>
-        <button type="button">
+      <div className="header-right">
+        <div className="header-right-button">
           <EditProfile />
-        </button>
-        <button type="button" onClick={() => logOut()}>
+        </div>
+        <button
+          className="header-right-button"
+          type="button"
+          onClick={() => logOut()}
+        >
           로그아웃
         </button>
       </div>
@@ -60,7 +68,7 @@ function HomeHeader() {
   return (
     <div id="home-header">
       <p className="header-left">{userName()} 님의 미니홈피</p>
-      <div className="header-right">{headerProfileButton()}</div>
+      <div>{headerProfileButton()}</div>
     </div>
   );
 }

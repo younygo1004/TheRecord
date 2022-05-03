@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../../components/Navigation';
-import PhotoList from './PhotoList';
+import PhotoList from '../../components/Album/PhotoList';
 import '../../styles/photo/album.css';
 
 function PhotoDetail() {
