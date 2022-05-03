@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
 function MakeBoothButton() {
@@ -95,9 +95,9 @@ function MakeBoothButton() {
                 onClick={() => setnumListOpen(!numListOpen)}
                 className="make-dialog-input"
               >
-                <p>
+                <div>
                   <p>{peopleNum}</p>
-                </p>
+                </div>
                 {numListOpen ? (
                   <ArrowDropUpIcon
                     color="action"
