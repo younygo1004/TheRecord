@@ -45,7 +45,6 @@ function PhotoList() {
   const history = useHistory();
 
   const movePhotoDetail = listitem => {
-    console.log('이동');
     history.push({
       pathname: '/album/photodetail',
       state: {

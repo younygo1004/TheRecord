@@ -21,7 +21,7 @@
 }
 
 
-/* 1024px 이상일 경우 적용되는 코드 */
+/* 1600px 이상일 경우 적용되는 코드 */
 @media (min-width: 1600px) {
   #navigation {
     right: -98px;
@@ -29,6 +29,7 @@
   }
   
   #navigation > a{
+    font-size: 16px;
     padding: 15px 15px;
     margin-bottom: 10px;
   }
