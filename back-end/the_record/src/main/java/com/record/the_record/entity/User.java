@@ -1,9 +1,6 @@
 package com.record.the_record.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Column;
@@ -13,15 +10,17 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@Setter
-@ToString
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long pk;
 
     @NotBlank
@@ -35,6 +34,7 @@ public class User {
     private String email;
 
     @NotBlank
+    @Size(min = 8)
     private String password;
 
     @Column(length = 2000)
