@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-// import fetchLogin from './service';
+import fetchLogin from './service';
 
 function Login() {
   const history = useHistory();
@@ -24,12 +24,14 @@ function Login() {
 
   const onSubmitAccount = async () => {
     try {
-      // const JWT = await fetchLogin(account);
+      const JWT = await fetchLogin(account);
+
+      console.log(JWT);
 
       // sessionStorage.setItem('jwt', JWT);
       history.replace('/home');
     } catch (error) {
-      // window.alert(error);
+      alert(error);
     }
   };
 
