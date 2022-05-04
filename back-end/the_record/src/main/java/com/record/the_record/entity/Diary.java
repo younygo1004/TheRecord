@@ -28,7 +28,7 @@ public class Diary {
     @ManyToOne(fetch = FetchType.LAZY)
     private Folder folder;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String mediaUrl;
@@ -40,6 +40,6 @@ public class Diary {
 
     private LocalDateTime recordDt;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private VisibleStatus visibleStatus;
 }
