@@ -13,4 +13,5 @@ public interface DiaryRepository extends JpaRepository<Diary,Long> {
 
     List<Diary> findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
 
+
 }

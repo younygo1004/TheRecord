@@ -7,6 +7,7 @@ import com.record.the_record.entity.enums.VisibleStatus;
 import com.record.the_record.home.dto.RecentDiaryDto;
 import com.record.the_record.diary.repository.DiaryRepository;
 import com.record.the_record.home.dto.RecentPhotoDto;
+import com.record.the_record.home.dto.UpdateStatusDto;
 import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,10 @@ public class HomeServiceImpl implements HomeService {
         }
 
         return recentPhotoDtoList;
+    }
+
+    @Override
+    public UpdateStatusDto findUpdateStatus(Long user_pk) {
+        return null;
     }
 }
