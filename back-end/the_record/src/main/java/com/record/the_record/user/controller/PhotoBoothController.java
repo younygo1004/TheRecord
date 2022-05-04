@@ -1,4 +1,4 @@
-package com.record.the_record.controller;
+package com.record.the_record.user.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
