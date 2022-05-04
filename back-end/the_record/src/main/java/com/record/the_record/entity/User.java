@@ -1,12 +1,10 @@
 package com.record.the_record.entity;
 
+import com.record.the_record.entity.enums.TrueAndFalse;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,5 +40,8 @@ public class User {
 
     @Nullable
     private String profile;
+
+    @Enumerated(EnumType.STRING)
+    private TrueAndFalse roomIsOpen;
 
 }
