@@ -7,8 +7,8 @@ import '../../styles/photo/photobooth.css';
 export default class PhotoBooth extends Component {
   constructor(props) {
     super(props);
-    this.OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
-    this.OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+    this.OPENVIDU_SERVER_URL = `https://k6b204.p.ssafy.io/:8080`;
+    this.OPENVIDU_SERVER_SECRET = 'record1014!';
     this.state = {
       mySessionId: 'SessionA',
       myUserName: `OpenVidu_User_${Math.floor(Math.random() * 100)}`,
@@ -76,7 +76,7 @@ export default class PhotoBooth extends Component {
     return new Promise(resolve => {
       const data = JSON.stringify({ customSessionId: sessionId });
       axios
-        .post(`${this.OPENVIDU_SERVER_URL}/openvidu/api/sessions`, data, {
+        .post(`${this.OPENVIDU_SERVER_URL}/api/photobooth/get-token`, data, {
           headers: {
             Authorization: `Basic ${btoa(
               `OPENVIDUAPP:${this.OPENVIDU_SERVER_SECRET}`,
