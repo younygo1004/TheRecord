@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import LinkedCameraOutlinedIcon from '@material-ui/icons/LinkedCameraOutlined';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
 function EnterBoothButton() {

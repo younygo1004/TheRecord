@@ -1,10 +1,10 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import ArrowLeftOutlinedIcon from '@material-ui/icons/ArrowLeftOutlined';
+import ArrowRightOutlinedIcon from '@material-ui/icons/ArrowRightOutlined';
+import Pagination from '@material-ui/lab/Pagination';
+// import Stack from '@material-ui/lab/Stack';
 import fourphoto from '../../assets/fourphoto.png';
 
 function PhotoPreview() {
@@ -129,14 +129,14 @@ function PhotoPreview() {
       </div>
       <div className="preview-pagebtn">
         {totalPage > 1 ? (
-          <Stack>
+          <div>
             <Pagination
               count={totalPage}
               page={page}
               onChange={changePage}
               size="small"
             />
-          </Stack>
+          </div>
         ) : (
           ''
         )}

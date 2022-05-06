@@ -1,6 +1,6 @@
 import React from 'react';
 import '../../styles/photo/album.css';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import InsertPhotoOutlinedIcon from '@material-ui/icons/InsertPhotoOutlined';
 import { useHistory } from 'react-router-dom';
 
 function PhotoList() {

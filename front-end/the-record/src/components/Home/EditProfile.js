@@ -1,25 +1,24 @@
 import React, { useRef, useState } from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import FaceIcon from '@mui/icons-material/Face';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import FaceIcon from '@material-ui/icons/Face';
 import EditButton from '../../assets/edit_button.png';
 import '../../styles/home/edit-profile.css';
 
 function EditProfile() {
   const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
   // 초기값 = 처음 로그인할 때 세션에 올려놓은 자기소개(useEffect)
+  // eslint-disable-next-line
   const [profileText, setProfileText] = useState('자기소개 입니다');
-  console.log(profileText);
-  console.log(editProfileDialogOpen);
 
   // profile 사진은 세션에 올려둔 userInfo에서 가져옴
+  // eslint-disable-next-line
   const [profileImg, setProfileImg] = useState(
     '../../assets/my_profile_photo.png',
   );
-  console.log(profileImg);
-  console.log(setProfileImg);
+  // console.log(setProfileImg);
   const fileInput = useRef(null);
 
   const handleProfileImg = e => {

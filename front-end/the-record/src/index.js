@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Root from './client/Root';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.unstable_createRoot(document.getElementById('root'));
 root.render(<Root />);
 
 // If you want to start measuring performance in your app, pass a function
