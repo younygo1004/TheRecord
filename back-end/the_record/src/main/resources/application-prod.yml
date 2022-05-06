@@ -8,7 +8,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
       use-new-id-generator-mappings: false
     show-sql: true
     properties:
@@ -24,3 +24,7 @@ logging:
   level:
     root: info
     com.record.the_record: info
+
+openvidu:
+  url: ${OPENVIDU_URL}
+  secret: ${OPENVIDU_SECRET}

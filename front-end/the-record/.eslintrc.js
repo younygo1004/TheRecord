@@ -27,6 +27,7 @@ module.exports = {
       },
     ],
     'no-console': 0,
+    'no-alert': 'off',
     'prettier/prettier': [
       'error',
       {
