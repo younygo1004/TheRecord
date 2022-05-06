@@ -93,7 +93,7 @@ public class PhotoBoothController {
         // New session
         System.out.println("New session " + sessionName);
         try {
-
+            System.out.println("before session create...");
             // Create a new OpenVidu Session
             Session session = this.openVidu.createSession();
             System.out.println("createSession Success" + session);
@@ -118,6 +118,8 @@ public class PhotoBoothController {
 
         } catch (Exception e) {
             // If error generate an error message and return it to client
+            System.out.println(e);
+            e.printStackTrace();
             return getErrorResponse(e);
         }
     }
