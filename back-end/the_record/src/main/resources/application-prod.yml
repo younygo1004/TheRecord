@@ -28,3 +28,10 @@ logging:
 openvidu:
   url: ${OPENVIDU_URL}
   secret: ${OPENVIDU_SECRET}
+
+server:
+  ssl:
+    key-store: classpath:openvidu-selfsigned.jks
+    key-store-password: openvidu
+    key-store-type: JKS
+    key-alias: openvidu-selfsigned
