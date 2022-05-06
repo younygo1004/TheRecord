@@ -16,6 +16,8 @@ public class UserDto {
     private Long userPk;
     @ApiModelProperty("유저 아이디")
     private String userId;
+    @ApiModelProperty("유저 비밀번호")
+    private String password;
     @ApiModelProperty("유저 이름")
     private String name;
     @ApiModelProperty("유저 이메일")
