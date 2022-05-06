@@ -36,7 +36,7 @@ public class HomeController {
     @ApiOperation(value = "이번달 업데이트 현황 조회")
     @GetMapping("/{user_pk}/month")
     public ResponseEntity<UpdateStatusDto> updateStatusDetails(@PathVariable @ApiParam(value = "유저 번호")Long user_pk) {
-        return null;
+        return ResponseEntity.ok().body(homeService.findUpdateStatus(user_pk));
     }
 
 }
