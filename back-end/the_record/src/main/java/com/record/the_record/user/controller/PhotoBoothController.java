@@ -64,7 +64,6 @@ public class PhotoBoothController {
             // Session already exists
             System.out.println("Existing session " + sessionName);
             try {
-
                 // Generate a new token with the recently created connectionProperties
                 String token = this.mapSessions.get(sessionName).createConnection(connectionProperties).getToken();
 
@@ -93,7 +92,8 @@ public class PhotoBoothController {
         // New session
         System.out.println("New session " + sessionName);
         try {
-
+            System.out.println("before session create...");
+            System.out.println("openvidu = " + this.openVidu);
             // Create a new OpenVidu Session
             Session session = this.openVidu.createSession();
             System.out.println("createSession Success" + session);
@@ -118,6 +118,8 @@ public class PhotoBoothController {
 
         } catch (Exception e) {
             // If error generate an error message and return it to client
+            System.out.println(e);
+            e.printStackTrace();
             return getErrorResponse(e);
         }
     }
