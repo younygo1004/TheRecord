@@ -96,16 +96,22 @@ public class PhotoBoothController {
 
             // Create a new OpenVidu Session
             Session session = this.openVidu.createSession();
+            System.out.println("createSession Success" + session);
             // Generate a new token with the recently created connectionProperties
             String token = session.createConnection(connectionProperties).getToken();
+            System.out.println("createSession Success" + session);
 
             // Store the session and the token in our collections
             this.mapSessions.put(sessionName, session);
+            System.out.println("mapSessions.put(sessionName, session) Success" + session);
             this.mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>());
+            System.out.println("mapSessionNamesTokens.put(sessionName, new ConcurrentHashMap<>())" + session);
             this.mapSessionNamesTokens.get(sessionName).put(token, role);
+            System.out.println("mapSessionNamesTokens.get(sessionName).put(token, role) Success" + session);
 
             // Prepare the response with the sessionId and the token
             responseJson.addProperty("0", token);
+            System.out.println("responseJson.addProperty Success" + session);
 
             // Return the response to the client
             return new ResponseEntity<>(responseJson, HttpStatus.OK);
