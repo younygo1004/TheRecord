@@ -74,7 +74,7 @@ export default class PhotoBooth extends Component {
 
   createSession(sessionId) {
     return new Promise(resolve => {
-      const data = JSON.stringify({ customSessionId: sessionId });
+      const data = JSON.stringify({ sessionName: sessionId });
       axios
         .post(`${this.OPENVIDU_SERVER_URL}/api/photobooth/get-token`, data, {
           headers: {
