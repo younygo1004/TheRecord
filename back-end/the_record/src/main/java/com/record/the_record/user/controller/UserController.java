@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.ok().body("success");
     }
 
-    @GetMapping("/{userPk}/info")
+    @GetMapping("/{user_pk}/info")
     public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable Long userPk) {
         return ResponseEntity.ok().body(userService.findUserInfo(userPk));
     }

@@ -1,8 +1,10 @@
 package com.record.the_record.user.service;
 
+import com.record.the_record.entity.Folder;
 import com.record.the_record.entity.Neighbor;
 import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.UserRole;
+import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.security.JwtTokenProvider;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final NeighborRepository neighborRepository;
+    private final FolderRepository folderRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -55,12 +58,17 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User addUser(UserDto userDto) {
-        return userRepository.save(User.builder()
+        User user = User.builder()
                 .userId(userDto.getUserId())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .name(userDto.getName())
                 .email(userDto.getEmail())
-                .userRole(UserRole.valueOf("ROLE_USER")).build());
+                .userRole(UserRole.valueOf("ROLE_USER")).build();
+
+        folderRepository.save(Folder.builder()
+                .user(user)
+                .name("기본 폴더").build());
+        return userRepository.save(user);
     }
 
     @Override
