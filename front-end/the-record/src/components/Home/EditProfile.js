@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
-import FaceIcon from '@material-ui/icons/Face';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import FaceIcon from '@mui/icons-material/Face';
 import EditButton from '../../assets/edit_button.png';
 import '../../styles/home/edit-profile.css';
 
