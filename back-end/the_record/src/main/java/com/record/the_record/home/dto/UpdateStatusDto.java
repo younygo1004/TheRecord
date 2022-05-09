@@ -13,12 +13,12 @@ import lombok.*;
 public class UpdateStatusDto {
 
     @ApiModelProperty("일기 업데이트 개수")
-    private int diaryCurrentMonthCnt;
+    private Long diaryCurrentMonthCnt;
     @ApiModelProperty("일기 전체 개수")
-    private int diaryAllCount;
+    private Long diaryAllCount;
     @ApiModelProperty("인생네컷 업데이트 개수")
-    private int albumCurrentMonthCnt;
+    private Long photoCurrentMonthCnt;
     @ApiModelProperty("인생네컷 전체 개수")
-    private int albumAllCount;
+    private Long photoAllCount;
 
 }

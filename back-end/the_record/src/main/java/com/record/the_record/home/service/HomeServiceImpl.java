@@ -13,6 +13,9 @@ import com.record.the_record.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,6 +68,23 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public UpdateStatusDto findUpdateStatus(Long user_pk) {
-        return null;
+
+        User user = userRepository.findById(user_pk).orElseThrow(null);
+        UpdateStatusDto updateStatusDto = new UpdateStatusDto();
+        LocalDateTime currentDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
+        LocalDateTime startDate = currentDate.withDayOfMonth(1);
+        LocalDateTime endDate = currentDate.withDayOfMonth(LocalDate.now().lengthOfMonth());
+
+        Long diaryCurrentMonthCnt = diaryRepository.countByUserAndRecordDtBetween(user, startDate, endDate);
+        Long diaryAllCount = diaryRepository.countByUser(user);
+        Long photoCurrentMonthCnt = photoRepository.countByUserAndRecordDtBetween(user, startDate, endDate);
+        Long photoAllCount = photoRepository.countByUser(user);
+
+        updateStatusDto.setDiaryCurrentMonthCnt(diaryCurrentMonthCnt);
+        updateStatusDto.setDiaryAllCount(diaryAllCount);
+        updateStatusDto.setPhotoCurrentMonthCnt(photoCurrentMonthCnt);
+        updateStatusDto.setPhotoAllCount(photoAllCount);
+
+        return updateStatusDto;
     }
 }

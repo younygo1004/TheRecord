@@ -6,12 +6,14 @@ import com.record.the_record.entity.enums.VisibleStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface DiaryRepository extends JpaRepository<Diary,Long> {
 
     List<Diary> findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
-
+    Long countByUser(User user);
+    Long countByUserAndRecordDtBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
 
 }
