@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import LinkedCameraOutlinedIcon from '@material-ui/icons/LinkedCameraOutlined';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
+import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
 function EnterBoothButton() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [enterBoothDialogOpen, setenterBoothDialogOpen] = useState(false);
   const [roomcode, setRoomcode] = useState('');
   const handleClose = () => {
@@ -19,7 +19,7 @@ function EnterBoothButton() {
 
   const movePhotobooth = () => {
     // 방 코드 유효성 검사 필요
-    history.push({ pathname: '/album/photobooth' });
+    navigate('/album/photobooth');
   };
 
   return (

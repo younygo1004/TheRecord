@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import fourPhoto from '../../assets/fourphoto.png';
 import store from '../../store';
 import { ADD_NAVPAGE } from '../../actions/navigation';
@@ -8,13 +8,10 @@ function UpdatedNews() {
   // useEffect로 처음에 updated 게시물, 갯수 불러오기
   // 만약에 현재 사용자면 현재 사용자꺼 불러오고 아니면 -> 세션에 올려둔 사용자꺼!!!
   // useEffect로 처음에 최신 네컷 업데이트 불러오기
-  const history = useHistory();
+  const navigate = useNavigate();
   const goDiaryDetails = diaryId => {
     store.dispatch({ type: ADD_NAVPAGE, data: 'nav-diary' });
-    history.push({
-      pathname: '/diary',
-      state: diaryId,
-    });
+    navigate('/diary', { state: diaryId });
   };
 
   const updatedPhotos = [

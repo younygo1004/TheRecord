@@ -1,10 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Grid } from '@material-ui/core';
+import { useNavigate } from 'react-router-dom';
+import { Grid, TextField, FormHelperText } from '@mui/material';
 import '../../styles/signup.css';
-import TextField from '@material-ui/core/TextField';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 function SignUp() {
   const useStyles = makeStyles({
@@ -23,7 +21,7 @@ function SignUp() {
     },
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
   // const [timer, setTimer] = useState(0);
 
   const [form, setForm] = useState({
@@ -64,7 +62,7 @@ function SignUp() {
   };
 
   const goLogin = () => {
-    history.replace('/login');
+    navigate('/login');
     // 회원가입
   };
 
