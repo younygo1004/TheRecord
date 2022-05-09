@@ -6,3 +6,54 @@
   align-items: center;
   justify-content: center;
 }
+#diarymain .diary-diarylist {
+  width: 100%;
+  height: 100%;
+  padding: 10%;
+}
+.diarylist .diarylist-text{
+  color: #1D8EAE;
+  font-size: 20px;
+  padding-left: 10px;
+  margin-bottom: 15px;
+}
+
+.diarylist .diarylist-box{
+  padding: 5% 1%;
+}
+
+.diarylist .diarylist-item {
+  margin: 10px 0px;
+  display: flex;
+
+}
+
+.diarylist .diarylist-icon{
+  display: inline;
+  margin-right: 5px;
+}
+
+.diarylist .diarylist-title{
+  max-width: 50%;
+  display: inline;
+  text-overflow:ellipsis;
+  overflow:hidden;
+  white-space:nowrap;
+  cursor:pointer;
+}
+
+.diarylist .diarylistdetail-title{
+  font-size: 16px;
+  font-family: 'dunggeunmo';
+  cursor:pointer;
+
+}
+.diarylist .diarylistdetail-icon{
+  margin-left: 5%;
+
+}
+.diarylist .diarylistdetail-item{
+
+  font-size: 16px;
+  font-family: 'dunggeunmo';
+}
