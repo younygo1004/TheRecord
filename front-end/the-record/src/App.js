@@ -6,6 +6,7 @@ import Album from './pages/Photo/Album';
 import HomeHeader from './components/Home/HomeHeader';
 import PhotoDetail from './pages/Photo/PhotoDetail';
 import PhotoBooth from './pages/Photo/PhotoBooth';
+import DiaryDetail from './pages/Diary/DiaryDetail';
 
 const BaseRouter = withRouter(() => {
   return (
@@ -17,6 +18,7 @@ const BaseRouter = withRouter(() => {
             <div className="bg-inner-box">
               <Route path="/home" component={Home} />
               <Route path="/diary" component={DiaryMain} />
+              <Route path="/diary/diarydetail" exact component={DiaryDetail} />
               <Route path="/album" exact component={Album} />
               <Route path="/album/photodetail" exact component={PhotoDetail} />
               <Route path="/album/photobooth" exact component={PhotoBooth} />

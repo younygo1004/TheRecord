@@ -1,10 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Navigation from '../../components/Navigation';
-import '../../styles/diary/diarymain.css';
 import DiaryList from './DiaryList';
-// import Calendar from './Calendar';
+import '../../styles/diary/diarymain.css';
 
-function DiaryMain() {
+function DiaryDetail() {
+  const location = useLocation();
+  const { DiaryInfo } = location.state;
   return (
     <div id="diarymain">
       <div className="bg-white-left">
@@ -13,11 +15,10 @@ function DiaryMain() {
         </div>
       </div>
       <div className="bg-white-right">
-        {/* <Calendar /> */}
+        <div>{DiaryInfo.title}</div>
         <Navigation />
       </div>
     </div>
   );
 }
-
-export default DiaryMain;
+export default DiaryDetail;
