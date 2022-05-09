@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded';
-import HomeIcon from '@material-ui/icons/Home';
-import StarIcon from '@material-ui/icons/Star';
-import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import HomeIcon from '@mui/icons-material/Home';
+import StarIcon from '@mui/icons-material/Star';
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MyNeighborList from './MyNeighborList';
 
 function NeighborButton() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleHost = neighbor => {
     console.log(neighbor);
     // neighbor.userPk로 사용자 정보 요청해서 history로 넘겨주기
 
     sessionStorage.setItem('homePageHost', neighbor.name);
-    history.push({
-      pathname: '/home',
-    });
+    navigate('/home');
   };
 
   const [neighborName, setNeighborName] = useState('');

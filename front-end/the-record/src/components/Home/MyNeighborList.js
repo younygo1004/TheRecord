@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import StarIcon from '@material-ui/icons/Star';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-import HomeIcon from '@material-ui/icons/Home';
-import { useHistory } from 'react-router-dom';
+import StarIcon from '@mui/icons-material/Star';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from 'react-router-dom';
 
 function MyNeighborList() {
   const [ListOpen, setListOpen] = useState(false);
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleHost = neighbor => {
     console.log(neighbor);
     // neighbor.userPk로 사용자 정보 요청해서 history로 넘겨주기
 
     sessionStorage.setItem('homePageHost', neighbor.name);
-    history.push({
-      pathname: '/home',
-    });
+    navigate('/home');
   };
   // useEffect 로그인한 유저의 일촌 목록 불러오기
   const res = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import Navigation from '../../components/Navigation';
 import EnterBoothButton from '../../components/Album/EnterBoothButton';
 import MakeBoothButton from '../../components/Album/MakeBoothButton';
