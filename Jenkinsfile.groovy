@@ -27,7 +27,7 @@ pipeline {
                                                 --build-arg OPENVIDU_URL=${OPENVIDU_URL}'
 										
 						sh 'cp -r /home/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record/'
-
+						
 						sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
 					} catch (e) {
 						mattermostSend (
