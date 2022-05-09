@@ -1,8 +1,11 @@
 package com.record.the_record.user.service;
 
 import com.record.the_record.entity.User;
+import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
+
+import java.util.List;
 
 public interface UserService {
     String login(UserDto userDto);
@@ -11,4 +14,7 @@ public interface UserService {
     boolean checkIdDuplicate(String userId);
     void modifyIntroduction(String introduce);
     UserDetailDto findUserInfo(Long userPk);
+    List<SearchUserDto> findNeighborList();
+    void addNeighbor(Long userPk);
+    List<SearchUserDto> searchUser(String name);
 }

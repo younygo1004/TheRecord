@@ -1,11 +1,14 @@
 package com.record.the_record.user.controller;
 
+import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -38,7 +41,23 @@ public class UserController {
     }
 
     @GetMapping("/{user_pk}/info")
-    public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable Long userPk) {
+    public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable("user_pk") Long userPk) {
         return ResponseEntity.ok().body(userService.findUserInfo(userPk));
+    }
+
+    @GetMapping("/neighbor")
+    public ResponseEntity<List<SearchUserDto>> neighborList() {
+        return ResponseEntity.ok().body(userService.findNeighborList());
+    }
+
+    @PostMapping("/neighbor")
+    public ResponseEntity<String> neighborAdd(@RequestParam Long userPk) {
+        userService.addNeighbor(userPk);
+        return ResponseEntity.ok().body("success");
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<List<SearchUserDto>> userSearch(@PathVariable("name") String name) {
+        return ResponseEntity.ok().body(userService.searchUser(name));
     }
 }

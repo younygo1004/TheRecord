@@ -2,10 +2,12 @@ package com.record.the_record.user.service;
 
 import com.record.the_record.entity.Folder;
 import com.record.the_record.entity.Neighbor;
+import com.record.the_record.entity.NeighborId;
 import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.security.JwtTokenProvider;
+import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 import com.record.the_record.user.repository.NeighborRepository;
@@ -15,8 +17,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean checkIdDuplicate(String userId) {
         return userRepository.existsByUserId(userId);
     }
@@ -86,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetailDto findUserInfo(Long userPk) {
         User user = userRepository.findByPk(userPk);
         User currentUser = userRepository.findByPk(currentUser());
@@ -101,5 +104,39 @@ public class UserServiceImpl implements UserService {
                 .introduce(user.getIntroduce())
                 .profile(user.getProfile())
                 .neighbor(followings.contains(user)).build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchUserDto> findNeighborList() {
+        List<Neighbor> neighborList = neighborRepository.findAllByNeighborId_FollowingId(userRepository.findByPk(currentUser()));
+        List<SearchUserDto> searchUserDtoList = new ArrayList<>();
+        neighborList.forEach(v -> searchUserDtoList.add(SearchUserDto.builder()
+                .userPk(v.getNeighborId().getFollowerId().getPk())
+                .userId(v.getNeighborId().getFollowerId().getUserId())
+                .name(v.getNeighborId().getFollowerId().getName())
+                .build()));
+        return searchUserDtoList;
+    }
+
+    @Override
+    @Transactional
+    public void addNeighbor(Long userPk) {
+        neighborRepository.save(Neighbor.builder()
+                .neighborId(NeighborId.builder()
+                        .followingId(userRepository.findByPk(currentUser()))
+                        .followerId(userRepository.findByPk(userPk)).build()).build());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SearchUserDto> searchUser(String name) {
+        List<User> userList = userRepository.findByNameContainsOrderByName(name);
+        List<SearchUserDto> dtoList = new ArrayList<>();
+        userList.forEach(v -> dtoList.add(SearchUserDto.builder()
+                .userPk(v.getPk())
+                .userId(v.getUserId())
+                .name(v.getName()).build()));
+        return dtoList;
     }
 }

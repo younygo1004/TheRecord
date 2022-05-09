@@ -88,4 +88,7 @@ public class User implements UserDetails {
     public void updateIntroduce(String introduce) {
         this.introduce = introduce;
     }
+
+
+
 }
