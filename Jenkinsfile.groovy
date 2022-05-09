@@ -26,9 +26,8 @@ pipeline {
                                                 --build-arg OPENVIDU_SECRET=${OPENVIDU_SECRET} \
                                                 --build-arg OPENVIDU_URL=${OPENVIDU_URL}'
 										
-						sh 'cp -r /home/ubuntu/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record/'
-                        sh 'cp /home/ubuntu/deploy/data/certbot/conf/live/k6b204.p.ssafy.io/k6b204.p.ssafy.io.p12 /var/jenkins_home/workspace/record/front-end/the-record/src/main/resources/'
-
+						sh 'cp -r /home/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record/'
+						
 						sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
 					} catch (e) {
 						mattermostSend (
