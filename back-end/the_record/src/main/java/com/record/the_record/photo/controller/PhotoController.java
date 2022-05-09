@@ -1,0 +1,49 @@
+package com.record.the_record.photo.controller;
+
+import com.record.the_record.photo.dto.PhotoDto;
+import com.record.the_record.photo.dto.PhotoListDto;
+import com.record.the_record.photo.dto.PhotoTitle;
+import com.record.the_record.photo.service.PhotoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin("*")
+@RequestMapping("/api/photo")
+@RequiredArgsConstructor
+public class PhotoController {
+
+    private final PhotoService photoService;
+
+    @ApiOperation(value = "인생네컷 업로드")
+    @PostMapping()
+    public ResponseEntity<String> photoAdd(@RequestBody @ApiParam(value = "저장할 인생네컷 정보")PhotoDto photoDto) {
+        photoService.addPhoto(photoDto);
+        return ResponseEntity.ok().body("success");
+    }
+
+    @ApiOperation(value = "인생네컷 최신순 제목 조회")
+    @GetMapping("/{user-pk}")
+    public ResponseEntity<List<PhotoTitle>> photoTitleList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+        return ResponseEntity.ok().body(photoService.findPhotoTitleList(userPk));
+    }
+
+    @ApiOperation(value = "인생네컷 최신순 목록 조회(페이지 당 3개씩)")
+    @GetMapping("/{user-pk}/{page}")
+    public ResponseEntity<List<PhotoListDto>> photoList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk,
+                                                        @PathVariable @ApiParam(value = "페이지 번호, 0부터 시작")int page) {
+        return ResponseEntity.ok().body(photoService.findPhotoList(userPk, page));
+    }
+
+    @ApiOperation(value = "인생네컷 전체 페이지 수 조회 (0부터 시작)")
+    @GetMapping("/{user-pk}/page")
+    public ResponseEntity<Integer> photoTotalPage(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+        return ResponseEntity.ok().body(photoService.findPhotoTotalPage(userPk));
+    }
+
+}
