@@ -29,8 +29,8 @@ public class UserController {
         return ResponseEntity.ok().body(userService.login(userDto));
     }
 
-    @GetMapping("/id-check/{user_id}")
-    public ResponseEntity<Boolean> idCheck(@PathVariable("user_id") String userId) {
+    @GetMapping("/id-check/{user-id}")
+    public ResponseEntity<Boolean> idCheck(@PathVariable("user-id") String userId) {
         return ResponseEntity.ok().body(userService.checkIdDuplicate(userId));
     }
 
@@ -40,8 +40,8 @@ public class UserController {
         return ResponseEntity.ok().body("success");
     }
 
-    @GetMapping("/{user_pk}/info")
-    public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable("user_pk") Long userPk) {
+    @GetMapping("/{user-pk}/info")
+    public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable("user-pk") Long userPk) {
         return ResponseEntity.ok().body(userService.findUserInfo(userPk));
     }
 
@@ -51,8 +51,8 @@ public class UserController {
     }
 
     @PostMapping("/neighbor")
-    public ResponseEntity<String> neighborAdd(@RequestParam Long userPk) {
-        userService.addNeighbor(userPk);
+    public ResponseEntity<String> neighborAdd(@RequestBody UserDto userDto) {
+        userService.addNeighbor(userDto.getUserPk());
         return ResponseEntity.ok().body("success");
     }
 
