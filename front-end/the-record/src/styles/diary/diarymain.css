@@ -6,3 +6,146 @@
   align-items: center;
   justify-content: center;
 }
+
+#diarymain .diary-diarylist {
+  width: 100%;
+  height: 100%;
+  padding: 0% 5%;
+}
+
+.diarylist .diarylist-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 10px;
+}
+
+.diarylist .diarylist-text {
+  color: #1d8eae;
+  font-size: 18px;
+}
+
+.diarylist .diarylist-folder-btn {
+  cursor: pointer;
+  border: white;
+  background-color: white;
+  font-size: 12px;
+  font-family: 'dunggeunmo';
+}
+
+.diarylist .diarylist-box {
+  padding: 5% 1%;
+}
+
+.diarylist .diarylist-folder {
+  display: flex;
+  flex-direction: column;
+  margin: 3px 0px;
+}
+
+.diarylist .diarylist-item {
+  display: flex;
+  align-items: center;
+}
+
+.diarylist .diarylist-icon {
+  display: inline;
+  margin-right: 5px;
+}
+
+.diarylist .diarylist-title {
+  font-size: 13px;
+  max-width: 80%;
+  display: inline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.diarylist .diarylistdetail-title {
+  font-size: 13px;
+  font-family: 'dunggeunmo';
+  cursor: pointer;
+}
+
+.diarylist .diarylistdetail-icon {
+  margin-left: 5%;
+}
+
+.diarylist .diarylistdetail-item {
+  font-size: 16px;
+  font-family: 'dunggeunmo';
+}
+
+.diarylist .diaryitem-box {
+  padding: 0 5%;
+}
+
+.diarylist .diaryitem-text {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.diarylist .diaryitem-title {
+  font-size: 13px;
+  display: inline;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+#diarymain .diarymain-box {
+  padding: 25px 80px;
+}
+
+.diarymain-box .diarymain-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.diarymain-box .diarymain-header-title {
+  font-size: 20px;
+  color: #1d8eae;
+}
+
+.diarymain-box .make-diary-btn {
+  padding: 8px 10px;
+  cursor: pointer;
+  background: rgba(75, 182, 209, 0.87);
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-family: 'dunggeunmo';
+  font-size: 13px;
+}
+
+.diarymain-box .diarymain-content {
+  height: 300px;
+  overflow: auto;
+  padding-right: 10px;
+}
+
+.diarymain-box .diarymain-content::-webkit-scrollbar {
+  width: 5px;
+}
+
+.diarymain-box .diarymain-content::-webkit-scrollbar-track {
+  background-color: #e5e5e5;
+  border-radius: 10px;
+}
+
+.diarymain-box .diarymain-content::-webkit-scrollbar-thumb {
+  background-color: #848484;
+  border-radius: 10px;
+}
+
+.diarymain-box .diarymain-item-content {
+  margin: 5px 0px;
+}

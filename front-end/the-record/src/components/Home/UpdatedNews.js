@@ -11,7 +11,7 @@ function UpdatedNews() {
   const navigate = useNavigate();
   const goDiaryDetails = diaryId => {
     store.dispatch({ type: ADD_NAVPAGE, data: 'nav-diary' });
-    navigate('/diary', { state: diaryId });
+    navigate('/diary/detail', { state: diaryId });
   };
 
   const updatedPhotos = [

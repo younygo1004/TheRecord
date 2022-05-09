@@ -10,7 +10,7 @@
 #album .album-photolist {
   width: 100%;
   height: 100%;
-  padding: 10%;
+  padding: 0% 5%;
 }
 
 #album .album-btns {
@@ -23,8 +23,8 @@
 #album .album-btn {
   width: 150px;
   height: 30px;
-  cursor:pointer;
-  background-color: #E9F2FF;
+  cursor: pointer;
+  background-color: #e9f2ff;
   border-color: #848484;
   border-radius: 5px;
   display: flex;
@@ -38,14 +38,14 @@
   margin-right: 5px;
 }
 
-.photolist .photolist-text{
-  color: #1D8EAE;
-  font-size: 20px;
+.photolist .photolist-text {
+  color: #1d8eae;
+  font-size: 18px;
   padding-left: 10px;
   margin-bottom: 15px;
 }
 
-.photolist .photolist-box{
+.photolist .photolist-box {
   padding: 5% 1%;
 }
 
@@ -55,19 +55,26 @@
   align-items: center;
 }
 
-.photolist .photolist-icon{
+.photolist .photolist-icon {
   display: inline;
   margin-right: 5px;
 }
 
-.photolist .photolist-title{
+.photolist .photolist-title {
   font-size: 13px;
   max-width: 50%;
   display: inline;
-  text-overflow:ellipsis;
-  overflow:hidden;
-  white-space:nowrap;
-  cursor:pointer;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.photolist .photolist-date {
+  font-size: 13px;
+  max-width: 50%;
+  display: inline;
+  cursor: pointer;
 }
 
 .photopreview {
@@ -82,7 +89,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .photopreview .preview-img {
@@ -94,9 +101,9 @@
 .photopreview .preview-title {
   max-width: 120px;
   display: inline;
-  text-overflow:ellipsis;
-  overflow:hidden;
-  white-space:nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
   margin-bottom: 10px;
   font-size: 15px;
 }
@@ -119,7 +126,7 @@
 }
 
 .photopreview .preview-no-btn {
-  visibility:hidden;
+  visibility: hidden;
 }
 
 .photobooth-dialog .photobooth-dialog-body {
@@ -136,9 +143,9 @@
   font-size: 28px;
 }
 
-.photobooth-dialog .enter-dialog-input{
+.photobooth-dialog .enter-dialog-input {
   margin: 7% 0 5%;
-  background-color: #E9F2FF;
+  background-color: #e9f2ff;
   border: 3px solid #848484;
   line-height: 35px;
   width: 40%;
@@ -151,9 +158,9 @@
   width: 33%;
   height: 10%;
   font-size: 15px;
-  cursor:pointer;
+  cursor: pointer;
   color: white;
-  background-color: #4EB6D9;
+  background-color: #4eb6d9;
   border: transparent;
   border-radius: 5px;
   font-family: 'dunggeunmo';
@@ -164,7 +171,7 @@
   height: 10%;
   font-size: 15px;
   color: white;
-  background-color: #A0A0A0;
+  background-color: #a0a0a0;
   border: transparent;
   border-radius: 5px;
   font-family: 'dunggeunmo';
@@ -177,9 +184,9 @@
   justify-content: center;
 }
 
-.photobooth-dialog .make-dialog-input{
+.photobooth-dialog .make-dialog-input {
   margin: 30px 0 0;
-  background-color: #E9F2FF;
+  background-color: #e9f2ff;
   border: 3px solid #848484;
   line-height: 35px;
   width: 100%;
@@ -195,7 +202,7 @@
   margin-left: 40%;
 }
 
-.photobooth-dialog .photobooth-num-list{
+.photobooth-dialog .photobooth-num-list {
   display: flex;
   flex-direction: column;
   width: 99%;
@@ -214,4 +221,3 @@
   background-color: white;
   cursor: pointer;
 }
-

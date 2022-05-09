@@ -68,7 +68,7 @@ function PhotoList() {
           >
             <InsertPhotoOutlinedIcon className="photolist-icon" />
             <div className="photolist-title">{listitem.title} &nbsp;</div>
-            <div className="photolist-title">{listitem.record_dt}</div>
+            <div className="photolist-date">{listitem.record_dt}</div>
           </div>
         ))}
       </div>
