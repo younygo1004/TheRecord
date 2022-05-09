@@ -1,15 +1,22 @@
 package com.record.the_record.user.service;
 
+import com.record.the_record.entity.Neighbor;
 import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.security.JwtTokenProvider;
+import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
+import com.record.the_record.user.repository.NeighborRepository;
 import com.record.the_record.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,6 +24,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final NeighborRepository neighborRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -37,6 +45,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
+    public Long currentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) authentication.getPrincipal();
+        return user.getPk();
+    }
+
+    @Override
+    @Transactional
     public User addUser(UserDto userDto) {
         return userRepository.save(User.builder()
                 .userId(userDto.getUserId())
@@ -44,5 +61,37 @@ public class UserServiceImpl implements UserService {
                 .name(userDto.getName())
                 .email(userDto.getEmail())
                 .userRole(UserRole.valueOf("ROLE_USER")).build());
+    }
+
+    @Override
+    @Transactional
+    public boolean checkIdDuplicate(String userId) {
+        return userRepository.existsByUserId(userId);
+    }
+
+    @Override
+    @Transactional
+    public void modifyIntroduction(String introduce) {
+        User user = userRepository.findByPk(currentUser());
+        user.updateIntroduce(introduce);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public UserDetailDto findUserInfo(Long userPk) {
+        User user = userRepository.findByPk(userPk);
+        User currentUser = userRepository.findByPk(currentUser());
+        List<Neighbor> neighborList = neighborRepository.findAllByNeighborId_FollowingId(currentUser);
+        HashSet<User> followings = new HashSet<>();
+        neighborList.forEach(s -> followings.add(s.getNeighborId().getFollowerId()));
+        return UserDetailDto.builder()
+                .userPk(user.getPk())
+                .userId(user.getUserId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .introduce(user.getIntroduce())
+                .profile(user.getProfile())
+                .neighbor(followings.contains(user)).build();
     }
 }

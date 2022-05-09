@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Entity
 @Getter
@@ -83,5 +83,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    public void updateIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

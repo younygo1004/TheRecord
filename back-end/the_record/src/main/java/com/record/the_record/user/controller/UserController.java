@@ -1,5 +1,6 @@
 package com.record.the_record.user.controller;
 
+import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,21 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> loginTest(@RequestBody UserDto userDto) {
         return ResponseEntity.ok().body(userService.login(userDto));
+    }
+
+    @GetMapping("/id-check/{user_id}")
+    public ResponseEntity<Boolean> idCheck(@PathVariable("user_id") String userId) {
+        return ResponseEntity.ok().body(userService.checkIdDuplicate(userId));
+    }
+
+    @PutMapping("/introduction")
+    public ResponseEntity<String> introductionAdd(@RequestBody UserDto userDto) {
+        userService.modifyIntroduction(userDto.getIntroduce());
+        return ResponseEntity.ok().body("success");
+    }
+
+    @GetMapping("/{userPk}/info")
+    public ResponseEntity<UserDetailDto> userInfoDetail(@PathVariable Long userPk) {
+        return ResponseEntity.ok().body(userService.findUserInfo(userPk));
     }
 }
