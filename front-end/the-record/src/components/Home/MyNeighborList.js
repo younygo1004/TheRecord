@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import StarIcon from '@mui/icons-material/Star';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import HomeIcon from '@mui/icons-material/Home';
+import StarIcon from '@material-ui/icons/Star';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import HomeIcon from '@material-ui/icons/Home';
 import { useHistory } from 'react-router-dom';
 
 function MyNeighborList() {

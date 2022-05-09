@@ -1,6 +1,6 @@
 const fetchLogin = async ({ id, password }) => {
   const data = { userId: id, userPassword: password };
-  return fetch('http://k6b204.p.ssafy.io:8080/api/user/login', {
+  return fetch('https://k6b204.p.ssafy.io/api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

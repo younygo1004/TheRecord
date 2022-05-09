@@ -22,10 +22,12 @@ pipeline {
 												--build-arg profile=${profile} \
 												--build-arg MYSQL_DATABASE_URL=${MYSQL_DATABASE_URL} \
 												--build-arg MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
-												--build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
+												--build-arg MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
+                                                --build-arg OPENVIDU_SECRET=${OPENVIDU_SECRET} \
+                                                --build-arg OPENVIDU_URL=${OPENVIDU_URL}'
 										
 						sh 'cp -r /home/deploy/data/certbot /var/jenkins_home/workspace/record/front-end/the-record/'
-
+						
 						sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
 					} catch (e) {
 						mattermostSend (
@@ -57,7 +59,9 @@ pipeline {
 												--profile=${profile} \
 												--MYSQL_DATABASE_URL=${MYSQL_DATABASE_URL} \
 												--MYSQL_DATABASE_USERNAME=${MYSQL_DATABASE_USERNAME} \
-												--MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD}'
+												--MYSQL_DATABASE_PASSWORD=${MYSQL_DATABASE_PASSWORD} \
+                                                --OPENVIDU_SECRET=${OPENVIDU_SECRET} \
+                                                --OPENVIDU_URL=${OPENVIDU_URL}'
 
 										sh 'docker run -d --name frontend \
 								-p 80:80 \
