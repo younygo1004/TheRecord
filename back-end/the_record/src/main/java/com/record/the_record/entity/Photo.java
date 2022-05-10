@@ -31,4 +31,9 @@ public class Photo {
     private String mediaUrl;
 
     private LocalDateTime recordDt;
+
+    public void updatePhoto(String title, VisibleStatus visibleStatus) {
+        this.title = title;
+        this.visibleStatus = visibleStatus;
+    }
 }
