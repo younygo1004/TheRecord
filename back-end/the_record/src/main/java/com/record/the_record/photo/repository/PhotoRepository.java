@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
@@ -17,11 +18,16 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
     List<Photo> findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
     Long countByUser(User user);
     Long countByUserAndRecordDtBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
+
     List<Photo> findByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
     List<Photo> findByUser_PkOrderByRecordDtDesc(Long userPk);
+
     Page<Photo> findByUserAndVisibleStatusOrderByRecordDtDesc(Pageable pageable, User user, VisibleStatus visibleStatus);
     Page<Photo> findByUser_PkOrderByRecordDtDesc(Pageable pageable, Long userPk);
+
     Integer countByUserAndVisibleStatus(User user, VisibleStatus visibleStatus);
     Integer countByUser_Pk(Long userPk);
+
+    Photo findOneById(Long photoId);
 
 }

@@ -4,15 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel
-public class PhotoListDto {
+public class PhotoDetailDto {
 
     @ApiModelProperty("인생네컷 번호")
     private Long photoId;
@@ -23,6 +21,6 @@ public class PhotoListDto {
     @ApiModelProperty("인생네컷 공개여부")
     private String visible;
     @ApiModelProperty("인생네컷 촬영 날짜")
-    private LocalDateTime recordDt;
+    private String recordDt;
 
 }

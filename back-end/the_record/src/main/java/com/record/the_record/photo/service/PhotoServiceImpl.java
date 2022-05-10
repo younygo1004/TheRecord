@@ -4,7 +4,7 @@ import com.record.the_record.entity.Photo;
 import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.VisibleStatus;
 import com.record.the_record.photo.dto.PhotoDto;
-import com.record.the_record.photo.dto.PhotoListDto;
+import com.record.the_record.photo.dto.PhotoDetailDto;
 import com.record.the_record.photo.dto.PhotoTitle;
 import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +71,7 @@ public class PhotoServiceImpl implements PhotoService{
             photoDtoList.add(PhotoTitle.builder()
                     .photoId(photo.getId())
                     .title(photo.getTitle())
-                    .recordDt(photo.getRecordDt())
+                    .recordDt(String.valueOf(photo.getRecordDt()))
                     .visible(String.valueOf(photo.getVisibleStatus()))
                     .build());
         }
@@ -79,7 +80,7 @@ public class PhotoServiceImpl implements PhotoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<PhotoListDto> findPhotoList(Long userPk, int page) {
+    public List<PhotoDetailDto> findPhotoList(Long userPk, int page) {
         int size = 3;
 
         Long loginUser = userService.currentUser();
@@ -88,7 +89,7 @@ public class PhotoServiceImpl implements PhotoService{
         Pageable pageable = PageRequest.of(page, size);
 
         Page<Photo> photoList;
-        List<PhotoListDto> photoDtoList = new ArrayList<>();
+        List<PhotoDetailDto> photoDtoList = new ArrayList<>();
 
         if(loginUser != userPk) {
             photoList = photoRepository.findByUserAndVisibleStatusOrderByRecordDtDesc(pageable, host, visibleStatus);
@@ -97,11 +98,11 @@ public class PhotoServiceImpl implements PhotoService{
         }
 
         for (Photo photo : photoList) {
-            photoDtoList.add(PhotoListDto.builder()
+            photoDtoList.add(PhotoDetailDto.builder()
                     .photoId(photo.getId())
                     .title(photo.getTitle())
                     .mediaUrl(photo.getMediaUrl())
-                    .recordDt(photo.getRecordDt())
+                    .recordDt(String.valueOf(photo.getRecordDt()))
                     .visible(String.valueOf(photo.getVisibleStatus()))
                     .build());
         }
@@ -130,6 +131,37 @@ public class PhotoServiceImpl implements PhotoService{
         }
 
         return totalPage;
+    }
+
+    @Override
+    public PhotoDetailDto findPhotoDetail(Long photoId) {
+
+        Photo photo = photoRepository.findOneById(photoId);
+
+        PhotoDetailDto photoDetailDto = PhotoDetailDto.builder()
+                .photoId(photo.getId())
+                .title(photo.getTitle())
+                .mediaUrl(photo.getMediaUrl())
+                .recordDt(String.valueOf(photo.getRecordDt()))
+                .visible(String.valueOf(photo.getVisibleStatus()))
+                .build();
+
+        return photoDetailDto;
+    }
+
+    @Override
+    public void modifyPhoto(PhotoDetailDto photoDetailDto) {
+
+        Photo photo = photoRepository.findOneById(photoDetailDto.getPhotoId());
+        photo.updatePhoto(photoDetailDto.getTitle(), VisibleStatus.valueOf(photoDetailDto.getVisible()));
+
+        photoRepository.save(photo);
+    }
+
+    @Override
+    public void removePhoto(Long photoId) {
+        Photo photo = photoRepository.findOneById(photoId);
+        photoRepository.delete(photo);
     }
 
 }
