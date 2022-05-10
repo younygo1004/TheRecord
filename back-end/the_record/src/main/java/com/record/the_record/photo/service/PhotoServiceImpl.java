@@ -71,7 +71,7 @@ public class PhotoServiceImpl implements PhotoService{
             photoDtoList.add(PhotoTitle.builder()
                     .photoId(photo.getId())
                     .title(photo.getTitle())
-                    .recordDt(String.valueOf(photo.getRecordDt()))
+                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
                     .visible(String.valueOf(photo.getVisibleStatus()))
                     .build());
         }
@@ -102,7 +102,7 @@ public class PhotoServiceImpl implements PhotoService{
                     .photoId(photo.getId())
                     .title(photo.getTitle())
                     .mediaUrl(photo.getMediaUrl())
-                    .recordDt(String.valueOf(photo.getRecordDt()))
+                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
                     .visible(String.valueOf(photo.getVisibleStatus()))
                     .build());
         }
@@ -142,7 +142,7 @@ public class PhotoServiceImpl implements PhotoService{
                 .photoId(photo.getId())
                 .title(photo.getTitle())
                 .mediaUrl(photo.getMediaUrl())
-                .recordDt(String.valueOf(photo.getRecordDt()))
+                .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
                 .visible(String.valueOf(photo.getVisibleStatus()))
                 .build();
 
