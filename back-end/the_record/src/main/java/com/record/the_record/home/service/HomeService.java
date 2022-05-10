@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface HomeService {
 
-    List<RecentDiaryDto> findRecentDiaryList(Long user_pk);
-    List<RecentPhotoDto> findRecentPhotoList(Long user_pk);
-    UpdateStatusDto findUpdateStatus(Long user_pk);
+    List<RecentDiaryDto> findRecentDiaryList(Long userPk);
+    List<RecentPhotoDto> findRecentPhotoList(Long userPk);
+    UpdateStatusDto findUpdateStatus(Long userPk);
 
 }

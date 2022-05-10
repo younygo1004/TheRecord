@@ -12,6 +12,7 @@ import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,9 +29,10 @@ public class HomeServiceImpl implements HomeService {
     private final PhotoRepository photoRepository;
 
     @Override
-    public List<RecentDiaryDto> findRecentDiaryList(Long user_pk) {
+    @Transactional(readOnly = true)
+    public List<RecentDiaryDto> findRecentDiaryList(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
         List<Diary> recentDiaryList = diaryRepository.findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentDiaryDto> recentDiaryDtoList = new ArrayList<>();
@@ -47,9 +49,10 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<RecentPhotoDto> findRecentPhotoList(Long user_pk) {
+    @Transactional(readOnly = true)
+    public List<RecentPhotoDto> findRecentPhotoList(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
         List<Photo> recentPhotoList = photoRepository.findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentPhotoDto> recentPhotoDtoList = new ArrayList<>();
@@ -67,9 +70,10 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public UpdateStatusDto findUpdateStatus(Long user_pk) {
+    @Transactional(readOnly = true)
+    public UpdateStatusDto findUpdateStatus(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         UpdateStatusDto updateStatusDto = new UpdateStatusDto();
         LocalDateTime currentDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
         LocalDateTime startDate = currentDate.withDayOfMonth(1);

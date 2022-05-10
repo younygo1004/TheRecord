@@ -21,21 +21,21 @@ public class HomeController {
     private final HomeService homeService;
 
     @ApiOperation(value = "최신 일기 조회")
-    @GetMapping("/{user_pk}/diary")
-    public ResponseEntity<List<RecentDiaryDto>> recentDiaryList(@PathVariable @ApiParam(value = "유저 번호")Long user_pk) {
-        return ResponseEntity.ok().body(homeService.findRecentDiaryList(user_pk));
+    @GetMapping("/{user-pk}/diary")
+    public ResponseEntity<List<RecentDiaryDto>> recentDiaryList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+        return ResponseEntity.ok().body(homeService.findRecentDiaryList(userPk));
     }
 
     @ApiOperation(value = "최신 인생네컷 조회")
-    @GetMapping("/{user_pk}/photo")
-    public ResponseEntity<List<RecentPhotoDto>> recentPhotoList(@PathVariable @ApiParam(value = "유저 번호")Long user_pk) {
-        return ResponseEntity.ok().body(homeService.findRecentPhotoList(user_pk));
+    @GetMapping("/{user-pk}/photo")
+    public ResponseEntity<List<RecentPhotoDto>> recentPhotoList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+        return ResponseEntity.ok().body(homeService.findRecentPhotoList(userPk));
     }
 
     @ApiOperation(value = "이번달 업데이트 현황 조회")
-    @GetMapping("/{user_pk}/month")
-    public ResponseEntity<UpdateStatusDto> updateStatusDetails(@PathVariable @ApiParam(value = "유저 번호")Long user_pk) {
-        return ResponseEntity.ok().body(homeService.findUpdateStatus(user_pk));
+    @GetMapping("/{user-pk}/month")
+    public ResponseEntity<UpdateStatusDto> updateStatusDetails(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+        return ResponseEntity.ok().body(homeService.findUpdateStatus(userPk));
     }
 
 }
