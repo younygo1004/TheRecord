@@ -17,5 +17,5 @@ COPY --from=build-stage /the-record/build /the-record/build
 
 EXPOSE 3000
 
-VOLUME [ "/home/ubuntu/dockerMount/frontendVol/nginx:/etc/nginx/conf.d", "/home/ubuntu/dockerMount/frontendVol/certbot/conf:/etc/letsencrypt", "/home/ubuntu/dockerMount/frontendVol/certbot/www:/var/www/certbot" ]
+VOLUME [ "/home/ubuntu/deploy/dockerMount/frontendVol:/etc/nginx/conf.d", "/home/ubuntu/deploy/dockerMount/frontendVol/conf:/etc/letsencrypt", "/home/ubuntu/deploy/dockerMount/frontendVol/certbot/www:/var/www/certbot" ]
 CMD ["nginx", "-g", "daemon off;"]

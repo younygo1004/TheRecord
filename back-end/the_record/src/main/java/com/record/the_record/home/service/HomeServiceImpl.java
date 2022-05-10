@@ -39,7 +39,7 @@ public class HomeServiceImpl implements HomeService {
             recentDiaryDtoList.add(RecentDiaryDto.builder()
                     .diaryId(diary.getId())
                     .title(diary.getTitle())
-                    .recordDt(diary.getRecordDt())
+                    .recordDt(String.valueOf(diary.getRecordDt()).substring(0,10))
                     .build());
         }
 
@@ -58,7 +58,7 @@ public class HomeServiceImpl implements HomeService {
             recentPhotoDtoList.add(RecentPhotoDto.builder()
                     .photoId(photo.getId())
                     .title(photo.getTitle())
-                    .recordDt(photo.getRecordDt())
+                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
                     .mediaUrl(photo.getMediaUrl())
                     .build());
         }
