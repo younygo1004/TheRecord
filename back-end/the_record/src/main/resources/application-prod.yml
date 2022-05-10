@@ -1,38 +1,38 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_DATABASE_URL}
-    username: ${MYSQL_DATABASE_USERNAME}
-    password: ${MYSQL_DATABASE_PASSWORD}
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: ${MYSQL_DATABASE_URL}
+        username: ${MYSQL_DATABASE_USERNAME}
+        password: ${MYSQL_DATABASE_PASSWORD}
 
-  jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
-      use-new-id-generator-mappings: false
-    show-sql: true
-    properties:
-      hibernate.format_sql: true
-    database: mysql
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: validate
+            use-new-id-generator-mappings: false
+        show-sql: true
+        properties:
+            hibernate.format_sql: true
+        database: mysql
 
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+    servlet:
+        multipart:
+            max-file-size: 100MB
+            max-request-size: 100MB
 
 logging:
-  level:
-    root: info
-    com.record.the_record: info
+    level:
+        root: info
+        com.record.the_record: info
 
 openvidu:
-  url: ${OPENVIDU_URL}
-  secret: ${OPENVIDU_SECRET}
+    url: ${OPENVIDU_URL}
+    secret: ${OPENVIDU_SECRET}
 
 server:
-  ssl:
-    enabled: true
-    key-store: classpath:k6b204.ssafy.io.p12
-    key-store-password: ${OPENVIDU_SECRET}
-    key-store-type: PKCS12
-    key-alias: ssafy
+    ssl:
+        enabled: true
+        key-store: classpath:the-record.co.kr.p12
+        key-store-password: ${RECORD_SECRET}
+        key-store-type: PKCS12
+        key-alias: ssafy

@@ -10,7 +10,7 @@ FROM nginx:stable-alpine as production-stage
 RUN rm /etc/nginx/conf.d/default.conf
 COPY ./nginx.conf/default.conf /etc/nginx/conf.d/default.conf
 COPY ./certbot/conf/options-ssl-nginx.conf /etc/letsencrypt/
-COPY ./certbot/conf/live/k6b204.p.ssafy.io/*.pem /etc/letsencrypt/live/k6b204.p.ssafy.io/
+COPY ./certbot/conf/live/the-record.co.kr/*.pem /etc/letsencrypt/live/the-record.co.kr/
 COPY ./certbot/conf/*.pem /etc/letsencrypt/
 COPY --from=build-stage /the-record/build /the-record/build
 
