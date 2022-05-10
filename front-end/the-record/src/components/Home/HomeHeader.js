@@ -1,12 +1,12 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import EditProfile from './EditProfile';
 import '../../styles/home/home-header.css';
 import store from '../../store';
 import { ADD_NAVPAGE } from '../../actions/navigation';
 
 function HomeHeader() {
-  const history = useHistory();
+  const navigate = useNavigate();
   // 현재 로그인 상태 세션에 올려놓음(userInfo)
   const loginUser = '5_waterglass';
 
@@ -24,9 +24,7 @@ function HomeHeader() {
   const moveMyPage = () => {
     sessionStorage.setItem('homePageHost', loginUser);
     store.dispatch({ type: ADD_NAVPAGE, data: 'nav-home' });
-    history.push({
-      pathname: '/home',
-    });
+    navigate('/home');
   };
 
   const headerProfileButton = () => {
@@ -45,7 +43,7 @@ function HomeHeader() {
     }
 
     const logOut = () => {
-      history.push({ pathname: '/' });
+      navigate('');
       sessionStorage.clear();
     };
 

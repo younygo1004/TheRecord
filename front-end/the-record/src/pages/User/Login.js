@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import fetchLogin from './service';
 
 function Login() {
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
   const moveHome = () => {
     // 로그인한 사람의 정보를 세션에 올려놓음
     sessionStorage.setItem('homePageHost', '5_waterglass');
-    history.push({
-      pathname: '/home',
-    });
+
+    navigate('home');
+    console.log(location.pathname);
   };
 
   const [account, setAccount] = useState({
@@ -29,7 +30,7 @@ function Login() {
       console.log(JWT);
 
       // sessionStorage.setItem('jwt', JWT);
-      history.replace('/home');
+      navigate('/home');
     } catch (error) {
       alert(error);
     }
@@ -80,7 +81,8 @@ function Login() {
         </DivStyle2>
         <GoogleLoginButton>구글 로그인</GoogleLoginButton>
         <JoinText>
-          아직 계정이 없으신가요? <Join>가입하기</Join>
+          아직 계정이 없으신가요?{' '}
+          <Join onClick={() => navigate('signup')}>가입하기</Join>
         </JoinText>
         <button type="button" onClick={() => moveHome()}>
           click

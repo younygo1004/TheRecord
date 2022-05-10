@@ -1,14 +1,14 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import ArrowLeftOutlinedIcon from '@material-ui/icons/ArrowLeftOutlined';
-import ArrowRightOutlinedIcon from '@material-ui/icons/ArrowRightOutlined';
-import Pagination from '@material-ui/lab/Pagination';
-// import Stack from '@material-ui/lab/Stack';
+import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
+import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import fourphoto from '../../assets/fourphoto.png';
 
 function PhotoPreview() {
-  const history = useHistory();
+  const navigate = useNavigate();
   // 일기목록 페이지 별로 불러오는 api 연결
   // const [photolist, setPhotolist] = useState([]);
 
@@ -79,8 +79,7 @@ function PhotoPreview() {
   };
 
   const movePhotoDetail = photo => {
-    history.push({
-      pathname: '/album/photodetail',
+    navigate('/album/photodetail', {
       state: {
         photoInfo: photo,
       },
@@ -129,14 +128,14 @@ function PhotoPreview() {
       </div>
       <div className="preview-pagebtn">
         {totalPage > 1 ? (
-          <div>
+          <Stack>
             <Pagination
               count={totalPage}
               page={page}
               onChange={changePage}
               size="small"
             />
-          </div>
+          </Stack>
         ) : (
           ''
         )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../styles/photo/album.css';
-import InsertPhotoOutlinedIcon from '@material-ui/icons/InsertPhotoOutlined';
-import { useHistory } from 'react-router-dom';
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
+import { useNavigate } from 'react-router-dom';
 
 function PhotoList() {
   // 일기목록 불러오는 api 연결
@@ -42,11 +42,10 @@ function PhotoList() {
     },
   ];
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const movePhotoDetail = listitem => {
-    history.push({
-      pathname: '/album/photodetail',
+    navigate('/album/photodetail', {
       state: {
         photoInfo: listitem,
       },

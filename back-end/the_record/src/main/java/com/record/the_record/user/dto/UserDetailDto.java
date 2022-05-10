@@ -10,14 +10,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel
-public class UserDto {
-
+public class UserDetailDto {
     @ApiModelProperty("유저 번호")
     private Long userPk;
     @ApiModelProperty("유저 아이디")
     private String userId;
-    @ApiModelProperty("유저 비밀번호")
-    private String password;
     @ApiModelProperty("유저 이름")
     private String name;
     @ApiModelProperty("유저 이메일")
@@ -26,5 +23,6 @@ public class UserDto {
     private String introduce;
     @ApiModelProperty("프로필 사진 경로")
     private String profile;
-
+    @ApiModelProperty("일촌 여부")
+    private boolean neighbor;
 }
