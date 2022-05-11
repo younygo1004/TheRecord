@@ -29,6 +29,19 @@ openvidu:
     url: ${OPENVIDU_URL}
     secret: ${OPENVIDU_SECRET}
 
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET}
+    credentials:
+      access-key: ${S3_ACCESSKEY}
+      secret-key: ${S3_SECRET_KEY}
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
 
 server:
   ssl:
