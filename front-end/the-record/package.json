@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "eslint-config-airbnb": "^19.0.4",
+    "fs": "^0.0.1-security",
     "openvidu-browser": "^2.21.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -55,5 +56,8 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "prettier": "2.6.2"
-  }
+  },
+  "browser": {
+    "fs": false
+ }
 }

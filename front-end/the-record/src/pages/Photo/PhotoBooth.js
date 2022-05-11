@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/no-array-index-key */
@@ -26,6 +28,7 @@ export default class PhotoBooth extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      photoNum: 0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -35,6 +38,9 @@ export default class PhotoBooth extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+
+    this.takePhoto = this.takePhoto.bind(this);
+    this.finishPhoto = this.finishPhoto.bind(this);
   }
 
   componentDidMount() {
@@ -233,28 +239,118 @@ export default class PhotoBooth extends Component {
     }
   }
 
+  takePhoto() {
+    if (this.state.photoNum < 4) {
+      const video = document.querySelectorAll('video');
+      const canvas = document.getElementById(`canvas-${this.state.photoNum}`);
+      const ctx = canvas.getContext('2d');
+      canvas.width = 190;
+      canvas.height = 110;
+      video.forEach((element, index) => {
+        console.log(element.clientWidth, element.clientHeight);
+        ctx.drawImage(
+          element,
+          180,
+          0,
+          element.clientWidth * 5,
+          element.clientHeight * 5,
+          element.clientWidth * index * 0.33,
+          0,
+          element.clientWidth,
+          element.clientHeight,
+        );
+      });
+      canvas.toDataURL('image/png');
+      this.setState(state => {
+        return { photoNum: state.photoNum + 1 };
+      });
+    } else {
+      alert('네번의 촬영이 완료되었습니다');
+    }
+  }
+
+  finishPhoto() {
+    console.log(this.state.photoNum);
+    if (this.state.photoNum >= 4) {
+      const fourPhoto = document.querySelectorAll('canvas');
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 220;
+      canvas.height = 470;
+      fourPhoto.forEach((element, index) => {
+        console.log(element);
+        ctx.drawImage(element, 20, element.clientHeight * index + 20);
+      });
+      const dataUrl = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'eee.png';
+      link.href = dataUrl;
+      link.click();
+      const imageUrl = dataUrl.split(',')[1];
+      const formData = new FormData();
+      formData.append('size', 'auto');
+      formData.append('image_file_b64', imageUrl);
+      console.log(imageUrl);
+      const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
+      axios({
+        method: 'post',
+        url: 'https://api.remove.bg/v1.0/removebg',
+        data: formData,
+        responseType: 'arraybuffer',
+        headers: {
+          ...formData.getHeaders,
+          'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
+        },
+        encoding: null,
+      })
+        .then(response => {
+          if (response.status !== 200)
+            return console.error(
+              'Error:',
+              response.status,
+              response.statusText,
+            );
+          const arrayBufferView = new Uint8Array(response.data);
+          console.log(arrayBufferView);
+          const blob = new Blob([arrayBufferView], { type: 'image/png' });
+          console.log('blob변환', blob);
+          const urlCreator = window.URL || window.webkitURL;
+          const imgUrl = urlCreator.createObjectURL(blob);
+          const img = document.querySelector('#photo');
+          img.src = imgUrl;
+        })
+        .catch(error => {
+          return console.error('Request failed:', error);
+        });
+    } else {
+      alert('네번의 촬영을 완료해주세요!');
+    }
+  }
+
   render() {
     const { mySessionId } = this.state;
     const { myUserName } = this.state;
 
     return (
       <div id="photobooth">
-        <div className="bg-white-left">미리보기</div>
+        <div className="bg-white-left">
+          <div className="photo-preview-box">
+            {/* <p>미리보기</p> */}
+            <canvas id="canvas-0" />
+            <canvas id="canvas-1" />
+            <canvas id="canvas-2" />
+            <canvas id="canvas-3" />
+          </div>
+        </div>
         <div className="bg-white-right">
-          촬영하기
           <div className="container">
             {this.state.session === undefined ? (
               <div id="join">
-                <div id="img-div">
-                  <img
-                    src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                    alt="OpenVidu logo"
-                  />
-                </div>
                 <div id="join-dialog">
-                  <h1> Join a video session </h1>
                   <form onSubmit={event => this.joinSession(event)}>
                     <p>
+                      {/* 접속자 이름 */}
                       <label>Participant: </label>
                       <input
                         type="text"
@@ -265,6 +361,7 @@ export default class PhotoBooth extends Component {
                       />
                     </p>
                     <p>
+                      {/* 세션 아이디 */}
                       <label> Session: </label>
                       <input
                         type="text"
@@ -285,7 +382,7 @@ export default class PhotoBooth extends Component {
             {this.state.session !== undefined ? (
               <div id="session">
                 <div id="session-header">
-                  <h1 id="session-title">{mySessionId}</h1>
+                  {/* <h1 id="session-title">{mySessionId}</h1> */}
                   <input
                     type="button"
                     id="buttonLeaveSession"
@@ -294,7 +391,7 @@ export default class PhotoBooth extends Component {
                   />
                 </div>
 
-                {this.state.mainStreamManager !== undefined ? (
+                {/* {this.state.mainStreamManager !== undefined ? (
                   <div id="main-video">
                     <UserVideoComponent
                       streamManager={this.state.mainStreamManager}
@@ -306,7 +403,7 @@ export default class PhotoBooth extends Component {
                       value="Switch Camera"
                     />
                   </div>
-                ) : null}
+                ) : null} */}
                 <div id="video-container">
                   {this.state.publisher !== undefined ? (
                     <div
@@ -332,10 +429,26 @@ export default class PhotoBooth extends Component {
                 </div>
               </div>
             ) : null}
+            <div className="photo-btn-group">
+              <button
+                className="take-photo-btn"
+                onClick={this.takePhoto}
+                type="button"
+              >
+                찰칵
+              </button>
+              <button
+                className="finish-photo-btn"
+                onClick={this.finishPhoto}
+                type="button"
+              >
+                사진촬영 완료
+              </button>
+              <img id="photo" alt="img" />
+            </div>
           </div>
-          <button type="button">찰칵</button>
+          <Navigation />
         </div>
-        <Navigation />
       </div>
     );
   }
