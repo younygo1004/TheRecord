@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Deprecated
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/photobooth")

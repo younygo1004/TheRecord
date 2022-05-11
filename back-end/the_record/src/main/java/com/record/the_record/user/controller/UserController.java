@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @RestController
@@ -60,4 +62,17 @@ public class UserController {
     public ResponseEntity<List<SearchUserDto>> userSearch(@PathVariable("name") String name) {
         return ResponseEntity.ok().body(userService.searchUser(name));
     }
+
+    @PostMapping("/email/number")
+    public ResponseEntity<String> verificationCodeSend(){
+        try {
+            userService.sendVerificationCode();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.ok().body("fail");
+        }
+        return ResponseEntity.ok().body("success");
+    }
+
 }
