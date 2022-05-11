@@ -1,5 +1,6 @@
 package com.record.the_record.user.controller;
 
+import com.record.the_record.user.dto.CertificateDto;
 import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
@@ -68,10 +69,26 @@ public class UserController {
         try {
             userService.sendVerificationCode();
         }
+        catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body("이미 인증번호를 전송했습니다.");
+        }
         catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.ok().body("fail");
         }
+        return ResponseEntity.ok().body("success");
+    }
+
+    @PostMapping("/email-check")
+    public ResponseEntity<String> verificationCodeCheck(@RequestBody CertificateDto certificateDto) {
+
+        try {
+            userService.checkVerificationCode(certificateDto.getCertificateNum());
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body("fail");
+        }
+
         return ResponseEntity.ok().body("success");
     }
 
