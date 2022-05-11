@@ -5,6 +5,8 @@ import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface UserService {
@@ -17,4 +19,5 @@ public interface UserService {
     List<SearchUserDto> findNeighborList();
     void addNeighbor(Long userPk);
     List<SearchUserDto> searchUser(String name);
+    void sendVerificationCode() throws Exception;
 }

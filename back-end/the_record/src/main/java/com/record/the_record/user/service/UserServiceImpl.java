@@ -1,9 +1,7 @@
 package com.record.the_record.user.service;
 
-import com.record.the_record.entity.Folder;
-import com.record.the_record.entity.Neighbor;
-import com.record.the_record.entity.NeighborId;
-import com.record.the_record.entity.User;
+import com.record.the_record.email.EmailService;
+import com.record.the_record.entity.*;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.security.JwtTokenProvider;
@@ -12,6 +10,7 @@ import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 import com.record.the_record.user.repository.NeighborRepository;
 import com.record.the_record.user.repository.UserRepository;
+import com.record.the_record.user.repository.UserVerificationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,8 +30,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final NeighborRepository neighborRepository;
     private final FolderRepository folderRepository;
+    private final UserVerificationRepository userverificationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+
+    private final EmailService emailService;
 
     @Override
     @Transactional
@@ -138,5 +140,23 @@ public class UserServiceImpl implements UserService {
                 .userId(v.getUserId())
                 .name(v.getName()).build()));
         return dtoList;
+    }
+
+    @Override
+    @Transactional
+    public void sendVerificationCode() throws Exception {
+
+        User user = userRepository.findByPk(currentUser());
+
+        String verificationCode = Integer.toString((int)(Math.random() * 100000000));
+        String userEmail = user.getEmail();
+
+        emailService.sendEmail(userEmail, verificationCode);
+
+        userverificationRepository.save(UserVerification.builder()
+                .user(user)
+                .verificationCode(passwordEncoder.encode(verificationCode))
+                .build());
+
     }
 }
