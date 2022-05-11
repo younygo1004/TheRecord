@@ -180,24 +180,14 @@ public class UserServiceImpl implements UserService {
                 }
                 throw new IllegalArgumentException();
             }
+            else {
+                userVerificationRepository.delete(userVerification);
+                userVerificationRepository.flush();
+            }
 
         });
 
         optionalUserVerification.orElseThrow(IllegalArgumentException::new);
-
-
-//        Optional<User> user = userRepository.findByUserId(userDto.getUserId());
-//        if (user.isPresent()) {
-//            if (!passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())) {
-//                return "nouser";
-//            }
-//            String accessToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
-//            String refreshToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
-//
-//            return accessToken;
-//        } else
-//            return "fail";
-
 
     }
 }
