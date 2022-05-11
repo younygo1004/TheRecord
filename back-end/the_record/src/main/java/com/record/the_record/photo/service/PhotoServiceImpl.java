@@ -5,7 +5,7 @@ import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.VisibleStatus;
 import com.record.the_record.photo.dto.PhotoDto;
 import com.record.the_record.photo.dto.PhotoDetailDto;
-import com.record.the_record.photo.dto.PhotoTitle;
+import com.record.the_record.photo.dto.PhotoTitleDto;
 import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.service.UserService;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +38,6 @@ public class PhotoServiceImpl implements PhotoService{
         User user = userRepository.findByPk(userPk);
 
         Photo photo = Photo.builder()
-                .id(photoDto.getPhotoId())
                 .title(photoDto.getTitle())
                 .visibleStatus(getVisible)
                 .mediaUrl(photoDto.getMediaUrl())
@@ -52,14 +50,14 @@ public class PhotoServiceImpl implements PhotoService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<PhotoTitle> findPhotoTitleList(Long userPk) {
+    public List<PhotoTitleDto> findPhotoTitleList(Long userPk) {
         // 자신의 홈페이지인지 판별 후 전제공개+비공개 / 전체공개 나눠서 보여주기!
         Long loginUser = userService.currentUser();
         User host = userRepository.findByPk(userPk);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
 
         List<Photo> photoList;
-        List<PhotoTitle> photoDtoList = new ArrayList<>();
+        List<PhotoTitleDto> photoDtoList = new ArrayList<>();
 
         if(loginUser != userPk) {
             photoList = photoRepository.findByUserAndVisibleStatusOrderByRecordDtDesc(host, visibleStatus);
@@ -68,7 +66,7 @@ public class PhotoServiceImpl implements PhotoService{
         }
 
         for (Photo photo : photoList) {
-            photoDtoList.add(PhotoTitle.builder()
+            photoDtoList.add(PhotoTitleDto.builder()
                     .photoId(photo.getId())
                     .title(photo.getTitle())
                     .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))

@@ -4,15 +4,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel
-public class PhotoTitle {
+public class PhotoTitleDto {
 
     @ApiModelProperty("인생네컷 번호")
     private Long photoId;
