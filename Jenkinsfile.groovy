@@ -33,7 +33,8 @@ pipeline {
                                                 --build-arg S3_SECRET_KEY=${S3_SECRET_KEY}'
 										
 						sh 'cp -r /certbot /var/jenkins_home/workspace/record/front-end/the-record/'
-						
+						sh 'cp /record/env /var/jenkins_home/workspace/record/front-end/the-record/env'
+
                         sh 'cp /certbot/conf/live/the-record.co.kr/the-record.co.kr.p12 /var/jenkins_home/workspace/record/back-end/the_record/src/main/resources/'
 
 						sh 'docker build -t frontend:latest /var/jenkins_home/workspace/record/front-end/the-record'
