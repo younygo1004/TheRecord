@@ -6,65 +6,41 @@ import DialogTitle from '@mui/material/DialogTitle';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import Navigation from '../../components/Navigation';
 import DiaryList from '../../components/Diary/DiaryList';
-import Calender from '../../components/Diary/Calendar';
 import DiaryDetailContainer from '../../components/Diary/DiaryDetailContainer';
-import '../../styles/diary/diarymain.css';
 import '../../styles/diary/diarydetail.css';
 
-function DiaryMain() {
+function DiaryDetail() {
   const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
-  // 로그인 유저 받아오기!
+  //  로그인 유저 받아오기!
   const loginUser = '5_waterglass';
   const homePageHost = sessionStorage.getItem('homePageHost');
 
-  // 전체 다이어리 목록 조회 api 연결
-  // const [diarys, setDiarys] = useState([]);
+  // 일기 상세 정보 조회 api 연결
+  // const diaryId = useLocation().state;
+  // const [diaryInfo, setDiaryInfo] = useState([]);
 
   // useEffect(() => {
   //   axios
-  //     .get('url{folder}', {
+  //     .get('url{diaryId}', {
   //       headers: {
   //         "x-auth-token": sessiontStorage.getItem("jwt"),
   //       },
   //     })
   //     .then((res) => {
-  //         setDiarys(res.data);
+  //         setDiaryInfo(res.data);
   //     });
   // }, []);
-
-  const diarys = [
-    {
-      diaryId: 1,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '백만원씩 모아와',
-      recordDt: '2022.05.02',
-      visible: 'true',
-    },
-    {
-      diaryId: 2,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '이백만원씩 모아와',
-      recordDt: '2022.05.05',
-      visible: 'true',
-    },
-    {
-      diaryId: 3,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '삼백만원씩 모아와',
-      recordDt: '2022.05.07',
-      visible: 'true',
-    },
-  ];
+  const diaryInfo = {
+    diaryId: 1,
+    category: '전체공개',
+    mediaUrl: '',
+    content:
+      '성태가 돈을 모아오라고했다. \n 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...\n 이미 주형이는 형! 여기있어!를 외치며 761,950원을 뺏겼다고 한다. \n 같은 팀하기 무섭다................왜 안되냐.................................................................................스크롤스크롤스크롤스크롤스크롤스크롤',
+    title: '백만원씩 모아와',
+    recordDt: '2022.05.02',
+    visible: 'true',
+  };
 
   const openSelectDialog = () => {
     setOpenDialog(true);
@@ -79,16 +55,15 @@ function DiaryMain() {
   };
 
   return (
-    <div id="diarymain">
+    <div id="diarydetail">
       <div className="bg-white-left">
         <div className="diary-diarylist">
           <DiaryList />
         </div>
       </div>
       <div className="bg-white-right">
-        <div className="diarymain-box">
-          <div className="diarymain-header">
-            <p className="diarymain-header-title">전체 일기</p>
+        <div className="diarydetail-box">
+          <div className="diarydetail-header">
             {loginUser === homePageHost ? (
               <button
                 type="button"
@@ -103,14 +78,7 @@ function DiaryMain() {
               ''
             )}
           </div>
-          <Calender />
-          <div className="diarymain-content">
-            {diarys.map(diary => (
-              <div key={diary.diaryId} className="diarymain-item-content">
-                <DiaryDetailContainer diaryInfo={diary} />
-              </div>
-            ))}
-          </div>
+          <DiaryDetailContainer diaryInfo={diaryInfo} />
         </div>
         <Navigation />
       </div>
@@ -180,7 +148,7 @@ function DiaryMain() {
             </button>
             <button
               type="button"
-              className=" diary-dialog-btns"
+              className="diary-dialog-btns"
               onClick={() => {
                 moveMakeDiary('voice');
               }}
@@ -199,4 +167,4 @@ function DiaryMain() {
   );
 }
 
-export default DiaryMain;
+export default DiaryDetail;
