@@ -72,14 +72,13 @@ public class PhotoServiceImpl implements PhotoService{
             photoList = photoRepository.findByUser_PkOrderByRecordDtDesc(userPk);
         }
 
-        for (Photo photo : photoList) {
-            photoDtoList.add(PhotoTitleDto.builder()
-                    .photoId(photo.getId())
-                    .title(photo.getTitle())
-                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
-                    .visible(String.valueOf(photo.getVisibleStatus()))
-                    .build());
-        }
+        photoList.forEach(v -> photoDtoList.add(PhotoTitleDto.builder()
+                .photoId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .visible(String.valueOf(v.getVisibleStatus()))
+                .build()));
+
         return photoDtoList;
     }
 
@@ -102,15 +101,14 @@ public class PhotoServiceImpl implements PhotoService{
             photoList = photoRepository.findByUser_PkOrderByRecordDtDesc(pageable, userPk);
         }
 
-        for (Photo photo : photoList) {
-            photoDtoList.add(PhotoDetailDto.builder()
-                    .photoId(photo.getId())
-                    .title(photo.getTitle())
-                    .mediaUrl(photo.getMediaUrl())
-                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
-                    .visible(String.valueOf(photo.getVisibleStatus()))
-                    .build());
-        }
+        photoList.forEach(v -> photoDtoList.add(PhotoDetailDto.builder()
+                .photoId(v.getId())
+                .title(v.getTitle())
+                .mediaUrl(v.getMediaUrl())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .visible(String.valueOf(v.getVisibleStatus()))
+                .build()));
+
         return photoDtoList;
     }
 
@@ -139,6 +137,7 @@ public class PhotoServiceImpl implements PhotoService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PhotoDetailDto findPhotoDetail(Long photoId) {
 
         Photo photo = photoRepository.findOneById(photoId);
@@ -155,6 +154,7 @@ public class PhotoServiceImpl implements PhotoService{
     }
 
     @Override
+    @Transactional
     public void modifyPhoto(PhotoDetailDto photoDetailDto) {
 
         Photo photo = photoRepository.findOneById(photoDetailDto.getPhotoId());
@@ -164,6 +164,7 @@ public class PhotoServiceImpl implements PhotoService{
     }
 
     @Override
+    @Transactional
     public void removePhoto(Long photoId) {
         Photo photo = photoRepository.findOneById(photoId);
         photoRepository.delete(photo);

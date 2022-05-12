@@ -10,6 +10,8 @@ import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.Category;
 import com.record.the_record.entity.enums.VisibleStatus;
 import com.record.the_record.folder.repository.FolderRepository;
+import com.record.the_record.s3.dto.FileDetailDto;
+import com.record.the_record.s3.service.FileUploadService;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,23 +37,25 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final FileUploadService fileUploadService;
 
     @Override
     @Transactional
-    public Diary addDiary(DiaryDto diaryDto) {
+    public Diary addDiary(DiaryDto diaryDto, MultipartFile multipartFile) {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(diaryDto.getVisible());
         Category getCategory = Category.valueOf(diaryDto.getCategory());
         Long userPk = userService.currentUser();
         User user = userRepository.findByPk(userPk);
         Folder folder = folderRepository.findOneById(diaryDto.getFolderId());
+        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
 
         Diary diary = Diary.builder()
                 .title(diaryDto.getTitle())
                 .content(diaryDto.getContent())
                 .category(getCategory)
                 .visibleStatus(getVisible)
-                .mediaUrl(diaryDto.getMediaUrl())
+                .mediaUrl(fileDetailDto.getUploadName())
                 .recordDt(LocalDateTime.now())
                 .folder(folder)
                 .user(user)
@@ -60,6 +65,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiaryDetailDto> findDiaryList(Long userPk, int page) {
         int size = 10;
 
@@ -77,23 +83,22 @@ public class DiaryServiceImpl implements DiaryService {
             diaryList = diaryRepository.findByUser_PkOrderByRecordDtDesc(pageable, userPk);
         }
 
-        for (Diary diary : diaryList) {
-            diaryDtoList.add(DiaryDetailDto.builder()
-                    .diaryId(diary.getId())
-                    .folderId(diary.getFolder().getId())
-                    .title(diary.getTitle())
-                    .content(diary.getContent())
-                    .category(String.valueOf(diary.getCategory()))
-                    .mediaUrl(diary.getMediaUrl())
-                    .recordDt(String.valueOf(diary.getRecordDt()).substring(0,10))
-                    .visible(String.valueOf(diary.getVisibleStatus()))
-                    .build());
-        }
+        diaryList.forEach(v -> diaryDtoList.add(DiaryDetailDto.builder()
+                .diaryId(v.getId())
+                .folderId(v.getFolder().getId())
+                .title(v.getTitle())
+                .content(v.getContent())
+                .category(String.valueOf(v.getCategory()))
+                .mediaUrl(v.getMediaUrl())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .visible(String.valueOf(v.getVisibleStatus()))
+                .build()));
 
         return diaryDtoList;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiaryTitleDto> findDiaryTitleList(Long userPk, Long folderId) {
 
         Long loginUser = userService.currentUser();
@@ -110,19 +115,18 @@ public class DiaryServiceImpl implements DiaryService {
             diaryList = diaryRepository.findByUser_PkAndFolder(userPk, folder);
         }
 
-        for (Diary diary : diaryList) {
-            diaryDtoList.add(DiaryTitleDto.builder()
-                    .diaryId(diary.getId())
-                    .title(diary.getTitle())
-                    .recordDt(String.valueOf(diary.getRecordDt()).substring(0,10))
-                    .visible(String.valueOf(diary.getVisibleStatus()))
-                    .build());
-        }
+        diaryList.forEach(v -> diaryDtoList.add(DiaryTitleDto.builder()
+                .diaryId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .visible(String.valueOf(v.getVisibleStatus()))
+                .build()));
 
         return diaryDtoList;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<DiaryDetailDto> findDiaryDateList(Long userPk, String date) {
 
         Long loginUser = userService.currentUser();
@@ -140,23 +144,22 @@ public class DiaryServiceImpl implements DiaryService {
             diaryList = diaryRepository.findByUser_PkAndRecordDtBetween(userPk, startDate, endDate);
         }
 
-        for (Diary diary : diaryList) {
-            diaryDtoList.add(DiaryDetailDto.builder()
-                    .diaryId(diary.getId())
-                    .folderId(diary.getFolder().getId())
-                    .title(diary.getTitle())
-                    .content(diary.getContent())
-                    .category(String.valueOf(diary.getCategory()))
-                    .mediaUrl(diary.getMediaUrl())
-                    .recordDt(date)
-                    .visible(String.valueOf(diary.getVisibleStatus()))
-                    .build());
-        }
+        diaryList.forEach(v -> diaryDtoList.add(DiaryDetailDto.builder()
+                .diaryId(v.getId())
+                .folderId(v.getFolder().getId())
+                .title(v.getTitle())
+                .content(v.getContent())
+                .category(String.valueOf(v.getCategory()))
+                .mediaUrl(v.getMediaUrl())
+                .recordDt(date)
+                .visible(String.valueOf(v.getVisibleStatus()))
+                .build()));
 
         return diaryDtoList;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DiaryDetailDto findDiaryDetail(Long diaryId) {
 
         Diary diary = diaryRepository.findOneById(diaryId);
@@ -173,5 +176,23 @@ public class DiaryServiceImpl implements DiaryService {
                 .build();
 
         return diaryDetailDto;
+    }
+
+    @Override
+    @Transactional
+    public void modifyDiary(DiaryDetailDto diaryDetailDto) {
+
+        Diary diary = diaryRepository.findOneById(diaryDetailDto.getDiaryId());
+        Folder folder = folderRepository.findOneById(diaryDetailDto.getFolderId());
+        diary.updateDiary(diaryDetailDto.getTitle(), diaryDetailDto.getContent(), folder, VisibleStatus.valueOf(diaryDetailDto.getVisible()));
+
+        diaryRepository.save(diary);
+    }
+
+    @Override
+    @Transactional
+    public void removeDiary(Long diaryId) {
+        Diary diary = diaryRepository.findOneById(diaryId);
+        diaryRepository.delete(diary);
     }
 }

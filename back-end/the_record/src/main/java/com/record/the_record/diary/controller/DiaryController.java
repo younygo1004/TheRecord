@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,8 +23,9 @@ public class DiaryController {
 
     @ApiOperation(value = "일기 저장")
     @PostMapping()
-    public ResponseEntity<String> diaryAdd(@RequestBody @ApiParam(value = "저장할 일기 정보")DiaryDto diaryDto) {
-        diaryService.addDiary(diaryDto);
+    public ResponseEntity<String> diaryAdd(@RequestPart(value = "diaryDto") @ApiParam(value = "저장할 일기 정보")DiaryDto diaryDto,
+                                           @RequestPart(value = "file") @ApiParam(value = "저장할 미디어 일기")MultipartFile multipartFile) {
+        diaryService.addDiary(diaryDto, multipartFile);
         return ResponseEntity.ok().body("success");
     }
 
@@ -52,6 +54,20 @@ public class DiaryController {
     @GetMapping("/{diary-id}")
     public ResponseEntity<DiaryDetailDto> diaryDetails(@PathVariable("diary-id") @ApiParam(value = "사진 번호")Long diaryId) {
         return ResponseEntity.ok().body(diaryService.findDiaryDetail(diaryId));
+    }
+
+    @ApiOperation(value = "일기 상세정보 수정")
+    @PutMapping()
+    public ResponseEntity<String> diaryModify(@RequestBody @ApiParam("수정하고자 하는 일기 정보")DiaryDetailDto diaryDetailDto) {
+        diaryService.modifyDiary(diaryDetailDto);
+        return ResponseEntity.ok().body("success");
+    }
+
+    @ApiOperation(value = "일기 삭제")
+    @DeleteMapping("/{diary-id}")
+    public ResponseEntity<String> diaryRemove(@PathVariable("diary-id") @ApiParam(value = "일기 번호")Long diaryId) {
+        diaryService.removeDiary(diaryId);
+        return ResponseEntity.ok().body("success");
     }
 
 }
