@@ -18,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final NeighborRepository neighborRepository;
     private final FolderRepository folderRepository;
-    private final UserVerificationRepository userverificationRepository;
+    private final UserVerificationRepository userVerificationRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
@@ -144,19 +146,48 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void sendVerificationCode() throws Exception {
+    public void sendVerificationCode() throws MessagingException, UnsupportedEncodingException {
 
         User user = userRepository.findByPk(currentUser());
+        userVerificationRepository.findById(currentUser()).ifPresent(userVerification -> {
+            throw new IllegalArgumentException();
+        });
 
         String verificationCode = Integer.toString((int)(Math.random() * 100000000));
         String userEmail = user.getEmail();
 
-        emailService.sendEmail(userEmail, verificationCode);
-
-        userverificationRepository.save(UserVerification.builder()
+        userVerificationRepository.save(UserVerification.builder()
+                .pk(user.getPk())
                 .user(user)
                 .verificationCode(passwordEncoder.encode(verificationCode))
                 .build());
+
+        System.out.println("이메일 전송");
+        emailService.sendEmail(userEmail, verificationCode);
+    }
+
+    @Override
+    public void checkVerificationCode(String certificateNum) throws Exception {
+
+        Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(currentUser());
+
+        optionalUserVerification.ifPresent(userVerification -> {
+            if(!passwordEncoder.matches(certificateNum, userVerification.getVerificationCode())){
+                try {
+                    this.sendVerificationCode();
+                } catch (MessagingException | UnsupportedEncodingException e) {
+                    throw new IllegalArgumentException();
+                }
+                throw new IllegalArgumentException();
+            }
+            else {
+                userVerificationRepository.delete(userVerification);
+                userVerificationRepository.flush();
+            }
+
+        });
+
+        optionalUserVerification.orElseThrow(IllegalArgumentException::new);
 
     }
 }
