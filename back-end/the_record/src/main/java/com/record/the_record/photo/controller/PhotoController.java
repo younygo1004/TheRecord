@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -22,8 +23,9 @@ public class PhotoController {
 
     @ApiOperation(value = "인생네컷 업로드")
     @PostMapping()
-    public ResponseEntity<String> photoAdd(@RequestBody @ApiParam(value = "저장할 인생네컷 정보")PhotoDto photoDto) {
-        photoService.addPhoto(photoDto);
+    public ResponseEntity<String> photoAdd(@RequestPart(value = "photoDto") @ApiParam(value = "저장할 인생네컷 정보") PhotoDto photoDto,
+                                           @RequestPart(value = "file") @ApiParam(value = "저장할 인생네컷 이미지")MultipartFile multipartFile) {
+        photoService.addPhoto(photoDto, multipartFile);
         return ResponseEntity.ok().body("success");
     }
 
