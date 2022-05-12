@@ -45,12 +45,10 @@ public class FolderServiceImpl implements FolderService{
         List<Folder> folderList = folderRepository.findByUser(user);
         List<FolderDto> folderDtoList = new ArrayList<>();
 
-        for (Folder folder : folderList) {
-            folderDtoList.add(FolderDto.builder()
-                    .folderId(folder.getId())
-                    .name(folder.getName())
-                    .build());
-        }
+        folderList.forEach(v -> folderDtoList.add(FolderDto.builder()
+                .folderId(v.getId())
+                .name(v.getName())
+                .build()));
 
         return folderDtoList;
     }

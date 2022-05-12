@@ -37,13 +37,11 @@ public class HomeServiceImpl implements HomeService {
         List<Diary> recentDiaryList = diaryRepository.findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentDiaryDto> recentDiaryDtoList = new ArrayList<>();
 
-        for (Diary diary : recentDiaryList) {
-            recentDiaryDtoList.add(RecentDiaryDto.builder()
-                    .diaryId(diary.getId())
-                    .title(diary.getTitle())
-                    .recordDt(String.valueOf(diary.getRecordDt()).substring(0,10))
-                    .build());
-        }
+        recentDiaryList.forEach(v ->  recentDiaryDtoList.add(RecentDiaryDto.builder()
+                .diaryId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .build()));
 
         return recentDiaryDtoList;
     }
@@ -57,14 +55,12 @@ public class HomeServiceImpl implements HomeService {
         List<Photo> recentPhotoList = photoRepository.findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentPhotoDto> recentPhotoDtoList = new ArrayList<>();
 
-        for (Photo photo : recentPhotoList) {
-            recentPhotoDtoList.add(RecentPhotoDto.builder()
-                    .photoId(photo.getId())
-                    .title(photo.getTitle())
-                    .recordDt(String.valueOf(photo.getRecordDt()).substring(0,10))
-                    .mediaUrl(photo.getMediaUrl())
-                    .build());
-        }
+        recentPhotoList.forEach(v -> recentPhotoDtoList.add(RecentPhotoDto.builder()
+                .photoId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .mediaUrl(v.getMediaUrl())
+                .build()));
 
         return recentPhotoDtoList;
     }

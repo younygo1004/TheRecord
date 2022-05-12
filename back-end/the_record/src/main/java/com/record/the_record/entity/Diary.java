@@ -42,4 +42,11 @@ public class Diary {
 
     @Enumerated(EnumType.STRING)
     private VisibleStatus visibleStatus;
+
+    public void updateDiary(String title, String content, Folder folder, VisibleStatus visibleStatus) {
+        this.title = title;
+        this.content = content;
+        this.folder = folder;
+        this.visibleStatus = visibleStatus;
+    }
 }
