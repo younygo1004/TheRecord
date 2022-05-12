@@ -5,8 +5,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class APIException {
     private final String message;
     private final LocalDateTime errorOccurrenceTime;
