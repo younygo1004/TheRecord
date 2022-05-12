@@ -2,7 +2,7 @@ package com.record.the_record.photo.controller;
 
 import com.record.the_record.photo.dto.PhotoDto;
 import com.record.the_record.photo.dto.PhotoDetailDto;
-import com.record.the_record.photo.dto.PhotoTitle;
+import com.record.the_record.photo.dto.PhotoTitleDto;
 import com.record.the_record.photo.service.PhotoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,7 +29,7 @@ public class PhotoController {
 
     @ApiOperation(value = "인생네컷 최신순 제목 조회")
     @GetMapping("/list/{user-pk}")
-    public ResponseEntity<List<PhotoTitle>> photoTitleList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
+    public ResponseEntity<List<PhotoTitleDto>> photoTitleList(@PathVariable("user-pk") @ApiParam(value = "유저 번호")Long userPk) {
         return ResponseEntity.ok().body(photoService.findPhotoTitleList(userPk));
     }
 
