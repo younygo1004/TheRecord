@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class UserVerification {
 
     @Id
-//    @Column(name = "user_pk", nullable = false)
     private Long pk;
 
     @OneToOne(fetch = FetchType.LAZY)
