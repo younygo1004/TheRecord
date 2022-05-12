@@ -150,14 +150,14 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByPk(currentUser());
         userVerificationRepository.findById(currentUser()).ifPresent(userVerification -> {
-            userVerificationRepository.delete(userVerification);
-            userVerificationRepository.flush();
+            throw new IllegalArgumentException();
         });
 
         String verificationCode = Integer.toString((int)(Math.random() * 100000000));
         String userEmail = user.getEmail();
 
         userVerificationRepository.save(UserVerification.builder()
+                .pk(user.getPk())
                 .user(user)
                 .verificationCode(passwordEncoder.encode(verificationCode))
                 .build());
