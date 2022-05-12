@@ -66,29 +66,13 @@ public class UserController {
 
     @PostMapping("/email/number")
     public ResponseEntity<String> verificationCodeSend(){
-        try {
-            userService.sendVerificationCode();
-        }
-        catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body("이미 인증번호를 전송했습니다.");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.ok().body("fail");
-        }
+        userService.sendVerificationCode();
         return ResponseEntity.ok().body("success");
     }
 
     @PostMapping("/email-check")
     public ResponseEntity<String> verificationCodeCheck(@RequestBody CertificateDto certificateDto) {
-
-        try {
-            userService.checkVerificationCode(certificateDto.getCertificateNum());
-        }
-        catch (Exception e) {
-            return ResponseEntity.badRequest().body("fail");
-        }
-
+        userService.checkVerificationCode(certificateDto.getCertificateNum());
         return ResponseEntity.ok().body("success");
     }
 

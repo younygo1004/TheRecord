@@ -1,6 +1,10 @@
 package com.record.the_record.user.service;
 
-import com.record.the_record.email.EmailService;
+import com.record.the_record.aop.exception.customexceptions.EmailExistException;
+import com.record.the_record.aop.exception.customexceptions.EmailSendException;
+import com.record.the_record.aop.exception.customexceptions.VerificationCodeMismatchException;
+import com.record.the_record.aop.exception.customexceptions.VerificationCodeNotExistException;
+import com.record.the_record.email.service.EmailService;
 import com.record.the_record.entity.*;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
@@ -146,11 +150,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void sendVerificationCode() throws MessagingException, UnsupportedEncodingException {
+    public void sendVerificationCode() {
 
         User user = userRepository.findByPk(currentUser());
         userVerificationRepository.findById(currentUser()).ifPresent(userVerification -> {
-            throw new IllegalArgumentException();
+            throw new EmailExistException();
         });
 
         String verificationCode = Integer.toString((int)(Math.random() * 100000000));
@@ -167,27 +171,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkVerificationCode(String certificateNum) throws Exception {
+    public void checkVerificationCode(String certificateNum){
 
         Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(currentUser());
 
         optionalUserVerification.ifPresent(userVerification -> {
             if(!passwordEncoder.matches(certificateNum, userVerification.getVerificationCode())){
-                try {
-                    this.sendVerificationCode();
-                } catch (MessagingException | UnsupportedEncodingException e) {
-                    throw new IllegalArgumentException();
-                }
-                throw new IllegalArgumentException();
+                this.sendVerificationCode();
+                throw new VerificationCodeMismatchException();
             }
-            else {
-                userVerificationRepository.delete(userVerification);
-                userVerificationRepository.flush();
-            }
-
         });
 
-        optionalUserVerification.orElseThrow(IllegalArgumentException::new);
+        optionalUserVerification.orElseThrow(VerificationCodeNotExistException::new);
 
     }
 }

@@ -19,6 +19,6 @@ public interface UserService {
     List<SearchUserDto> findNeighborList();
     void addNeighbor(Long userPk);
     List<SearchUserDto> searchUser(String name);
-    void sendVerificationCode() throws MessagingException, UnsupportedEncodingException;
-    void checkVerificationCode(String certificateNum) throws Exception;
+    void sendVerificationCode();
+    void checkVerificationCode(String certificateNum);
 }
