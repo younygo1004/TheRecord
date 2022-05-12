@@ -7,6 +7,8 @@ import com.record.the_record.photo.dto.PhotoDto;
 import com.record.the_record.photo.dto.PhotoDetailDto;
 import com.record.the_record.photo.dto.PhotoTitleDto;
 import com.record.the_record.photo.repository.PhotoRepository;
+import com.record.the_record.s3.dto.FileDetailDto;
+import com.record.the_record.s3.service.FileUploadService;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,19 +31,23 @@ public class PhotoServiceImpl implements PhotoService{
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final FileUploadService fileUploadService;
 
     @Override
     @Transactional
-    public Photo addPhoto(PhotoDto photoDto) {
+    public Photo addPhoto(PhotoDto photoDto, MultipartFile multipartFile) {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(photoDto.getVisible());
         Long userPk = userService.currentUser();
         User user = userRepository.findByPk(userPk);
 
+        // S3 업로드
+        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+
         Photo photo = Photo.builder()
                 .title(photoDto.getTitle())
                 .visibleStatus(getVisible)
-                .mediaUrl(photoDto.getMediaUrl())
+                .mediaUrl(fileDetailDto.getUploadName())
                 .recordDt(LocalDateTime.now())
                 .user(user)
                 .build();
