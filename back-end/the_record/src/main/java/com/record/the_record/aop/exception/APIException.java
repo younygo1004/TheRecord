@@ -1,10 +1,12 @@
 package com.record.the_record.aop.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
+@Getter
 public class APIException {
     private final String message;
     private final LocalDateTime errorOccurrenceTime;
