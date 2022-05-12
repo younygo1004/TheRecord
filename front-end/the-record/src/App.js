@@ -7,6 +7,7 @@ import Album from './pages/Photo/Album';
 import HomeHeader from './components/Home/HomeHeader';
 import PhotoDetail from './pages/Photo/PhotoDetail';
 import PhotoBooth from './pages/Photo/PhotoBooth';
+import MakeDiary from './pages/Diary/MakeDiary';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/home" element={<Home />} />
                 <Route path="/diary" element={<DiaryMain />} />
                 <Route path="/diary/diarydetail" element={<DiaryDetail />} />
+                <Route path="/diary/makediary" element={<MakeDiary />} />
                 <Route path="/album" element={<Album />} />
                 <Route path="/album/photodetail" element={<PhotoDetail />} />
                 <Route path="/album/photobooth" element={<PhotoBooth />} />

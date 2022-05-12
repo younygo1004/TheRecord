@@ -38,6 +38,13 @@
   margin-right: 5px;
 }
 
+.photolist > hr {
+  width: 100%;
+  height: 1.5px;
+  background-color: black;
+  border: none;
+}
+
 .photolist .photolist-text {
   color: #1d8eae;
   font-size: 18px;
