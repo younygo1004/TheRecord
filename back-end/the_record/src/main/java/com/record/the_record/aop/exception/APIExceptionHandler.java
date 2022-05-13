@@ -33,5 +33,10 @@ public class APIExceptionHandler {
         return ResponseEntity.badRequest().body(new APIException(e));
     }
 
+    @ExceptionHandler(value = NoUserException.class)
+    public ResponseEntity<APIException> handlerNoUserException(NoUserException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
+
 
 }

@@ -90,5 +90,7 @@ public class User implements UserDetails {
     }
 
 
-
+    public void changeProfile(String uploadName) {
+        this.profile = uploadName;
+    }
 }
