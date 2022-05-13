@@ -116,12 +116,7 @@ function PhotoFrame() {
       <div className="bg-white-right">
         <div className="custom-frame-box">
           <div className="color-picker-box">
-            <div
-              id="picker"
-              onChange={() => {
-                console.log('변함');
-              }}
-            />
+            <div id="picker" />
             <div className="choose-logo-box">
               <div className="dark-logo logo-check">
                 <p>Dark</p>

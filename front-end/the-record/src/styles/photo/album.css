@@ -129,7 +129,11 @@
   padding: 30px;
   display: flex;
   justify-content: center;
+  font-size: 20px;
+  font-weight: 500;
 }
+
+
 
 .photobooth-dialog .photobooth-dialog-title {
   margin: 4%;
@@ -213,5 +217,31 @@
   padding-right: 15px;
   background-color: white;
   cursor: pointer;
+}
+
+.photobooth-dialog .background-dialog-body {
+  width: 594px;
+  height: 450px;
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  justify-content: space-between !important;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.photobooth-dialog .background-dialog-body .background-color-box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 40px;
+}
+
+.photobooth-dialog .background-color-box canvas{
+  width: 125px;
+  height: 180px;
+  border-radius: 12px;
+  background-color: rgb(194, 225, 255);
 }
 

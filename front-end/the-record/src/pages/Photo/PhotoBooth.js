@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-state */
 /* eslint-disable react/prop-types */
 /* eslint-disable vars-on-top */
 /* eslint-disable no-var */
@@ -51,6 +52,15 @@ class PhotoBooth extends Component {
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
+    console.log(this.props.location.state);
+
+    // 방 만든사람과 사용자가 일치할 경우만
+    // if () {
+    //   this.setState({
+    //     peopleNum: this.props.location.state.peopleNum,
+    //     backgroundColor: this.props.location.state.backgroundColor,
+    //   });
+    // }
   }
 
   componentWillUnmount() {
@@ -58,7 +68,6 @@ class PhotoBooth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('prev', prevState.donePhoto, '현재', this.state.donePhoto);
     if (
       this.state.donePhoto >= 4 &&
       this.state.donePhoto !== prevState.donePhoto
@@ -347,7 +356,7 @@ class PhotoBooth extends Component {
         //   .catch(error => {
         //     return console.error('Request failed:', error);
         //   });
-        // ctx.fillStyle = 'rgb(204,229,255)';
+        // ctx.fillStyle = 'rgb(194, 225, 255)';
         // ctx.fillRect(
         //   15,
         //   element.clientHeight * index + 20,
