@@ -1,6 +1,6 @@
 import React from 'react';
-import CloudUploadOutlinedIcon from '@material-ui/icons/CloudUploadOutlined';
 import Navigation from '../../components/Navigation';
+import UploadButton from '../../components/Album/UploadButton';
 import EnterBoothButton from '../../components/Album/EnterBoothButton';
 import MakeBoothButton from '../../components/Album/MakeBoothButton';
 import PhotoPreview from '../../components/Album/PhotoPreview';
@@ -17,13 +17,14 @@ function Album() {
       </div>
       <div className="bg-white-right">
         <div className="album-btns">
-          <button type="button" className="album-btn">
+          {/* <button type="button" className="album-btn">
             <CloudUploadOutlinedIcon
               className="album-btn-icon"
               fontSize="small"
             />
             업로드 하기
-          </button>
+          </button> */}
+          <UploadButton />
           <MakeBoothButton />
           <EnterBoothButton />
         </div>

@@ -1,14 +1,15 @@
 import React from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import DiaryMain from './pages/Diary/DiaryMain';
 import Album from './pages/Photo/Album';
 import HomeHeader from './components/Home/HomeHeader';
 import PhotoDetail from './pages/Photo/PhotoDetail';
 import PhotoBooth from './pages/Photo/PhotoBooth';
-import DiaryDetail from './pages/Diary/DiaryDetail';
+import PhotoDeco from './pages/Photo/PhotoDeco';
+import PhotoDecoUpload from './pages/Photo/PhotoDecoUpload';
 
-const BaseRouter = withRouter(() => {
+function App() {
   return (
     <div id="app">
       <div className="bg-green-box">
@@ -16,22 +17,24 @@ const BaseRouter = withRouter(() => {
           <div className="bg-gray-box">
             <HomeHeader />
             <div className="bg-inner-box">
-              <Route path="/home" component={Home} />
-              <Route path="/diary" component={DiaryMain} />
-              <Route path="/diary/diarydetail" exact component={DiaryDetail} />
-              <Route path="/album" exact component={Album} />
-              <Route path="/album/photodetail" exact component={PhotoDetail} />
-              <Route path="/album/photobooth" exact component={PhotoBooth} />
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/diary" element={<DiaryMain />} />
+                <Route path="/album" element={<Album />} />
+                <Route path="/album/photodetail" element={<PhotoDetail />} />
+                <Route path="/album/photobooth" element={<PhotoBooth />} />
+                <Route path="/album/photodeco" element={<PhotoDeco />} />
+                <Route
+                  path="/album/photodeco/upload"
+                  element={<PhotoDecoUpload />}
+                />
+              </Routes>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-});
-
-function App() {
-  return <BaseRouter />;
 }
 
 export default App;

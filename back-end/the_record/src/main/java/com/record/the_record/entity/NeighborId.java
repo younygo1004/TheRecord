@@ -1,9 +1,6 @@
 package com.record.the_record.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import javax.persistence.FetchType;
@@ -12,6 +9,7 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 @Embeddable
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

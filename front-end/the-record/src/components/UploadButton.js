@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/photo/album.css';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -10,7 +10,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
-function MakeBoothButton() {
+function UploadButton() {
   const navigate = useNavigate();
   const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false);
   const [colorDialogOpen, setColorDialogOpen] = useState(false);
@@ -46,8 +46,8 @@ function MakeBoothButton() {
         className="album-btn"
         onClick={() => setmakeBoothDialogOpen(true)}
       >
-        <CameraAltOutlinedIcon className="album-btn-icon" fontSize="small" />
-        포토부스 생성하기
+        <CloudUploadOutlinedIcon className="album-btn-icon" fontSize="small" />
+        업로드 하기
       </button>
       <Dialog
         open={makeBoothDialogOpen}
@@ -189,4 +189,4 @@ function MakeBoothButton() {
   );
 }
 
-export default MakeBoothButton;
+export default UploadButton;
