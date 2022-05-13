@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
 /* eslint-disable consistent-return */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
@@ -10,14 +13,16 @@
 import React, { Component } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
+import withRouter from '../../components/withRouter';
 import Navigation from '../../components/Navigation';
 import '../../styles/photo/photobooth.css';
 import UserVideoComponent from '../../components/Album/UserVideoComponent';
 
 const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
 const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
 
-export default class PhotoBooth extends Component {
+class PhotoBooth extends Component {
   constructor(props) {
     super(props);
 
@@ -29,6 +34,7 @@ export default class PhotoBooth extends Component {
       publisher: undefined,
       subscribers: [],
       photoNum: 0,
+      donePhoto: 0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -49,6 +55,23 @@ export default class PhotoBooth extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('prev', prevState.donePhoto, '현재', this.state.donePhoto);
+    if (
+      this.state.donePhoto >= 4 &&
+      this.state.donePhoto !== prevState.donePhoto
+    ) {
+      setTimeout(() => {
+        this.leaveSession();
+        this.props.navigate('/album/photoframe', {
+          state: {
+            doneImg: document.querySelector('#show').toDataURL('image/png'),
+          },
+        });
+      }, 3000);
+    }
   }
 
   onbeforeunload(event) {
@@ -247,10 +270,9 @@ export default class PhotoBooth extends Component {
       canvas.width = 190;
       canvas.height = 110;
       video.forEach((element, index) => {
-        console.log(element.clientWidth, element.clientHeight);
         ctx.drawImage(
           element,
-          180,
+          160,
           0,
           element.clientWidth * 5,
           element.clientHeight * 5,
@@ -270,59 +292,75 @@ export default class PhotoBooth extends Component {
   }
 
   finishPhoto() {
-    console.log(this.state.photoNum);
     if (this.state.photoNum >= 4) {
       const fourPhoto = document.querySelectorAll('canvas');
 
-      const canvas = document.createElement('canvas');
+      // const canvas = document.createElement('canvas');
+      const canvas = document.querySelector('#show');
       const ctx = canvas.getContext('2d');
       canvas.width = 220;
       canvas.height = 470;
+
       fourPhoto.forEach((element, index) => {
-        console.log(element);
+        const dataUrl = element.toDataURL('image/png');
+        const imageUrl = dataUrl.split(',')[1];
+
+        const formData = new FormData();
+        formData.append('size', 'auto');
+        formData.append('image_file_b64', imageUrl);
+
+        // 배경 없애기 remove.bg
+        // axios({
+        //   method: 'post',
+        //   url: 'https://api.remove.bg/v1.0/removebg',
+        //   data: formData,
+        //   responseType: 'arraybuffer',
+        //   headers: {
+        //     ...formData.getHeaders,
+        //     'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
+        //   },
+        //   encoding: null,
+        // })
+        //   .then(response => {
+        //     if (response.status !== 200)
+        //       return console.error(
+        //         'Error:',
+        //         response.status,
+        //         response.statusText,
+        //       );
+        //     const arrayBufferView = new Uint8Array(response.data);
+        //     const blob = new Blob([arrayBufferView], { type: 'image/png' });
+        //     const urlCreator = window.URL || window.webkitURL;
+        //     const imgUrl = urlCreator.createObjectURL(blob);
+        //     const img = document.createElement('img');
+        //     img.src = imgUrl;
+
+        //     img.addEventListener('load', e => {
+        //       ctx.drawImage(img, 20, element.clientHeight * index + 20);
+        //     });
+        //   })
+        //   .then(() => {
+        //     this.setState(state => {
+        //       return { donePhoto: state.donePhoto + 1 };
+        //     });
+        //   })
+        //   .catch(error => {
+        //     return console.error('Request failed:', error);
+        //   });
+        // ctx.fillStyle = 'rgb(204,229,255)';
+        // ctx.fillRect(
+        //   15,
+        //   element.clientHeight * index + 20,
+        //   element.clientWidth,
+        //   element.clientHeight - 14,
+        // );
+
+        // api 사용시 이후부터 삭제
         ctx.drawImage(element, 20, element.clientHeight * index + 20);
-      });
-      const dataUrl = canvas.toDataURL('image/png');
-      const link = document.createElement('a');
-      link.download = 'eee.png';
-      link.href = dataUrl;
-      link.click();
-      const imageUrl = dataUrl.split(',')[1];
-      const formData = new FormData();
-      formData.append('size', 'auto');
-      formData.append('image_file_b64', imageUrl);
-      console.log(imageUrl);
-      const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
-      axios({
-        method: 'post',
-        url: 'https://api.remove.bg/v1.0/removebg',
-        data: formData,
-        responseType: 'arraybuffer',
-        headers: {
-          ...formData.getHeaders,
-          'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
-        },
-        encoding: null,
-      })
-        .then(response => {
-          if (response.status !== 200)
-            return console.error(
-              'Error:',
-              response.status,
-              response.statusText,
-            );
-          const arrayBufferView = new Uint8Array(response.data);
-          console.log(arrayBufferView);
-          const blob = new Blob([arrayBufferView], { type: 'image/png' });
-          console.log('blob변환', blob);
-          const urlCreator = window.URL || window.webkitURL;
-          const imgUrl = urlCreator.createObjectURL(blob);
-          const img = document.querySelector('#photo');
-          img.src = imgUrl;
-        })
-        .catch(error => {
-          return console.error('Request failed:', error);
+        this.setState(state => {
+          return { donePhoto: state.donePhoto + 1 };
         });
+      });
     } else {
       alert('네번의 촬영을 완료해주세요!');
     }
@@ -336,7 +374,6 @@ export default class PhotoBooth extends Component {
       <div id="photobooth">
         <div className="bg-white-left">
           <div className="photo-preview-box">
-            {/* <p>미리보기</p> */}
             <canvas id="canvas-0" />
             <canvas id="canvas-1" />
             <canvas id="canvas-2" />
@@ -350,7 +387,6 @@ export default class PhotoBooth extends Component {
                 <div id="join-dialog">
                   <form onSubmit={event => this.joinSession(event)}>
                     <p>
-                      {/* 접속자 이름 */}
                       <label>Participant: </label>
                       <input
                         type="text"
@@ -361,7 +397,6 @@ export default class PhotoBooth extends Component {
                       />
                     </p>
                     <p>
-                      {/* 세션 아이디 */}
                       <label> Session: </label>
                       <input
                         type="text"
@@ -444,7 +479,7 @@ export default class PhotoBooth extends Component {
               >
                 사진촬영 완료
               </button>
-              <img id="photo" alt="img" />
+              <canvas id="show" />
             </div>
           </div>
           <Navigation />
@@ -535,3 +570,5 @@ export default class PhotoBooth extends Component {
     });
   }
 }
+
+export default withRouter(PhotoBooth);

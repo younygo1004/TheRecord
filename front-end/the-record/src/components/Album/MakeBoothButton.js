@@ -49,6 +49,8 @@ function MakeBoothButton() {
         <CameraAltOutlinedIcon className="album-btn-icon" fontSize="small" />
         포토부스 생성하기
       </button>
+
+      {/* 포토부스 Dialog */}
       <Dialog
         open={makeBoothDialogOpen}
         onClose={closeMakeDialog}
@@ -138,6 +140,8 @@ function MakeBoothButton() {
           </div>
         </div>
       </Dialog>
+
+      {/* 배경색 Dialog */}
       <Dialog
         open={colorDialogOpen}
         onClose={closeColorDialog}
