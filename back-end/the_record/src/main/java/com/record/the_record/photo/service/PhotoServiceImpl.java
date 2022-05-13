@@ -35,7 +35,7 @@ public class PhotoServiceImpl implements PhotoService{
 
     @Override
     @Transactional
-    public Photo addPhoto(PhotoDto photoDto, MultipartFile multipartFile) {
+    public Photo addPhoto(PhotoDto photoDto, MultipartFile multipartFile) throws Exception {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(photoDto.getVisible());
         Long userPk = userService.currentUser();

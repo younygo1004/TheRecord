@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void modifyProfile(MultipartFile multipartFile) {
+    public void modifyProfile(MultipartFile multipartFile) throws Exception {
         Long userPk = currentUser();
         FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
         User user = userRepository.findByPk(userPk);
