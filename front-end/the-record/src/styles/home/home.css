@@ -38,16 +38,15 @@
   overflow-wrap: break-word;
 }
 
-#home #profile .profile-info .profile-text > p{
+#home #profile .profile-info .profile-text > p {
   margin-bottom: 15px;
   font-size: 13px;
 }
 
-
 #home #profile .ilchon-button {
   width: 200px;
   height: 36px;
-  background: #E9F2FF;
+  background: #e9f2ff;
   border: 3px solid #848484;
   border-radius: 5px;
   margin-bottom: 20px;
@@ -85,7 +84,7 @@
 
 #updated-news .updated-news-top .updated-diary-list > p {
   font-size: 18px;
-  color: #1D8EAE;
+  color: #1d8eae;
 }
 
 #updated-news .updated-news-top .updated-diary-list > hr {
@@ -110,9 +109,9 @@
   border: none;
   font-size: 15px;
   font-family: 'dunggeunmo';
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   overflow: hidden;
-  white-space:nowrap;
+  white-space: nowrap;
   width: 90%;
   text-align: left;
   cursor: pointer;
@@ -141,7 +140,7 @@
 
 #updated-news .updated-news-bottom > p {
   font-size: 18px;
-  color: #1D8EAE;
+  color: #1d8eae;
   margin-bottom: 10px;
   margin-top: 20px;
 }
@@ -165,25 +164,24 @@
   justify-content: center;
 }
 
-#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p{
+#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p {
   width: 100%;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   overflow: hidden;
-  white-space:nowrap;
+  white-space: nowrap;
   font-size: 13px;
   margin-bottom: 5px;
   text-align: center;
 }
 
-#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img{
+#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img {
   width: fit-content;
   height: 80%;
   margin-bottom: 5px;
 }
 
 @media (min-width: 1600px) {
-  
-  #home #profile .profile-info .profile-text > p{
+  #home #profile .profile-info .profile-text > p {
     margin-bottom: 20px;
     font-size: 16px;
   }
@@ -193,7 +191,6 @@
     max-width: 260px;
   }
 
-  
   #home #profile .ilchon-button {
     width: 270px;
     height: 44px;
@@ -201,11 +198,10 @@
     font-size: 18px;
   }
 
-
   #updated-news .updated-news-top .updated-diary-list > p {
     font-size: 20px;
   }
-  
+
   #updated-news .updated-news-top .updated-diary-list li {
     margin-bottom: 11px;
   }
@@ -223,7 +219,6 @@
     font-size: 16px;
   }
 
-
   #updated-news .updated-news-bottom > p {
     font-size: 20px;
     margin-bottom: 10px;
@@ -237,9 +232,7 @@
     width: 150px;
   }
 
-  #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p{
+  #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p {
     font-size: 14px;
   }
-
-  
 }

@@ -19,7 +19,7 @@ public class RecentPhotoDto {
     @ApiModelProperty("인생네컷 제목")
     private String title;
     @ApiModelProperty("인생네컷 촬영 날짜")
-    private LocalDateTime recordDt;
+    private String recordDt;
     @ApiModelProperty("인생네컷 사진 경로")
     private String mediaUrl;
 

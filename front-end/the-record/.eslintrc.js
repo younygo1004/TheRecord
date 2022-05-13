@@ -13,6 +13,7 @@ module.exports = {
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
+      modules: true,
     },
     ecmaVersion: 'latest',
     sourceType: 'module',
@@ -20,6 +21,7 @@ module.exports = {
   plugins: ['react'],
   rules: {
     'global-require': 0,
+    'react/prop-types': 'off',
     'react/jsx-filename-extension': [
       'error',
       {
@@ -34,6 +36,7 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'jsx-a11y/label-has-associated-control': 'off',
   },
 };

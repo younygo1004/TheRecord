@@ -12,6 +12,7 @@ import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,48 +29,47 @@ public class HomeServiceImpl implements HomeService {
     private final PhotoRepository photoRepository;
 
     @Override
-    public List<RecentDiaryDto> findRecentDiaryList(Long user_pk) {
+    @Transactional(readOnly = true)
+    public List<RecentDiaryDto> findRecentDiaryList(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
         List<Diary> recentDiaryList = diaryRepository.findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentDiaryDto> recentDiaryDtoList = new ArrayList<>();
 
-        for (Diary diary : recentDiaryList) {
-            recentDiaryDtoList.add(RecentDiaryDto.builder()
-                    .diaryId(diary.getId())
-                    .title(diary.getTitle())
-                    .recordDt(diary.getRecordDt())
-                    .build());
-        }
+        recentDiaryList.forEach(v ->  recentDiaryDtoList.add(RecentDiaryDto.builder()
+                .diaryId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .build()));
 
         return recentDiaryDtoList;
     }
 
     @Override
-    public List<RecentPhotoDto> findRecentPhotoList(Long user_pk) {
+    @Transactional(readOnly = true)
+    public List<RecentPhotoDto> findRecentPhotoList(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
         List<Photo> recentPhotoList = photoRepository.findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
         List<RecentPhotoDto> recentPhotoDtoList = new ArrayList<>();
 
-        for (Photo photo : recentPhotoList) {
-            recentPhotoDtoList.add(RecentPhotoDto.builder()
-                    .photoId(photo.getId())
-                    .title(photo.getTitle())
-                    .recordDt(photo.getRecordDt())
-                    .mediaUrl(photo.getMediaUrl())
-                    .build());
-        }
+        recentPhotoList.forEach(v -> recentPhotoDtoList.add(RecentPhotoDto.builder()
+                .photoId(v.getId())
+                .title(v.getTitle())
+                .recordDt(String.valueOf(v.getRecordDt()).substring(0,10))
+                .mediaUrl(v.getMediaUrl())
+                .build()));
 
         return recentPhotoDtoList;
     }
 
     @Override
-    public UpdateStatusDto findUpdateStatus(Long user_pk) {
+    @Transactional(readOnly = true)
+    public UpdateStatusDto findUpdateStatus(Long userPk) {
 
-        User user = userRepository.findById(user_pk).orElseThrow(null);
+        User user = userRepository.findById(userPk).orElseThrow(null);
         UpdateStatusDto updateStatusDto = new UpdateStatusDto();
         LocalDateTime currentDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
         LocalDateTime startDate = currentDate.withDayOfMonth(1);

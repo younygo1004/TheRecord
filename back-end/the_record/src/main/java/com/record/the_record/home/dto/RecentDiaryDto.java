@@ -19,6 +19,6 @@ public class RecentDiaryDto {
     @ApiModelProperty("일기 제목")
     private String title;
     @ApiModelProperty("일기 작성 날짜")
-    private LocalDateTime recordDt;
+    private String recordDt;
 
 }
