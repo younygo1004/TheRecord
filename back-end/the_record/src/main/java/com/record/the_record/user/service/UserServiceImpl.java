@@ -1,13 +1,12 @@
 package com.record.the_record.user.service;
 
-import com.record.the_record.aop.exception.customexceptions.EmailExistException;
-import com.record.the_record.aop.exception.customexceptions.EmailSendException;
-import com.record.the_record.aop.exception.customexceptions.VerificationCodeMismatchException;
-import com.record.the_record.aop.exception.customexceptions.VerificationCodeNotExistException;
+import com.record.the_record.aop.exception.customexceptions.*;
 import com.record.the_record.email.service.EmailService;
 import com.record.the_record.entity.*;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
+import com.record.the_record.s3.dto.FileDetailDto;
+import com.record.the_record.s3.service.FileUploadService;
 import com.record.the_record.security.JwtTokenProvider;
 import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
@@ -21,9 +20,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.mail.MessagingException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,21 +39,23 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final EmailService emailService;
+    private final FileUploadService fileUploadService;
 
     @Override
     @Transactional
     public String login(UserDto userDto) {
         Optional<User> user = userRepository.findByUserId(userDto.getUserId());
+
         if (user.isPresent()) {
             if (!passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())) {
-                return "nouser";
+                throw new NoUserException();
             }
             String accessToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
             String refreshToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
 
             return accessToken;
         } else
-            return "fail";
+            throw new NoUserException();
     }
 
     @Override
@@ -68,18 +68,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User addUser(UserDto userDto) {
+    public void addUser(UserDto userDto) {
         User user = User.builder()
                 .userId(userDto.getUserId())
                 .password(passwordEncoder.encode(userDto.getPassword()))
                 .name(userDto.getName())
                 .email(userDto.getEmail())
+                .profile("default.png")
                 .userRole(UserRole.valueOf("ROLE_USER")).build();
 
         folderRepository.save(Folder.builder()
                 .user(user)
                 .name("기본 폴더").build());
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
@@ -93,6 +94,16 @@ public class UserServiceImpl implements UserService {
     public void modifyIntroduction(String introduce) {
         User user = userRepository.findByPk(currentUser());
         user.updateIntroduce(introduce);
+        userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void modifyProfile(MultipartFile multipartFile) {
+        Long userPk = currentUser();
+        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+        User user = userRepository.findByPk(userPk);
+        user.changeProfile(fileDetailDto.getUploadName());
         userRepository.save(user);
     }
 
@@ -157,7 +168,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistException();
         });
 
-        String verificationCode = Integer.toString((int)(Math.random() * 100000000));
+        String verificationCode = Integer.toString((int) (Math.random() * 100000000));
         String userEmail = user.getEmail();
 
         userVerificationRepository.save(UserVerification.builder()
@@ -170,12 +181,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkVerificationCode(String certificateNum){
+    public void checkVerificationCode(String certificateNum) {
 
         Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(currentUser());
 
         optionalUserVerification.ifPresent(userVerification -> {
-            if(!passwordEncoder.matches(certificateNum, userVerification.getVerificationCode())){
+            if (!passwordEncoder.matches(certificateNum, userVerification.getVerificationCode())) {
                 this.sendVerificationCode();
                 throw new VerificationCodeMismatchException();
             }
