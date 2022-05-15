@@ -541,7 +541,7 @@ class PhotoBooth extends Component {
           } else {
             console.log(error);
             console.warn(
-              `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`,
+              `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL} OPENVIDU_SERVER_SECRET:${OPENVIDU_SERVER_SECRET}`,
             );
             if (
               window.confirm(
