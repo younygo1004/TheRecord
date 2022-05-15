@@ -20,10 +20,10 @@ import '../../styles/photo/photobooth.css';
 import UserVideoComponent from '../../components/Album/UserVideoComponent';
 
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443';
-const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
+// const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
 const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
 // const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
-// const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 class PhotoBooth extends Component {
   constructor(props) {
