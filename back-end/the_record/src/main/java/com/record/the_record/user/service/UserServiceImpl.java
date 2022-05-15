@@ -172,7 +172,7 @@ public class UserServiceImpl implements UserService {
         String userEmail = user.getEmail();
 
         userVerificationRepository.save(UserVerification.builder()
-                .user(user)
+//                .user(user)
                 .verificationCode(passwordEncoder.encode(verificationCode))
                 .build());
 

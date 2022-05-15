@@ -38,5 +38,14 @@ public class APIExceptionHandler {
         return ResponseEntity.badRequest().body(new APIException(e));
     }
 
+    @ExceptionHandler(value = TitleValidateException.class)
+    public ResponseEntity<APIException> handlerTitleValidateException(TitleValidateException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
+
+    @ExceptionHandler(value = NoFileException.class)
+    public ResponseEntity<APIException> handlerNoFileException(NoFileException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
 
 }

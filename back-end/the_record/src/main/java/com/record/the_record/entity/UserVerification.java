@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 
 @Entity
 @Getter
@@ -15,12 +16,8 @@ import javax.persistence.*;
 public class UserVerification {
 
     @Id
-    private Long pk;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
-    @JoinColumn(name = "user_pk")
-    private User user;
+    @Email
+    private String email;
 
     private String verificationCode;
 

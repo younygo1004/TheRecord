@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PhotoService {
 
-    Photo addPhoto(PhotoDto photoDto, MultipartFile multipartFile);
+    String addPhoto(PhotoDto photoDto, MultipartFile multipartFile);
     List<PhotoTitleDto> findPhotoTitleList(Long userPk);
     List<PhotoDetailDto> findPhotoList(Long userPk, int page);
     Integer findPhotoTotalPage(Long userPk);

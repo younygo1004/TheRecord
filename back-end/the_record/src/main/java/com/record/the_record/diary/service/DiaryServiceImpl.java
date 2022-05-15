@@ -1,5 +1,7 @@
 package com.record.the_record.diary.service;
 
+import com.record.the_record.aop.exception.customexceptions.NoFileException;
+import com.record.the_record.aop.exception.customexceptions.TitleValidateException;
 import com.record.the_record.diary.dto.DiaryDetailDto;
 import com.record.the_record.diary.dto.DiaryDto;
 import com.record.the_record.diary.dto.DiaryTitleDto;
@@ -41,7 +43,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public Diary addDiary(DiaryDto diaryDto, MultipartFile multipartFile) {
+    public String addDiary(DiaryDto diaryDto, MultipartFile multipartFile) {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(diaryDto.getVisible());
         Category getCategory = Category.valueOf(diaryDto.getCategory());
@@ -50,18 +52,26 @@ public class DiaryServiceImpl implements DiaryService {
         Folder folder = folderRepository.findOneById(diaryDto.getFolderId());
         FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
 
-        Diary diary = Diary.builder()
-                .title(diaryDto.getTitle())
-                .content(diaryDto.getContent())
-                .category(getCategory)
-                .visibleStatus(getVisible)
-                .mediaUrl(fileDetailDto.getUploadName())
-                .recordDt(LocalDateTime.now())
-                .folder(folder)
-                .user(user)
-                .build();
+        if (diaryDto.getTitle().isEmpty()) {
+            throw new TitleValidateException();
+        } else if (multipartFile.isEmpty()) {
+            throw new NoFileException();
+        } else {
+            Diary diary = Diary.builder()
+                    .title(diaryDto.getTitle())
+                    .content(diaryDto.getContent())
+                    .category(getCategory)
+                    .visibleStatus(getVisible)
+                    .mediaUrl(fileDetailDto.getUploadName())
+                    .recordDt(LocalDateTime.now())
+                    .folder(folder)
+                    .user(user)
+                    .build();
 
-        return diaryRepository.save(diary);
+            diaryRepository.save(diary);
+        }
+
+        return "success";
     }
 
     @Override
