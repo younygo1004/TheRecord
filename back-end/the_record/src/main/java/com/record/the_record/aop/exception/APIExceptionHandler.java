@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class APIExceptionHandler {
 
-    @ExceptionHandler(value = EmailExistException.class)
-    public ResponseEntity<APIException> handlerEmailExistException(EmailExistException e) {
+    @ExceptionHandler(value = VerificationCodeExistException.class)
+    public ResponseEntity<APIException> handlerEmailExistException(VerificationCodeExistException e) {
         return ResponseEntity.badRequest().body(new APIException(e));
     }
 

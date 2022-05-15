@@ -1,6 +1,7 @@
 package com.record.the_record.user.service;
 
 import com.record.the_record.entity.User;
+import com.record.the_record.user.dto.CertificateDto;
 import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
@@ -29,6 +30,8 @@ public interface UserService {
     void addNeighbor(Long userPk);
     // 유저 검색
     List<SearchUserDto> searchUser(String name);
-    void sendVerificationCode();
-    void checkVerificationCode(String certificateNum);
+    void sendVerificationCode(String email);
+    void checkVerificationCode(CertificateDto certificateDto);
+    void reissuePassword(CertificateDto certificateDto);
+    String getRandomString();
 }

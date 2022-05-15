@@ -8,6 +8,7 @@ import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
 import com.record.the_record.s3.service.FileUploadService;
 import com.record.the_record.security.JwtTokenProvider;
+import com.record.the_record.user.dto.CertificateDto;
 import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
@@ -15,6 +16,7 @@ import com.record.the_record.user.repository.NeighborRepository;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.repository.UserVerificationRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -161,38 +163,52 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void sendVerificationCode() {
+    public void sendVerificationCode(String email) {
 
-        User user = userRepository.findByPk(currentUser());
-        userVerificationRepository.findById(currentUser()).ifPresent(userVerification -> {
-            throw new EmailExistException();
+        userVerificationRepository.findById(email).ifPresent(userVerification -> {
+            throw new VerificationCodeExistException();
         });
 
-        String verificationCode = Integer.toString((int) (Math.random() * 100000000));
-        String userEmail = user.getEmail();
+        String verificationCode = getRandomString();
 
         userVerificationRepository.save(UserVerification.builder()
-                .user(user)
+                .email(email)
                 .verificationCode(passwordEncoder.encode(verificationCode))
                 .build());
 
         System.out.println("이메일 전송");
-        emailService.sendEmail(userEmail, verificationCode);
+        String subject = "The Record 인증 메일입니다.";
+        emailService.sendEmail(email, subject, verificationCode);
     }
 
     @Override
-    public void checkVerificationCode(String certificateNum) {
-
-        Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(currentUser());
+    public void checkVerificationCode(CertificateDto certificateDto){
+        Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(certificateDto.getUserEmail());
 
         optionalUserVerification.ifPresent(userVerification -> {
-            if (!passwordEncoder.matches(certificateNum, userVerification.getVerificationCode())) {
-                this.sendVerificationCode();
+            if (!passwordEncoder.matches(certificateDto.getCertificateNum(), userVerification.getVerificationCode()))
                 throw new VerificationCodeMismatchException();
-            }
         });
 
         optionalUserVerification.orElseThrow(VerificationCodeNotExistException::new);
 
+    }
+
+    @Override
+    public void reissuePassword(CertificateDto certificateDto) {
+
+        Optional<User> optionalUser = userRepository.findByEmail(certificateDto.getUserEmail());
+
+        optionalUser.ifPresent(user -> {
+
+        });
+
+    }
+
+    @Override
+    public String getRandomString() {
+        int length = 8 + (int)(Math.random() * 5);
+        String generatedPassword = RandomStringUtils.random(length, true, true);
+        return generatedPassword;
     }
 }
