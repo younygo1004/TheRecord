@@ -66,7 +66,7 @@ public class JwtTokenProvider {
 
     // 토큰에서 회원 정보 추출
     private String getPassword(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("userId");
     }
 
     // Request Header에서 토큰 추출
