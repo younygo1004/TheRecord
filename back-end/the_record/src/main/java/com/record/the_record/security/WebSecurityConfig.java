@@ -11,6 +11,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -44,6 +47,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /* Spring Security 설정 */
         http
                 .httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
                 .csrf().disable() // csrf 보안 토큰 disable처리
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않음
                 .and()
@@ -54,5 +59,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().hasRole("USER")
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin("https://the-record.co.kr");
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+        configuration.addAllowedHeader("X-AUTH-TOKEN");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

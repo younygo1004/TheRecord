@@ -3,6 +3,7 @@ package com.record.the_record.user.service;
 import com.record.the_record.aop.exception.customexceptions.*;
 import com.record.the_record.email.service.EmailService;
 import com.record.the_record.entity.*;
+import com.record.the_record.entity.enums.TrueAndFalse;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
@@ -77,6 +78,7 @@ public class UserServiceImpl implements UserService {
                 .name(userDto.getName())
                 .email(userDto.getEmail())
                 .profile("default.png")
+                .roomIsOpen(TrueAndFalse.FALSE)
                 .userRole(UserRole.valueOf("ROLE_USER")).build();
 
         folderRepository.save(Folder.builder()
