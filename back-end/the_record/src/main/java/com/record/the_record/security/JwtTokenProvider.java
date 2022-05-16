@@ -32,9 +32,10 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(Long userPk, String role) {
+    public String createAccessToken(Long userPk, String userId, String role) {
         Map<String, Object> payLoads = new HashMap<>(); // Jwt payload에 저장되는 단위
-        payLoads.put("userId", userPk);
+        payLoads.put("userPk", userPk);
+        payLoads.put("userId", userId);
         payLoads.put("role", role);                     // key, value 쌍으로 저장
         Date now = new Date();
         return Jwts.builder()
