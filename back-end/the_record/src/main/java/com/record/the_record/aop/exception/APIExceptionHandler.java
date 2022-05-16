@@ -42,5 +42,15 @@ public class APIExceptionHandler {
     public ResponseEntity<APIException> handlerTitleValidateException(TitleValidateException e) {
         return ResponseEntity.badRequest().body(new APIException(e));
     }
+    
+    @ExceptionHandler(value = CustomFileNotFoundException.class)
+    public ResponseEntity<APIException> handlerCustomFileNotFoundException(CustomFileNotFoundException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
+
+    @ExceptionHandler(value = UploadException.class)
+    public ResponseEntity<APIException> handlerUploadException(UploadException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
 
 }

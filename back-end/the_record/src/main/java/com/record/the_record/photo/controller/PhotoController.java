@@ -24,7 +24,7 @@ public class PhotoController {
     @ApiOperation(value = "인생네컷 업로드")
     @PostMapping()
     public ResponseEntity<String> photoAdd(@RequestPart(value = "photoDto") @ApiParam(value = "저장할 인생네컷 정보") PhotoDto photoDto,
-                                           @RequestPart(value = "file") @ApiParam(value = "저장할 인생네컷 이미지")MultipartFile multipartFile) {
+                                           @RequestPart(value = "file") @ApiParam(value = "저장할 인생네컷 이미지")MultipartFile multipartFile) throws Exception {
 
         return ResponseEntity.ok().body(photoService.addPhoto(photoDto, multipartFile));
     }

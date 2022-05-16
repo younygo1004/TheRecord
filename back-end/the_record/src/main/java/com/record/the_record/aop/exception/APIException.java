@@ -11,7 +11,7 @@ public class APIException {
     private final String message;
     private final LocalDateTime errorOccurrenceTime;
 
-    public APIException(RuntimeException e) {
+    public APIException(Exception e) {
         this.message = e.getMessage();
         this.errorOccurrenceTime = LocalDateTime.now();
     }

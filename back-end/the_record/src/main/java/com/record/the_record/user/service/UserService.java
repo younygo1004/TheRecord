@@ -21,7 +21,7 @@ public interface UserService {
     // 자기소개 수정
     void modifyIntroduction(String introduce);
     // 프로필 사진 변경
-    void modifyProfile(MultipartFile multipartFile);
+    void modifyProfile(MultipartFile multipartFile) throws Exception;
     // 회원 정보 조회
     UserDetailDto findUserInfo(Long userPk);
     // 일촌 목록 조회

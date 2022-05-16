@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DiaryService {
 
-    String addDiary(DiaryDto diaryDto, MultipartFile multipartFile);
+    String addDiary(DiaryDto diaryDto, MultipartFile multipartFile) throws Exception;
     List<DiaryDetailDto> findDiaryList(Long userPk, int page);
     List<DiaryTitleDto> findDiaryTitleList(Long userPk, Long folderId);
     List<DiaryDetailDto> findDiaryDateList(Long userPk, String date);

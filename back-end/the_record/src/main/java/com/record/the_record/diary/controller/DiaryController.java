@@ -24,7 +24,7 @@ public class DiaryController {
     @ApiOperation(value = "일기 저장")
     @PostMapping()
     public ResponseEntity<String> diaryAdd(@RequestPart(value = "diaryDto") @ApiParam(value = "저장할 일기 정보")DiaryDto diaryDto,
-                                           @RequestPart(value = "file") @ApiParam(value = "저장할 미디어 일기")MultipartFile multipartFile) {
+                                           @RequestPart(value = "file") @ApiParam(value = "저장할 미디어 일기")MultipartFile multipartFile) throws Exception {
         return ResponseEntity.ok().body(diaryService.addDiary(diaryDto, multipartFile));
     }
 

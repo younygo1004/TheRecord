@@ -42,7 +42,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public String addDiary(DiaryDto diaryDto, MultipartFile multipartFile) {
+    public String addDiary(DiaryDto diaryDto, MultipartFile multipartFile) throws Exception {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(diaryDto.getVisible());
         Category getCategory = Category.valueOf(diaryDto.getCategory());
