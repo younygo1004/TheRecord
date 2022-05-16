@@ -1,6 +1,5 @@
 package com.record.the_record.diary.service;
 
-import com.record.the_record.aop.exception.customexceptions.NoFileException;
 import com.record.the_record.aop.exception.customexceptions.TitleValidateException;
 import com.record.the_record.diary.dto.DiaryDetailDto;
 import com.record.the_record.diary.dto.DiaryDto;
@@ -54,8 +53,6 @@ public class DiaryServiceImpl implements DiaryService {
 
         if (diaryDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
-        } else if (multipartFile.isEmpty()) {
-            throw new NoFileException();
         } else {
             Diary diary = Diary.builder()
                     .title(diaryDto.getTitle())

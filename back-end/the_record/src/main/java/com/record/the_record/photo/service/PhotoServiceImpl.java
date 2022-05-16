@@ -1,6 +1,5 @@
 package com.record.the_record.photo.service;
 
-import com.record.the_record.aop.exception.customexceptions.NoFileException;
 import com.record.the_record.aop.exception.customexceptions.TitleValidateException;
 import com.record.the_record.entity.Photo;
 import com.record.the_record.entity.User;
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -49,8 +47,6 @@ public class PhotoServiceImpl implements PhotoService{
 
         if (photoDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
-        } else if (multipartFile.isEmpty()) {
-            throw new NoFileException();
         } else {
             Photo photo = Photo.builder()
                     .title(photoDto.getTitle())
