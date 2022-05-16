@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import iro from '@jaames/iro';
 import '../../styles/photo/album.css';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -11,45 +10,15 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
-function MakeBoothButton() {
+function UploadButton() {
   const navigate = useNavigate();
   const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false);
   const [colorDialogOpen, setColorDialogOpen] = useState(false);
   const [peopleNum, setPeopleNum] = useState(4);
   const [numListOpen, setnumListOpen] = useState(false);
-  const [colorPicker, setColorPicker] = useState();
-  const [backgroundColor, setBackgroundColor] = useState('rgb(194, 225, 255)');
-
-  useEffect(() => {
-    if (colorDialogOpen === true) {
-      setColorPicker(
-        () =>
-          new iro.ColorPicker('#background-picker', {
-            width: 200,
-            color: 'rgb(194, 225, 255)',
-          }),
-      );
-    }
-  }, [colorDialogOpen]);
-
-  useEffect(() => {
-    if (colorPicker) {
-      colorPicker.on('color:change', color => {
-        const backgroundrgb = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b})`;
-        setBackgroundColor(() => backgroundrgb);
-      });
-    }
-  }, [colorPicker]);
-
-  useEffect(() => {
-    if (colorDialogOpen === true) {
-      const canvas = document.querySelector('#bgcolor-preview');
-      canvas.style.backgroundColor = backgroundColor;
-    }
-  }, [backgroundColor]);
-
   const closeMakeDialog = () => {
     setmakeBoothDialogOpen(false);
+    setPeopleNum(4);
     setnumListOpen(false);
   };
 
@@ -65,12 +34,8 @@ function MakeBoothButton() {
   };
 
   const movePhotobooth = () => {
-    navigate('/album/photobooth', {
-      state: { peopleNum, backgroundColor },
-    });
-    console.log(peopleNum, backgroundColor);
+    navigate('/album/photobooth');
     setColorDialogOpen(false);
-    setPeopleNum(4);
     setmakeBoothDialogOpen(false);
   };
 
@@ -81,11 +46,9 @@ function MakeBoothButton() {
         className="album-btn"
         onClick={() => setmakeBoothDialogOpen(true)}
       >
-        <CameraAltOutlinedIcon className="album-btn-icon" fontSize="small" />
-        포토부스 생성하기
+        <CloudUploadOutlinedIcon className="album-btn-icon" fontSize="small" />
+        업로드 하기
       </button>
-
-      {/* 포토부스 Dialog */}
       <Dialog
         open={makeBoothDialogOpen}
         onClose={closeMakeDialog}
@@ -175,8 +138,6 @@ function MakeBoothButton() {
           </div>
         </div>
       </Dialog>
-
-      {/* 배경색 Dialog */}
       <Dialog
         open={colorDialogOpen}
         onClose={closeColorDialog}
@@ -212,12 +173,8 @@ function MakeBoothButton() {
           </Button>
         </DialogTitle>
         <div className="dialog-body-box">
-          <div className="dialog-body background-dialog-body">
+          <div className="dialog-body photobooth-dialog-body">
             <p>배경색을 정해주세요</p>
-            <div className="background-color-box">
-              <div id="background-picker" />
-              <canvas id="bgcolor-preview" />
-            </div>
             <button
               type="button"
               className="photobooth-dialog-btn"
@@ -232,4 +189,4 @@ function MakeBoothButton() {
   );
 }
 
-export default MakeBoothButton;
+export default UploadButton;

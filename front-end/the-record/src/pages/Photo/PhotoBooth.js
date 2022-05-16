@@ -1,3 +1,9 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/prop-types */
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
+/* eslint-disable consistent-return */
+/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/no-array-index-key */
@@ -8,24 +14,30 @@
 import React, { Component } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
+import withRouter from '../../components/withRouter';
 import Navigation from '../../components/Navigation';
 import '../../styles/photo/photobooth.css';
 import UserVideoComponent from '../../components/Album/UserVideoComponent';
 
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443';
-const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
+// const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
+const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
+// const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
+const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
-export default class PhotoBooth extends Component {
+class PhotoBooth extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mySessionId: 'SessionA',
-      myUserName: `Participant${Math.floor(Math.random() * 100)}`,
+      mySessionId: 'SingleBungle',
+      myUserName: '내 아이디',
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      photoNum: 0,
+      donePhoto: 0,
     };
 
     this.joinSession = this.joinSession.bind(this);
@@ -35,14 +47,47 @@ export default class PhotoBooth extends Component {
     this.handleChangeUserName = this.handleChangeUserName.bind(this);
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this);
     this.onbeforeunload = this.onbeforeunload.bind(this);
+
+    this.takePhoto = this.takePhoto.bind(this);
+    this.finishPhoto = this.finishPhoto.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
+    this.joinSession();
+    console.log(this.props.location.state);
+
+    // 방 만든사람과 사용자가 일치할 경우만
+    // if () {
+    //   this.setState({
+    //     peopleNum: this.props.location.state.peopleNum,
+    //     backgroundColor: this.props.location.state.backgroundColor,
+    //   });
+    // }
   }
+
+  // componentDidUpdate() {
+  //   this.joinSession();
+  // }
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.state.donePhoto >= 4 &&
+      this.state.donePhoto !== prevState.donePhoto
+    ) {
+      setTimeout(() => {
+        this.leaveSession();
+        this.props.navigate('/album/photoframe', {
+          state: {
+            doneImg: document.querySelector('#show').toDataURL('image/png'),
+          },
+        });
+      }, 3000);
+    }
   }
 
   onbeforeunload(event) {
@@ -80,13 +125,13 @@ export default class PhotoBooth extends Component {
     }
   }
 
-  joinSession(e) {
+  joinSession() {
     // --- 1) Get an OpenVidu object ---
 
     this.OV = new OpenVidu();
 
     // --- 2) Init a session ---
-    e.preventDefault();
+    // e.preventDefault();
     this.setState(
       {
         session: this.OV.initSession(),
@@ -233,59 +278,158 @@ export default class PhotoBooth extends Component {
     }
   }
 
+  takePhoto() {
+    if (this.state.photoNum < 4) {
+      const video = document.querySelectorAll('video');
+      const canvas = document.getElementById(`canvas-${this.state.photoNum}`);
+      const ctx = canvas.getContext('2d');
+      canvas.width = 190;
+      canvas.height = 110;
+      video.forEach((element, index) => {
+        ctx.drawImage(
+          element,
+          160,
+          0,
+          element.clientWidth * 5,
+          element.clientHeight * 5,
+          element.clientWidth * index * 0.33,
+          0,
+          element.clientWidth,
+          element.clientHeight,
+        );
+      });
+      canvas.toDataURL('image/png');
+      this.setState(state => {
+        return { photoNum: state.photoNum + 1 };
+      });
+    } else {
+      alert('네번의 촬영이 완료되었습니다');
+    }
+  }
+
+  finishPhoto() {
+    if (this.state.photoNum >= 4) {
+      const fourPhoto = document.querySelectorAll('canvas');
+
+      // const canvas = document.createElement('canvas');
+      const canvas = document.querySelector('#show');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 220;
+      canvas.height = 470;
+
+      fourPhoto.forEach((element, index) => {
+        const dataUrl = element.toDataURL('image/png');
+        const imageUrl = dataUrl.split(',')[1];
+
+        const formData = new FormData();
+        formData.append('size', 'auto');
+        formData.append('image_file_b64', imageUrl);
+
+        // 배경 없애기 remove.bg
+        // axios({
+        //   method: 'post',
+        //   url: 'https://api.remove.bg/v1.0/removebg',
+        //   data: formData,
+        //   responseType: 'arraybuffer',
+        //   headers: {
+        //     ...formData.getHeaders,
+        //     'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
+        //   },
+        //   encoding: null,
+        // })
+        //   .then(response => {
+        //     if (response.status !== 200)
+        //       return console.error(
+        //         'Error:',
+        //         response.status,
+        //         response.statusText,
+        //       );
+        //     const arrayBufferView = new Uint8Array(response.data);
+        //     const blob = new Blob([arrayBufferView], { type: 'image/png' });
+        //     const urlCreator = window.URL || window.webkitURL;
+        //     const imgUrl = urlCreator.createObjectURL(blob);
+        //     const img = document.createElement('img');
+        //     img.src = imgUrl;
+
+        //     img.addEventListener('load', e => {
+        //       ctx.drawImage(img, 20, element.clientHeight * index + 20);
+        //     });
+        //   })
+        //   .then(() => {
+        //     this.setState(state => {
+        //       return { donePhoto: state.donePhoto + 1 };
+        //     });
+        //   })
+        //   .catch(error => {
+        //     return console.error('Request failed:', error);
+        //   });
+        ctx.fillStyle = 'rgb(194, 225, 255)';
+        ctx.fillRect(
+          15,
+          element.clientHeight * index + 20,
+          element.clientWidth,
+          element.clientHeight - 14,
+        );
+
+        // api 사용시 이후부터 삭제
+        ctx.drawImage(element, 20, element.clientHeight * index + 20);
+        this.setState(state => {
+          return { donePhoto: state.donePhoto + 1 };
+        });
+      });
+    } else {
+      alert('네번의 촬영을 완료해주세요!');
+    }
+  }
+
   render() {
     const { mySessionId } = this.state;
     const { myUserName } = this.state;
 
     return (
       <div id="photobooth">
-        <div className="bg-white-left">미리보기</div>
+        <div className="bg-white-left">
+          <div className="photo-preview-box">
+            <canvas id="canvas-0" />
+            <canvas id="canvas-1" />
+            <canvas id="canvas-2" />
+            <canvas id="canvas-3" />
+          </div>
+        </div>
         <div className="bg-white-right">
-          촬영하기
           <div className="container">
-            {this.state.session === undefined ? (
-              <div id="join">
-                <div id="img-div">
-                  <img
-                    src="resources/images/openvidu_grey_bg_transp_cropped.png"
-                    alt="OpenVidu logo"
+            {/* {this.state.session === undefined ? (
+              <form onSubmit={event => this.joinSession(event)}>
+                <p>
+                  <label> 참가자이름: </label>
+                  <input
+                    type="text"
+                    id="userName"
+                    value={myUserName}
+                    onChange={this.handleChangeUserName}
+                    required
                   />
-                </div>
-                <div id="join-dialog">
-                  <h1> Join a video session </h1>
-                  <form onSubmit={event => this.joinSession(event)}>
-                    <p>
-                      <label>Participant: </label>
-                      <input
-                        type="text"
-                        id="userName"
-                        value={myUserName}
-                        onChange={this.handleChangeUserName}
-                        required
-                      />
-                    </p>
-                    <p>
-                      <label> Session: </label>
-                      <input
-                        type="text"
-                        id="sessionId"
-                        value={mySessionId}
-                        onChange={this.handleChangeSessionId}
-                        required
-                      />
-                    </p>
-                    <p>
-                      <input name="commit" type="submit" value="JOIN" />
-                    </p>
-                  </form>
-                </div>
-              </div>
-            ) : null}
+                </p>
+                <p>
+                  <label> 방장 아이디: </label>
+                  <input
+                    type="text"
+                    id="sessionId"
+                    value={mySessionId}
+                    onChange={this.handleChangeSessionId}
+                    required
+                  />
+                </p>
+                <p>
+                  <input name="commit" type="submit" value="입장하기" />
+                </p>
+              </form>
+            ) : null} */}
 
             {this.state.session !== undefined ? (
               <div id="session">
                 <div id="session-header">
-                  <h1 id="session-title">{mySessionId}</h1>
+                  {/* <h1 id="session-title">{mySessionId}</h1> */}
                   <input
                     type="button"
                     id="buttonLeaveSession"
@@ -294,7 +438,7 @@ export default class PhotoBooth extends Component {
                   />
                 </div>
 
-                {this.state.mainStreamManager !== undefined ? (
+                {/* {this.state.mainStreamManager !== undefined ? (
                   <div id="main-video">
                     <UserVideoComponent
                       streamManager={this.state.mainStreamManager}
@@ -306,7 +450,7 @@ export default class PhotoBooth extends Component {
                       value="Switch Camera"
                     />
                   </div>
-                ) : null}
+                ) : null} */}
                 <div id="video-container">
                   {this.state.publisher !== undefined ? (
                     <div
@@ -332,10 +476,26 @@ export default class PhotoBooth extends Component {
                 </div>
               </div>
             ) : null}
+            <div className="photo-btn-group">
+              <button
+                className="take-photo-btn"
+                onClick={this.takePhoto}
+                type="button"
+              >
+                찰칵
+              </button>
+              <button
+                className="finish-photo-btn"
+                onClick={this.finishPhoto}
+                type="button"
+              >
+                사진촬영 완료
+              </button>
+              <canvas id="show" />
+            </div>
           </div>
-          <button type="button">찰칵</button>
+          <Navigation />
         </div>
-        <Navigation />
       </div>
     );
   }
@@ -381,7 +541,7 @@ export default class PhotoBooth extends Component {
           } else {
             console.log(error);
             console.warn(
-              `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL}`,
+              `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL} OPENVIDU_SERVER_SECRET:${OPENVIDU_SERVER_SECRET}`,
             );
             if (
               window.confirm(
@@ -422,3 +582,5 @@ export default class PhotoBooth extends Component {
     });
   }
 }
+
+export default withRouter(PhotoBooth);

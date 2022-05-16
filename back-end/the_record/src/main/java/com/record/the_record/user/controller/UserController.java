@@ -81,14 +81,21 @@ public class UserController {
     }
 
     @PostMapping("/email/number")
-    public ResponseEntity<String> verificationCodeSend(){
-        userService.sendVerificationCode();
+    public ResponseEntity<String> joinVerificationCodeSend(@RequestBody CertificateDto certificateDto){
+        userService.sendVerificationCode(certificateDto.getUserEmail());
         return ResponseEntity.ok().body("success");
     }
 
     @PostMapping("/email-check")
     public ResponseEntity<String> verificationCodeCheck(@RequestBody CertificateDto certificateDto) {
-        userService.checkVerificationCode(certificateDto.getCertificateNum());
+        userService.checkVerificationCode(certificateDto);
         return ResponseEntity.ok().body("success");
     }
+
+    @PostMapping("/password/reissue")
+    public ResponseEntity<String> passwordReissue(@RequestBody CertificateDto certificateDto){
+        userService.reissuePassword(certificateDto);
+        return ResponseEntity.ok().body("success");
+    }
+
 }

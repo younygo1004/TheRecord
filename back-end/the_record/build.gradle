@@ -43,6 +43,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	//smtp
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	// apache common langs
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
 }
 
 tasks.named('test') {

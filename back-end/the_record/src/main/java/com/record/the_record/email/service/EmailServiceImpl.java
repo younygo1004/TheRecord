@@ -18,12 +18,12 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender emailSender;
 
     @Override
-    public void sendEmail(String userEmail, String msg){
+    public void sendEmail(String userEmail, String subject, String msg){
         MimeMessage message = emailSender.createMimeMessage();
 
         try {
             message.addRecipients(Message.RecipientType.TO, userEmail);
-            message.setSubject("The Record 인증 메일입니다.");
+            message.setSubject(subject);
 
             StringBuilder formattedMsg = new StringBuilder("");
             formattedMsg.append(msg);
