@@ -12,9 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -34,12 +32,13 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createAccessToken(String password, String role) {
-        Claims claims = Jwts.claims().setSubject(password); // Jwt payload에 저장되는 단위
-        claims.put("role", role); // key, value 쌍으로 저장
+    public String createAccessToken(Long userPk, String role) {
+        Map<String, Object> payLoads = new HashMap<>(); // Jwt payload에 저장되는 단위
+        payLoads.put("userId", userPk);
+        payLoads.put("role", role);                     // key, value 쌍으로 저장
         Date now = new Date();
         return Jwts.builder()
-                .setClaims(claims)  // 정보 저장
+                .setClaims(payLoads)  // 정보 저장
                 .setIssuedAt(now)   // 토큰 발행 시간
                 .setExpiration(new Date(now.getTime() + ACCESS_TOKEN_VALID_TIME))   // 토큰 만료 시간
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 암호화 알고리즘, secret값

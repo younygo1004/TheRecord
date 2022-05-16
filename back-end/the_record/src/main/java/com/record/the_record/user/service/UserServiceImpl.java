@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService {
             if (!passwordEncoder.matches(userDto.getPassword(), user.get().getPassword())) {
                 throw new NoUserException();
             }
-            String accessToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
-            String refreshToken = jwtTokenProvider.createAccessToken(user.get().getUserId(), user.get().getUserRole().name());
+            String accessToken = jwtTokenProvider.createAccessToken(user.get().getPk(), user.get().getUserRole().name());
+            String refreshToken = jwtTokenProvider.createAccessToken(user.get().getPk(), user.get().getUserRole().name());
 
             return accessToken;
         } else
