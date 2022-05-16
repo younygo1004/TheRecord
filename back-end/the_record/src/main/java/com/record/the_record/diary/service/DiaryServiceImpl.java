@@ -1,5 +1,6 @@
 package com.record.the_record.diary.service;
 
+import com.record.the_record.aop.exception.customexceptions.TitleValidateException;
 import com.record.the_record.diary.dto.DiaryDetailDto;
 import com.record.the_record.diary.dto.DiaryDto;
 import com.record.the_record.diary.dto.DiaryTitleDto;
@@ -49,6 +50,10 @@ public class DiaryServiceImpl implements DiaryService {
         User user = userRepository.findByPk(userPk);
         Folder folder = folderRepository.findOneById(diaryDto.getFolderId());
         FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+
+        if (diaryDto.getTitle().isEmpty()) {
+            throw new TitleValidateException();
+        }
 
         Diary diary = Diary.builder()
                 .title(diaryDto.getTitle())

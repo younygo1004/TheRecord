@@ -1,5 +1,6 @@
 package com.record.the_record.photo.service;
 
+import com.record.the_record.aop.exception.customexceptions.TitleValidateException;
 import com.record.the_record.entity.Photo;
 import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.VisibleStatus;
@@ -43,6 +44,10 @@ public class PhotoServiceImpl implements PhotoService{
 
         // S3 업로드
         FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+
+        if (photoDto.getTitle().isEmpty()) {
+            throw new TitleValidateException();
+        }
 
         Photo photo = Photo.builder()
                 .title(photoDto.getTitle())
