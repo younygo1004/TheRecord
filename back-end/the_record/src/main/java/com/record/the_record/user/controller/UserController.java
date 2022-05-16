@@ -50,7 +50,7 @@ public class UserController {
 
     @ApiOperation(value = "프로필 사진 변경")
     @PutMapping("/profile")
-    public ResponseEntity<String> modifyUserProfile(@ApiParam(value = "프로필 사진") @RequestPart("profile") MultipartFile multipartFile) {
+    public ResponseEntity<String> modifyUserProfile(@ApiParam(value = "프로필 사진") @RequestPart("profile") MultipartFile multipartFile) throws Exception {
         userService.modifyProfile(multipartFile);
         return ResponseEntity.ok().body("success");
     }
