@@ -89,8 +89,11 @@ public class User implements UserDetails {
         this.introduce = introduce;
     }
 
-
     public void changeProfile(String uploadName) {
         this.profile = uploadName;
+    }
+
+    public void changePassword(String password) {
+        this.password = password;
     }
 }
