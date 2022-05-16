@@ -42,7 +42,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Override
     @Transactional
-    public String addDiary(DiaryDto diaryDto, MultipartFile multipartFile) throws Exception {
+    public Diary addDiary(DiaryDto diaryDto, MultipartFile multipartFile) throws Exception {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(diaryDto.getVisible());
         Category getCategory = Category.valueOf(diaryDto.getCategory());
@@ -53,22 +53,20 @@ public class DiaryServiceImpl implements DiaryService {
 
         if (diaryDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
-        } else {
-            Diary diary = Diary.builder()
-                    .title(diaryDto.getTitle())
-                    .content(diaryDto.getContent())
-                    .category(getCategory)
-                    .visibleStatus(getVisible)
-                    .mediaUrl(fileDetailDto.getUploadName())
-                    .recordDt(LocalDateTime.now())
-                    .folder(folder)
-                    .user(user)
-                    .build();
-
-            diaryRepository.save(diary);
         }
 
-        return "success";
+        Diary diary = Diary.builder()
+                .title(diaryDto.getTitle())
+                .content(diaryDto.getContent())
+                .category(getCategory)
+                .visibleStatus(getVisible)
+                .mediaUrl(fileDetailDto.getUploadName())
+                .recordDt(LocalDateTime.now())
+                .folder(folder)
+                .user(user)
+                .build();
+
+        return diaryRepository.save(diary);
     }
 
     @Override

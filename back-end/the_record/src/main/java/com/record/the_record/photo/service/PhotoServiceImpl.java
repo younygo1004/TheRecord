@@ -36,7 +36,7 @@ public class PhotoServiceImpl implements PhotoService{
 
     @Override
     @Transactional
-    public String addPhoto(PhotoDto photoDto, MultipartFile multipartFile) throws Exception {
+    public Photo addPhoto(PhotoDto photoDto, MultipartFile multipartFile) throws Exception {
 
         VisibleStatus getVisible = VisibleStatus.valueOf(photoDto.getVisible());
         Long userPk = userService.currentUser();
@@ -47,18 +47,17 @@ public class PhotoServiceImpl implements PhotoService{
 
         if (photoDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
-        } else {
-            Photo photo = Photo.builder()
-                    .title(photoDto.getTitle())
-                    .visibleStatus(getVisible)
-                    .mediaUrl(fileDetailDto.getUploadName())
-                    .recordDt(LocalDateTime.now())
-                    .user(user)
-                    .build();
-
-            photoRepository.save(photo);
         }
-        return "success";
+
+        Photo photo = Photo.builder()
+                .title(photoDto.getTitle())
+                .visibleStatus(getVisible)
+                .mediaUrl(fileDetailDto.getUploadName())
+                .recordDt(LocalDateTime.now())
+                .user(user)
+                .build();
+
+        return photoRepository.save(photo);
     }
 
     @Override
