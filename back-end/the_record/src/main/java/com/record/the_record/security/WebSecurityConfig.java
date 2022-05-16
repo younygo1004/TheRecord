@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         configuration.setAllowedOrigins(Arrays.asList("https://the-record.co.kr", "http://localhost:3000"));    // 허용 url
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));              // 허용 메소드
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));       // 허용 헤더
+        configuration.setAllowedHeaders(Collections.singletonList("*"));       // 허용 헤더
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(Collections.singletonList("X-AUTH-TOKEN"));
 
