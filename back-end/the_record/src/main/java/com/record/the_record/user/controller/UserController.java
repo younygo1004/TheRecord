@@ -23,7 +23,7 @@ public class UserController {
     private final UserService userService;
 
     @ApiOperation(value = "회원가입")
-    @PostMapping("/join")
+    @PostMapping("/signup")
     public ResponseEntity<String> signup(@ApiParam(value = "가입 정보") @RequestBody UserDto userDto) {
         userService.addUser(userDto);
         return ResponseEntity.ok().body("success");
