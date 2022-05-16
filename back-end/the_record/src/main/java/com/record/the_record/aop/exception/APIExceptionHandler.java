@@ -53,4 +53,9 @@ public class APIExceptionHandler {
         return ResponseEntity.badRequest().body(new APIException(e));
     }
 
+    @ExceptionHandler(value = ExistUserRoomException.class)
+    public ResponseEntity<APIException> handlerExistUserRoomException(ExistUserRoomException e) {
+        return ResponseEntity.badRequest().body(new APIException(e));
+    }
+
 }

@@ -89,8 +89,11 @@ public class User implements UserDetails {
         this.introduce = introduce;
     }
 
-
     public void changeProfile(String uploadName) {
         this.profile = uploadName;
+    }
+
+    public void addPhotoBooth(TrueAndFalse roomIsOpen) {
+        this.roomIsOpen = roomIsOpen;
     }
 }

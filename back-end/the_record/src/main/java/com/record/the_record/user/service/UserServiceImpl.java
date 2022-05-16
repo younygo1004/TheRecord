@@ -9,10 +9,7 @@ import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
 import com.record.the_record.s3.service.FileUploadService;
 import com.record.the_record.security.JwtTokenProvider;
-import com.record.the_record.user.dto.CertificateDto;
-import com.record.the_record.user.dto.SearchUserDto;
-import com.record.the_record.user.dto.UserDetailDto;
-import com.record.the_record.user.dto.UserDto;
+import com.record.the_record.user.dto.*;
 import com.record.the_record.user.repository.NeighborRepository;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.repository.UserVerificationRepository;
@@ -212,5 +209,19 @@ public class UserServiceImpl implements UserService {
         int length = 8 + (int)(Math.random() * 5);
         String generatedPassword = RandomStringUtils.random(length, true, true);
         return generatedPassword;
+    }
+
+    @Override
+    public void addPhotoBooth(PhotoBoothDto photoBoothDto) {
+
+        User user = userRepository.findByPk(photoBoothDto.getUserPk());
+        String roomIsOpen = String.valueOf(user.getRoomIsOpen());
+
+        if (roomIsOpen.equals("TRUE")) {
+            throw new ExistUserRoomException();
+        }
+
+        user.addPhotoBooth(TrueAndFalse.TRUE);
+        userRepository.save(user);
     }
 }

@@ -1,10 +1,7 @@
 package com.record.the_record.user.service;
 
 import com.record.the_record.entity.User;
-import com.record.the_record.user.dto.CertificateDto;
-import com.record.the_record.user.dto.SearchUserDto;
-import com.record.the_record.user.dto.UserDetailDto;
-import com.record.the_record.user.dto.UserDto;
+import com.record.the_record.user.dto.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -34,4 +31,6 @@ public interface UserService {
     void checkVerificationCode(CertificateDto certificateDto);
     void reissuePassword(CertificateDto certificateDto);
     String getRandomString();
+
+    void addPhotoBooth(PhotoBoothDto photoBoothDto);
 }
