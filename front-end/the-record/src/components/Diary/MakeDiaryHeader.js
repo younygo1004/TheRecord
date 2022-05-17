@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { styled } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
+import React, { useState } from 'react'
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 
 function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
   const AntSwitch = styled(Switch)(({ theme }) => ({
@@ -51,12 +51,12 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
           : 'rgba(0,0,0,.25)',
       boxSizing: 'border-box',
     },
-  }));
+  }))
 
-  const [checked, setChecked] = useState(true);
-  const [folderListOpen, setFolderListOpen] = useState(false);
+  const [checked, setChecked] = useState(true)
+  const [folderListOpen, setFolderListOpen] = useState(false)
   // 폴더 조회 api 연결
-  const [selectedFolder, setSelectedFolder] = useState('');
+  const [selectedFolder, setSelectedFolder] = useState('')
   const folderlist = [
     {
       folderId: 2,
@@ -66,11 +66,11 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
       folderId: 3,
       folderName: '분분분분분분분분분분분분분분분분분분분분',
     },
-  ];
+  ]
 
   const handleChange = event => {
-    setChecked(event.target.checked);
-  };
+    setChecked(event.target.checked)
+  }
 
   return (
     <div className="make-diary-header">
@@ -134,7 +134,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default MakeDiaryHeader;
+export default MakeDiaryHeader

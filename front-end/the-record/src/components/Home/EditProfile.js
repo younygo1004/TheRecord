@@ -1,58 +1,58 @@
 /* eslint-disable no-unused-vars */
-import React, { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import FaceIcon from '@mui/icons-material/Face';
-import EditButton from '../../assets/edit_button.png';
-import '../../styles/home/edit-profile.css';
-import callApi from '../../common/api';
-import store from '../../store';
-import { types } from '../../actions/common';
+import React, { useRef, useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import FaceIcon from '@mui/icons-material/Face'
+import EditButton from '../../assets/edit_button.png'
+import '../../styles/home/edit-profile.css'
+import callApi from '../../common/api'
+import store from '../../store'
+import { types } from '../../actions/common'
 
 function EditProfile() {
-  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
-  const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
-  const [tempImg, setTempImg] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const [profileText, setProfileText] = useState(homePageHostInfo.introduce);
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
+  const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false)
+  const [tempImg, setTempImg] = useState(null)
+  const [imageFile, setImageFile] = useState(null)
+  const [profileText, setProfileText] = useState(homePageHostInfo.introduce)
 
   const handleText = e => {
-    setProfileText(e.currentTarget.value);
-  };
+    setProfileText(e.currentTarget.value)
+  }
 
-  const fileInput = useRef();
+  const fileInput = useRef()
 
   const handleProfileImg = e => {
     if (e.target.files[0]) {
-      setImageFile(e.target.files[0]);
+      setImageFile(e.target.files[0])
     } else {
-      console.log('취소');
-      return;
+      console.log('취소')
+      return
     }
 
     // 화면에 프로필 사진 표시
-    const reader = new FileReader();
+    const reader = new FileReader()
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setTempImg(reader.result);
+        setTempImg(reader.result)
       }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  };
+    }
+    reader.readAsDataURL(e.target.files[0])
+  }
 
   const updateProfile = async () => {
     if (imageFile !== null) {
-      const formData = new FormData();
-      formData.append('profile', imageFile);
+      const formData = new FormData()
+      formData.append('profile', imageFile)
       await callApi({
         method: 'put',
         url: `/api/user/profile`,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data' },
-      });
+      })
     }
 
     if (profileText !== homePageHostInfo.introduce) {
@@ -60,28 +60,28 @@ function EditProfile() {
         method: 'put',
         url: `/api/user/introduction`,
         data: { introduce: profileText },
-      });
+      })
     }
 
     store.dispatch({
       type: types.FETCH_USER_INFO,
       userInfo: homePageHostInfo,
       key: 'homePageHostInfo',
-    });
+    })
     store.dispatch({
       type: types.FETCH_USER_INFO,
       userInfo: homePageHostInfo,
       key: 'loginUserInfo',
-    });
+    })
 
-    setEditProfileDialogOpen(false);
-  };
+    setEditProfileDialogOpen(false)
+  }
 
   const handleClose = () => {
-    setTempImg(() => null);
-    setProfileText(() => homePageHostInfo.introduce);
-    setEditProfileDialogOpen(false);
-  };
+    setTempImg(() => null)
+    setProfileText(() => homePageHostInfo.introduce)
+    setEditProfileDialogOpen(false)
+  }
 
   return (
     <div id="edit-profile">
@@ -89,7 +89,7 @@ function EditProfile() {
         className="header-right-button"
         type="button"
         onClick={() => {
-          setEditProfileDialogOpen(true);
+          setEditProfileDialogOpen(true)
         }}
       >
         프로필 수정하기
@@ -153,7 +153,7 @@ function EditProfile() {
                   <button
                     type="button"
                     onClick={() => {
-                      fileInput.current.click();
+                      fileInput.current.click()
                     }}
                   >
                     <img src={EditButton} alt="수정버튼" />
@@ -174,7 +174,7 @@ function EditProfile() {
         </Dialog>
       </div>
     </div>
-  );
+  )
 }
 
-export default EditProfile;
+export default EditProfile

@@ -1,11 +1,11 @@
-import React from 'react';
-import '../../styles/diary/diarydetail.css';
+import React from 'react'
+import '../../styles/diary/diarydetail.css'
 
 function DiaryDetailContainer(props) {
-  const { diaryInfo } = props;
+  const { diaryInfo } = props
   // 로그인 유저 받아오기!
-  const loginUser = '5_waterglass';
-  const homePageHost = sessionStorage.getItem('homePageHost');
+  const loginUser = '5_waterglass'
+  const homePageHost = sessionStorage.getItem('homePageHost')
   // 미디어 파일 가져오기
   // const [media, setMedia] = usestate('../../assets/my_profile_photo.png');
   // useEffect(() => {
@@ -56,12 +56,12 @@ function DiaryDetailContainer(props) {
                 {line}
                 <br />
               </span>
-            );
+            )
           })}
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default DiaryDetailContainer;
+export default DiaryDetailContainer

@@ -1,11 +1,11 @@
-import React from 'react';
-import Navigation from '../../components/Navigation';
-import UploadButton from '../../components/Album/UploadButton';
-import EnterBoothButton from '../../components/Album/EnterBoothButton';
-import MakeBoothButton from '../../components/Album/MakeBoothButton';
-import PhotoPreview from '../../components/Album/PhotoPreview';
-import PhotoList from '../../components/Album/PhotoList';
-import '../../styles/photo/album.css';
+import React from 'react'
+import Navigation from '../../components/Navigation'
+import UploadButton from '../../components/Album/UploadButton'
+import EnterBoothButton from '../../components/Album/EnterBoothButton'
+import MakeBoothButton from '../../components/Album/MakeBoothButton'
+import PhotoPreview from '../../components/Album/PhotoPreview'
+import PhotoList from '../../components/Album/PhotoList'
+import '../../styles/photo/album.css'
 
 function Album() {
   return (
@@ -32,7 +32,7 @@ function Album() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
 
-export default Album;
+export default Album

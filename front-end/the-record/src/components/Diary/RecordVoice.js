@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import '../../styles/diary/makediary.css';
+import React, { useState } from 'react'
+import '../../styles/diary/makediary.css'
 // import axios from 'axios';
 
 function RecordVoice({ sendVoice }) {
-  const [media, setMedia] = useState();
-  const [isRecord, setIsRecord] = useState(false);
+  const [media, setMedia] = useState()
+  const [isRecord, setIsRecord] = useState(false)
   // const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_API_TOKEN;
 
   const sendSpeech = async result => {
-    console.log('전송');
-    console.log(result);
+    console.log('전송')
+    console.log(result)
     // const url = `https://speech.googleapis.com/v1/speech:longrunningrecognize?key=${GOOGLE_API_TOKEN}`;
     // const request = {
     //   audio: { content: result },
@@ -31,7 +31,7 @@ function RecordVoice({ sendVoice }) {
     // .catch(err => {
     //   console.log('err :', err);
     // });
-  };
+  }
 
   const voiceRecordStart = () => {
     navigator.mediaDevices
@@ -41,37 +41,37 @@ function RecordVoice({ sendVoice }) {
       .then(stream => {
         const mediaRecorder = new MediaRecorder(stream, {
           mimeType: 'audio/webm; codecs=opus',
-        });
-        mediaRecorder.start();
-        setMedia(mediaRecorder);
-        console.log(mediaRecorder);
+        })
+        mediaRecorder.start()
+        setMedia(mediaRecorder)
+        console.log(mediaRecorder)
       })
-      .catch(err => console.log(err));
-  };
+      .catch(err => console.log(err))
+  }
 
   const voiceRecordStop = () => {
-    console.log('중지');
+    console.log('중지')
     media.ondataavailable = e => {
-      const reader = new FileReader();
-      reader.readAsDataURL(e.data);
+      const reader = new FileReader()
+      reader.readAsDataURL(e.data)
       reader.onloadend = () => {
-        sendSpeech(reader.result.split('base64,')[1]);
-        const data = reader.result.split('base64,')[1];
-        const array = [];
+        sendSpeech(reader.result.split('base64,')[1])
+        const data = reader.result.split('base64,')[1]
+        const array = []
         for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i));
+          array.push(data.charCodeAt(i))
         }
-        const file = new File([new Uint8Array(array)], { type: 'audio/mpeg' });
-        const formdata = new FormData();
-        formdata.append('file', file);
-        console.log(file);
+        const file = new File([new Uint8Array(array)], { type: 'audio/mpeg' })
+        const formdata = new FormData()
+        formdata.append('file', file)
+        console.log(file)
         // 임시 설정
         // sendVoice(formdata);
-        console.log(sendVoice);
-      };
-    };
-    media.stop();
-  };
+        console.log(sendVoice)
+      }
+    }
+    media.stop()
+  }
 
   const recordVoice = () => {
     if (isRecord) {
@@ -80,8 +80,8 @@ function RecordVoice({ sendVoice }) {
           type="button"
           className="record-voice-btn"
           onClick={() => {
-            voiceRecordStop();
-            setIsRecord(false);
+            voiceRecordStop()
+            setIsRecord(false)
           }}
         >
           <img
@@ -90,15 +90,15 @@ function RecordVoice({ sendVoice }) {
             className="profile-img"
           />
         </button>
-      );
+      )
     }
     return (
       <button
         type="button"
         className="record-voice-btn"
         onClick={() => {
-          voiceRecordStart();
-          setIsRecord(true);
+          voiceRecordStart()
+          setIsRecord(true)
         }}
       >
         <img
@@ -107,8 +107,8 @@ function RecordVoice({ sendVoice }) {
           className="profile-img"
         />
       </button>
-    );
-  };
+    )
+  }
 
   return (
     <div className="record-voice">
@@ -175,7 +175,7 @@ function RecordVoice({ sendVoice }) {
         <textarea className="record-text" />
       </div>
     </div>
-  );
+  )
 }
 
-export default RecordVoice;
+export default RecordVoice

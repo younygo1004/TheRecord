@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import '../../styles/diary/diarymain.css';
-import FolderOpenIcon from '@mui/icons-material/FolderOpen';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DiaryItem from './DiaryItem';
+import React, { useState } from 'react'
+import '../../styles/diary/diarymain.css'
+import FolderOpenIcon from '@mui/icons-material/FolderOpen'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined'
+import DeleteIcon from '@mui/icons-material/Delete'
+import DiaryItem from './DiaryItem'
 
 function DiaryList() {
-  const [open, setOpen] = useState(false);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openCheckDialog, setOpenCheckDialog] = useState(false);
-  const [folder, setFolder] = useState(-1);
-  const [deleteFolderId, setDeleteFolderId] = useState(-1);
-  const [folderName, setFolderName] = useState('');
+  const [open, setOpen] = useState(false)
+  const [openDialog, setOpenDialog] = useState(false)
+  const [openCheckDialog, setOpenCheckDialog] = useState(false)
+  const [folder, setFolder] = useState(-1)
+  const [deleteFolderId, setDeleteFolderId] = useState(-1)
+  const [folderName, setFolderName] = useState('')
   // 로그인 유저 받아오기!
-  const loginUser = '5_waterglass';
-  const homePageHost = sessionStorage.getItem('homePageHost');
+  const loginUser = '5_waterglass'
+  const homePageHost = sessionStorage.getItem('homePageHost')
 
   // 일기폴더 조회 api 연결
   // const [diarylist, setDiarylist] = useState([]);
@@ -44,16 +44,16 @@ function DiaryList() {
       folderId: 3,
       folderName: 'CSS 너무 어렵다 ㅠㅠㅠㅠㅠㅠㅠ',
     },
-  ]);
+  ])
 
   const openList = folderId => {
     if (folderId === folder) {
-      setOpen(!open);
+      setOpen(!open)
     } else {
-      setFolder(folderId);
-      setOpen(true);
+      setFolder(folderId)
+      setOpen(true)
     }
-  };
+  }
 
   const resetFolder = () => {
     setDiarylist([
@@ -65,7 +65,7 @@ function DiaryList() {
         folderId: 3,
         folderName: 'CSS 너무 어렵다 ㅠㅠㅠㅠㅠㅠㅠ',
       },
-    ]);
+    ])
     // 일기 폴더 조회 api 연결
     //   axios
     //     .get('url', {
@@ -76,16 +76,16 @@ function DiaryList() {
     //     .then((res) => {
     //         setDiarylist(res.data);
     //     });
-  };
+  }
 
   // id가 있을 경우 -> 폴더 이름 수정
   const changeFolderName = id => {
-    console.log('수정');
-    console.log(id);
+    console.log('수정')
+    console.log(id)
     if (folderName.length === 0) {
-      alert('폴더 이름을 입력해주세요');
+      alert('폴더 이름을 입력해주세요')
     } else {
-      resetFolder();
+      resetFolder()
     }
     // 폴더 수정 api 연결 & 다시 조회 api 불러오기(resetFolder)
     // axios({
@@ -106,16 +106,16 @@ function DiaryList() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-  };
+  }
 
   const checkDelete = id => {
-    setOpenCheckDialog(true);
-    setDeleteFolderId(id);
-  };
+    setOpenCheckDialog(true)
+    setDeleteFolderId(id)
+  }
 
   const deleteFolder = () => {
-    console.log(deleteFolderId);
-    resetFolder();
+    console.log(deleteFolderId)
+    resetFolder()
     // 폴더 삭제 api 연결
     // axios({
     //   method: 'delete',
@@ -130,7 +130,7 @@ function DiaryList() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-  };
+  }
 
   const addFolder = () => {
     // 폴더 추가 api 연결 & 다시 조회 api 불러오기(resetFolder)
@@ -157,21 +157,21 @@ function DiaryList() {
         folderId: '',
         folderName: '',
       }),
-    );
-  };
+    )
+  }
 
   const openSelectDialog = () => {
-    setOpenDialog(true);
-  };
+    setOpenDialog(true)
+  }
 
   const handleClose = () => {
-    resetFolder();
-    setOpenDialog(false);
-  };
+    resetFolder()
+    setOpenDialog(false)
+  }
 
   const handleCloseCheck = () => {
-    setOpenCheckDialog(false);
-  };
+    setOpenCheckDialog(false)
+  }
 
   return (
     <div className="diarylist">
@@ -182,7 +182,7 @@ function DiaryList() {
             type="button"
             className="diarylist-folder-btn"
             onClick={() => {
-              openSelectDialog();
+              openSelectDialog()
             }}
           >
             폴더 수정
@@ -240,7 +240,7 @@ function DiaryList() {
               height: 49,
             }}
             onClick={() => {
-              handleClose();
+              handleClose()
             }}
           >
             <CloseRoundedIcon
@@ -273,13 +273,13 @@ function DiaryList() {
                         defaultValue={listitem.folderName}
                         maxLength={30}
                         onBlur={() => {
-                          changeFolderName(listitem.folderId);
+                          changeFolderName(listitem.folderId)
                         }}
                         onClick={e => {
-                          setFolderName(e.target.value);
+                          setFolderName(e.target.value)
                         }}
                         onChange={e => {
-                          setFolderName(e.target.value);
+                          setFolderName(e.target.value)
                         }}
                       />
                     </div>
@@ -300,7 +300,7 @@ function DiaryList() {
                 type="button"
                 className="folder-dialog-btn"
                 onMouseDown={() => {
-                  handleClose();
+                  handleClose()
                 }}
               >
                 수정 완료
@@ -331,7 +331,7 @@ function DiaryList() {
               height: 49,
             }}
             onClick={() => {
-              handleCloseCheck();
+              handleCloseCheck()
             }}
           >
             <CloseRoundedIcon
@@ -350,8 +350,8 @@ function DiaryList() {
                 className="delete-folder-delete-btn"
                 type="button"
                 onClick={() => {
-                  deleteFolder();
-                  handleCloseCheck();
+                  deleteFolder()
+                  handleCloseCheck()
                 }}
               >
                 삭제
@@ -360,7 +360,7 @@ function DiaryList() {
                 className="delete-folder-cancel-btn"
                 type="button"
                 onClick={() => {
-                  handleCloseCheck();
+                  handleCloseCheck()
                 }}
               >
                 취소
@@ -370,7 +370,7 @@ function DiaryList() {
         </div>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default DiaryList;
+export default DiaryList

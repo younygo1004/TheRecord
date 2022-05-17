@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useLocation } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useLocation } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
-import { styled } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import Navigation from '../../components/Navigation';
-import PhotoList from '../../components/Album/PhotoList';
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import Navigation from '../../components/Navigation'
+import PhotoList from '../../components/Album/PhotoList'
 // import PhotoUpload from '../../components/Album/PhotoUpload';
-import '../../styles/photo/album.css';
+import '../../styles/photo/album.css'
 
 function PhotoDecoUpload() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
+  const navigate = useNavigate()
+  const { state } = useLocation()
   const [photoDto, setPhotoDto] = useState({
     title: '',
     visible: 'PUBLIC',
-  });
-  const [checked, setChecked] = useState(true);
+  })
+  const [checked, setChecked] = useState(true)
 
   // 토글
   const AntSwitch = styled(Switch)(({ theme }) => ({
@@ -65,72 +65,72 @@ function PhotoDecoUpload() {
           : 'rgba(0,0,0,.25)',
       boxSizing: 'border-box',
     },
-  }));
+  }))
 
   // 접근 권한
   const handleChange = event => {
-    setChecked(event.target.checked);
-  };
+    setChecked(event.target.checked)
+  }
 
   useEffect(() => {
     // 토글이 바뀔 때
     if (checked) {
-      setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }));
+      setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }))
     } else {
-      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }));
+      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }))
     }
-  }, [checked]);
+  }, [checked])
 
   useEffect(() => {
     // 접근 권한이 바뀔 때
     if (photoDto.visible === 'PUBLIC') {
-      console.log(photoDto);
-      console.log('트루');
+      console.log(photoDto)
+      console.log('트루')
     } else {
-      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }));
-      console.log(photoDto);
-      console.log('페일');
+      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }))
+      console.log(photoDto)
+      console.log('페일')
     }
-  }, [photoDto.visible]);
+  }, [photoDto.visible])
 
   // 제목 변경
   const onChangTitle = e => {
-    setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }));
-  };
+    setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }))
+  }
 
   useEffect(() => {
-    console.log(photoDto);
-  }, [photoDto.title]);
+    console.log(photoDto)
+  }, [photoDto.title])
 
   // 사진첩 저장
   const saveDecoPhoto = () => {
     // base64 -> 파일화
-    const blobBin = atob(state.split(',')[1]); // base64 데이터 디코딩
-    const array = [];
+    const blobBin = atob(state.split(',')[1]) // base64 데이터 디코딩
+    const array = []
     for (let i = 0; i < blobBin.length; i += 1) {
-      array.push(blobBin.charCodeAt(i));
+      array.push(blobBin.charCodeAt(i))
     }
 
     const file = new File([new Uint8Array(array)], 'blobtofile.png', {
       type: 'image/png',
-    });
+    })
 
-    const formData = new FormData(); // formData 생성
-    formData.append('file', file);
+    const formData = new FormData() // formData 생성
+    formData.append('file', file)
     // 'key'라는 이름으로 위에서 담은 data를 formData에 append한다. type은 json
     formData.append(
       'photoDto',
       new Blob([JSON.stringify(photoDto)], { type: 'application/json' }),
-    );
+    )
 
-    console.log(file);
-    console.log(photoDto);
+    console.log(file)
+    console.log(photoDto)
     // console.log(...formData.getHeaders());
-    console.log(sessionStorage.getItem('jwt'));
+    console.log(sessionStorage.getItem('jwt'))
     // formData 확인
     // eslint-disable-next-line no-restricted-syntax
     for (const key of formData.keys()) {
-      console.log(key);
+      console.log(key)
     }
 
     axios({
@@ -143,14 +143,14 @@ function PhotoDecoUpload() {
       },
     })
       .then(res => {
-        console.log(res);
-        navigate('/album');
+        console.log(res)
+        navigate('/album')
       })
       .catch(res => {
-        alert('문제가 발생했습니다.');
-        console.log(res);
-      });
-  };
+        alert('문제가 발생했습니다.')
+        console.log(res)
+      })
+  }
 
   return (
     <div id="album">
@@ -181,7 +181,7 @@ function PhotoDecoUpload() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
 
-export default PhotoDecoUpload;
+export default PhotoDecoUpload

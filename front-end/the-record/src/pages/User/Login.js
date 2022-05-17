@@ -1,55 +1,55 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import jwtDecode from 'jwt-decode';
-import fetchLogin from './service';
-import store from '../../store';
-import { types } from '../../actions/common';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { useNavigate } from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
+import fetchLogin from './service'
+import store from '../../store'
+import { types } from '../../actions/common'
 
 function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [account, setAccount] = useState({
     id: '',
     password: '',
-  });
+  })
 
   const onChangeAccount = e => {
-    setAccount({ ...account, [e.target.name]: e.target.value });
-  };
+    setAccount({ ...account, [e.target.name]: e.target.value })
+  }
 
   const onSubmitAccount = async () => {
     try {
-      const JWT = await fetchLogin(account);
+      const JWT = await fetchLogin(account)
 
-      const decodeJWT = jwtDecode(JWT);
+      const decodeJWT = jwtDecode(JWT)
       const userInfo = {
         userPk: decodeJWT.userPk,
         userId: decodeJWT.userId,
-      };
-      sessionStorage.setItem('jwt', JWT);
+      }
+      sessionStorage.setItem('jwt', JWT)
       store.dispatch({
         type: types.FETCH_USER_INFO,
         userInfo,
         key: 'loginUserInfo',
-      });
+      })
       store.dispatch({
         type: types.FETCH_USER_INFO,
         userInfo,
         key: 'homePageHostInfo',
-      });
+      })
 
       if (store.getState().common.homePageHostInfo) {
-        navigate('/home');
+        navigate('/home')
       } else {
         setTimeout(() => {
-          navigate('/home');
-        }, 300);
+          navigate('/home')
+        }, 300)
       }
     } catch (error) {
-      alert('로그인 정보가 일치하지 않습니다');
+      alert('로그인 정보가 일치하지 않습니다')
     }
-  };
+  }
 
   return (
     <Container>
@@ -101,10 +101,10 @@ function Login() {
         </JoinText>
       </Container2>
     </Container>
-  );
+  )
 }
 
-export default Login;
+export default Login
 
 /* CSS */
 const Container = styled.div`
@@ -114,7 +114,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 const Container2 = styled.div`
   width: 60%;
@@ -130,7 +130,7 @@ const Container2 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
+`
 
 const Input = styled.input`
   width: 100%;
@@ -146,13 +146,13 @@ const Input = styled.input`
     border: none;
     outline: 1px solid rgba(75, 182, 209, 0.87);
   }
-`;
+`
 const DivStyle = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: 0 180px;
-`;
+`
 
 const DivStyle2 = styled.div`
   display: flex;
@@ -160,7 +160,7 @@ const DivStyle2 = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 30px;
-`;
+`
 
 const LoginButton = styled.button`
   font-size: 21px;
@@ -176,7 +176,7 @@ const LoginButton = styled.button`
   border: none;
   background-color: rgba(75, 182, 209, 0.87);
   border-radius: 10px;
-`;
+`
 const GoogleLoginButton = styled.button`
   display: block;
   font-size: 21px;
@@ -190,26 +190,26 @@ const GoogleLoginButton = styled.button`
   border: none;
   background-color: rgba(75, 182, 209, 0.87);
   border-radius: 10px;
-`;
+`
 
 const ForgotPwd = styled.div`
   margin: 24px 0px 24px 0px;
   font-size: 16px;
   text-align: right;
   cursor: pointer;
-`;
+`
 
 const OrDiv = styled.div`
   text-align: center;
   margin: 0 20px;
-`;
+`
 
 const JoinText = styled.div`
   text-align: center;
-`;
+`
 
 const Join = styled.a`
   color: rgba(75, 182, 209, 0.87);
   text-decoration: none;
   cursor: pointer;
-`;
+`

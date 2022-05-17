@@ -1,9 +1,9 @@
-import React from 'react';
-import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
-import { useNavigate } from 'react-router-dom';
+import React from 'react'
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight'
+import { useNavigate } from 'react-router-dom'
 
 function DiaryItem({ folder }) {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   //  폴더명으로 일기 목록 조회 api 연결
   // const [diaryItems, setDiaryItems] = useState([]);
 
@@ -38,15 +38,15 @@ function DiaryItem({ folder }) {
       recordDt: '2022.05.09',
       visible: true,
     },
-  ];
+  ]
 
   const moveDiaryDetail = diaryId => {
     navigate('/diary/diarydetail', {
       state: diaryId,
-    });
-  };
+    })
+  }
 
-  console.log(folder);
+  console.log(folder)
 
   return (
     <div className="diaryitem-box">
@@ -64,7 +64,7 @@ function DiaryItem({ folder }) {
         </div>
       ))}
     </div>
-  );
+  )
 }
 
-export default DiaryItem;
+export default DiaryItem

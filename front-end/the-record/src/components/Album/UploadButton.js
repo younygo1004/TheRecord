@@ -1,13 +1,13 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/photo/album.css';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../../styles/photo/album.css'
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'
 
 function UploadButton() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const movePhothDeco = () => {
-    navigate('/album/photodeco');
-  };
+    navigate('/album/photodeco')
+  }
 
   return (
     <div>
@@ -20,7 +20,7 @@ function UploadButton() {
         업로드 하기
       </button>
     </div>
-  );
+  )
 }
 
-export default UploadButton;
+export default UploadButton

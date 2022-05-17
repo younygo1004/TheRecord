@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/photo/album.css';
-import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined';
-import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import fourphoto from '../../assets/fourphoto.png';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+import '../../styles/photo/album.css'
+import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined'
+import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined'
+import Pagination from '@mui/material/Pagination'
+import Stack from '@mui/material/Stack'
+import fourphoto from '../../assets/fourphoto.png'
 
 function PhotoPreview() {
-  const navigate = useNavigate();
-  const [photolist, setPhotolist] = useState([]);
-  const [page, setPage] = React.useState(0);
-  const [totalPage, setTotalPage] = useState(0);
+  const navigate = useNavigate()
+  const [photolist, setPhotolist] = useState([])
+  const [page, setPage] = React.useState(0)
+  const [totalPage, setTotalPage] = useState(0)
 
   // 일기목록 페이지 별로 불러오는 api 연결
   useEffect(() => {
@@ -24,10 +24,10 @@ function PhotoPreview() {
         },
       })
       .then(res => {
-        console.log(res.data);
-        setPhotolist(res.data);
-      });
-  }, [page]);
+        console.log(res.data)
+        setPhotolist(res.data)
+      })
+  }, [page])
   // 인생네컷 전체 페이지 수 불러오는 api 연결
   useEffect(() => {
     axios
@@ -38,32 +38,32 @@ function PhotoPreview() {
         },
       })
       .then(res => {
-        console.log(res.data);
-        setTotalPage(res.data);
-      });
-  }, []);
+        console.log(res.data)
+        setTotalPage(res.data)
+      })
+  }, [])
   const changePage = (event, value) => {
-    console.log(page);
-    setPage(value - 1);
-  };
+    console.log(page)
+    setPage(value - 1)
+  }
 
   const moveRight = () => {
-    const newPage = page + 1;
-    setPage(newPage);
-  };
+    const newPage = page + 1
+    setPage(newPage)
+  }
 
   const moveLeft = () => {
-    const newPage = page - 1;
-    setPage(newPage);
-  };
+    const newPage = page - 1
+    setPage(newPage)
+  }
 
   const movePhotoDetail = photo => {
     navigate('/album/photodetail', {
       state: {
         photoInfo: photo,
       },
-    });
-  };
+    })
+  }
 
   return (
     <div>
@@ -120,7 +120,7 @@ function PhotoPreview() {
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default PhotoPreview;
+export default PhotoPreview
