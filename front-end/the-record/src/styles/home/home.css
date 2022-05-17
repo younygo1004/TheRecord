@@ -14,6 +14,7 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  padding-top: 20px;
 }
 
 #home #profile .profile-info {
@@ -41,6 +42,19 @@
 #home #profile .profile-info .profile-text > p {
   margin-bottom: 15px;
   font-size: 13px;
+}
+
+#home #profile .already-ilchon-button {
+  width: 200px;
+  height: 36px;
+  border: 3px solid #848484;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'dunggeunmo';
+  font-size: 15px;
 }
 
 #home #profile .ilchon-button {
@@ -71,7 +85,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 10px;
 }
 
 #updated-news .updated-news-top .updated-diary-list {

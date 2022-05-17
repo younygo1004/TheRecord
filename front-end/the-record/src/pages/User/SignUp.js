@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Grid, TextField, FormHelperText } from '@mui/material';
 import '../../styles/signup.css';
 import { makeStyles } from '@mui/styles';
+import axios from 'axios';
 
 function SignUp() {
   const useStyles = makeStyles({
@@ -22,7 +23,7 @@ function SignUp() {
   });
 
   const navigate = useNavigate();
-  // const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(0);
 
   const [form, setForm] = useState({
     userId: '',
@@ -62,39 +63,34 @@ function SignUp() {
   };
 
   const goLogin = () => {
-    navigate('/login');
+    navigate('/');
     // 회원가입
   };
 
   const idValidation = e => {
-    if (e.target.value.length < 8 && e.target.value.length >= 0) {
-      checkValid({ category: 'validId', status: true });
-      return 1;
-    }
-    checkValid({ category: 'validId', status: false });
-    return 1;
     // 존재하는 아이디 확인 api 연결
-    // if (form.userId.trim().length > 0) {
-    //   if (timer) {
-    //     clearTimeout(timer);
-    //   }
-    // const newTimer = setTimeout(async () => {
-    //   try {
-    //     await axios
-    //       .get(`https://j6b102.p.ssafy.io/api-v1/user/id-check/${id}`, null)
-    //       .then((res) => {
-    //         if (res.data === true) {
-    //           return false;
-    //         } else {
-    //           return true;
-    //         }
-    //       });
-    //   } catch (e) {
-    //     console.error("error", e);
-    //   }
-    // }, 500);
-    // setTimer(newTimer);
-    // }
+    if (form.userId.trim().length > 0) {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      const newTimer = setTimeout(async () => {
+        try {
+          await axios
+            .get(
+              `https://the-record.co.kr:8080/api/user/id-check/${e.target.value}`,
+            )
+            .then(res => {
+              if (res.data === true) {
+                return checkValid({ category: 'validId', status: false });
+              }
+              return checkValid({ category: 'validId', status: true });
+            });
+        } catch (err) {
+          console.error('error', err);
+        }
+      }, 500);
+      setTimer(newTimer);
+    }
   };
 
   function IdHelperText() {
@@ -111,7 +107,6 @@ function SignUp() {
   }
 
   const nameValidation = () => {
-    console.log('확인');
     if (form.name.length > 0) {
       checkValid({ category: 'validName', status: true });
       return false;
@@ -198,71 +193,62 @@ function SignUp() {
   }
 
   const sendNum = () => {
-    console.log('인증번호 전송');
     // 인증번호 전송 api 연결
-    // axios({
-    //   method: "POST",
-    //   url: "",
-    //   data: {
-    //     email: form.email
-    //   },
-    //   headers: {
-    //     "x-auth-token": sessionStorage.getItem("jwt"),
-    //   }
-    // }).then((res) => {
-    //   alert('인증번호를 전송했습니다.')
-    // }).catch((err) => {
-    //   console.log(err)
-    // });
+    console.log(form.email);
+    axios
+      .post('https://the-record.co.kr:8080/api/user/email/number', {
+        userEmail: form.email,
+      })
+      .then(() => {
+        alert('인증번호를 전송했습니다.');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const checkNum = () => {
-    console.log('인증번호 확인');
     // 인증번호 확인 api 연결
-    // axios({
-    //   method: "POST",
-    //   url: "",
-    //   data: {
-    //     certificateNum: form.certification
-    //   },
-    //   headers: {
-    //     "x-auth-token": sessionStorage.getItem("jwt"),
-    //   }
-    // }).then((res) => {
-    //   console.log('인증번호 확인');
-    //   if (res.data === 'SUCCESS') {
-    //     checkValid({ category: 'validConfirmPassword', status: true });
-    //     alert('인증되었습니다.')
-    //   }
-    //   checkValid({ category: 'validConfirmPassword', status: false });
-    //   alert('인증번호를 다시 입력해주세요')
-    // }).catch((err) => {
-    //   console.log(err)
-    // });
+    axios({
+      method: 'POST',
+      url: '',
+      data: {
+        certificateNum: form.certification,
+      },
+    })
+      .then(res => {
+        console.log('인증번호 확인');
+        if (res.data === 'SUCCESS') {
+          checkValid({ category: 'validConfirmPassword', status: true });
+          alert('인증되었습니다.');
+        }
+        checkValid({ category: 'validConfirmPassword', status: false });
+        alert('인증번호를 다시 입력해주세요');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const onSubmit = () => {
-    console.log(form);
-    goLogin();
     // 회원가입 api 연결
-    // axios({
-    //   method: "post",
-    //   url: "",
-    //   data: {
-    //     userId: form.userId,
-    //     name: form.name,
-    //     email: form.email,
-    //     password: form.password
-    //   },
-    //   headers: {
-    //     "x-auth-token": sessionStorage.getItem("jwt"),
-    //   },
-    // }).then((res) => {
-    //   alert('회원가입이 완료되었습니다.');
-    //   goLogin();
-    // }).catch((res) => {
-    //   alert('회원가입 작성 문항을 확인해주세요')
-    // });
+    axios({
+      method: 'post',
+      url: 'https://the-record.co.kr:8080/api/user/signup',
+      data: {
+        userId: form.userId,
+        name: form.name,
+        email: form.email,
+        password: form.password,
+      },
+    })
+      .then(() => {
+        alert('회원가입이 완료되었습니다.');
+        goLogin();
+      })
+      .catch(() => {
+        alert('회원가입 작성 문항을 확인해주세요');
+      });
   };
 
   function signupButton() {
