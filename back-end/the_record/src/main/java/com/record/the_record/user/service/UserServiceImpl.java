@@ -7,7 +7,7 @@ import com.record.the_record.entity.enums.TrueAndFalse;
 import com.record.the_record.entity.enums.UserRole;
 import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
-import com.record.the_record.s3.service.FileUploadService;
+import com.record.the_record.s3.service.AmazonS3Service;
 import com.record.the_record.security.JwtTokenProvider;
 import com.record.the_record.user.dto.*;
 import com.record.the_record.user.repository.NeighborRepository;
@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     private final EmailService emailService;
-    private final FileUploadService fileUploadService;
+    private final AmazonS3Service amazonS3Service;
 
     @Override
     @Transactional
@@ -115,9 +116,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void modifyProfile(MultipartFile multipartFile) throws Exception {
-        Long userPk = currentUser();
-        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
-        User user = userRepository.findByPk(userPk);
+        User user = userRepository.findByPk(currentUser());
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, user.getPk());
+
+        if (StringUtils.hasText(user.getProfile()) && !user.getProfile().equals("default.png")) {
+            amazonS3Service.delete(user.getProfile());
+        }
+
         user.changeProfile(fileDetailDto.getUploadName());
         userRepository.save(user);
     }

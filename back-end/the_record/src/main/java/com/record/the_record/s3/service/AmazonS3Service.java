@@ -1,8 +1,10 @@
 package com.record.the_record.s3.service;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.record.the_record.aop.exception.customexceptions.CustomAmazonS3Exception;
 import com.record.the_record.aop.exception.customexceptions.CustomFileNotFoundException;
 import com.record.the_record.s3.dto.FileDetailDto;
 import com.record.the_record.s3.util.MultipartUtil;
@@ -16,7 +18,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class FileUploadService {
+public class AmazonS3Service {
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -32,6 +34,8 @@ public class FileUploadService {
                     .withCannedAcl(CannedAccessControlList.PublicRead));        // CannedAccessControlList.PublicRead로 설정해야 누구나 파일에 접근 가능
         } catch (IOException e) {
             throw new CustomFileNotFoundException();
+        } catch (AmazonClientException e) {
+            throw new CustomAmazonS3Exception();
         } finally {
             if (file.exists()) {
                 file.delete();
@@ -39,5 +43,9 @@ public class FileUploadService {
         }
 
         return fileDetailDto;
+    }
+
+    public void delete(String fileKey) throws CustomAmazonS3Exception {
+        amazonS3Client.deleteObject(bucket, fileKey);
     }
 }

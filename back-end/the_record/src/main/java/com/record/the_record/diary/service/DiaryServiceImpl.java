@@ -12,7 +12,7 @@ import com.record.the_record.entity.enums.Category;
 import com.record.the_record.entity.enums.VisibleStatus;
 import com.record.the_record.folder.repository.FolderRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
-import com.record.the_record.s3.service.FileUploadService;
+import com.record.the_record.s3.service.AmazonS3Service;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,7 @@ public class DiaryServiceImpl implements DiaryService {
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final FileUploadService fileUploadService;
+    private final AmazonS3Service amazonS3Service;
 
     @Override
     @Transactional
@@ -49,7 +49,7 @@ public class DiaryServiceImpl implements DiaryService {
         Long userPk = userService.currentUser();
         User user = userRepository.findByPk(userPk);
         Folder folder = folderRepository.findOneById(diaryDto.getFolderId());
-        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, userPk);
 
         if (diaryDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
@@ -198,6 +198,7 @@ public class DiaryServiceImpl implements DiaryService {
     @Transactional
     public void removeDiary(Long diaryId) {
         Diary diary = diaryRepository.findOneById(diaryId);
+        amazonS3Service.delete(diary.getMediaUrl());
         diaryRepository.delete(diary);
     }
 }

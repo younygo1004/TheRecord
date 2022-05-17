@@ -9,7 +9,7 @@ import com.record.the_record.photo.dto.PhotoDetailDto;
 import com.record.the_record.photo.dto.PhotoTitleDto;
 import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.s3.dto.FileDetailDto;
-import com.record.the_record.s3.service.FileUploadService;
+import com.record.the_record.s3.service.AmazonS3Service;
 import com.record.the_record.user.repository.UserRepository;
 import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class PhotoServiceImpl implements PhotoService{
 
     private final UserRepository userRepository;
     private final UserService userService;
-    private final FileUploadService fileUploadService;
+    private final AmazonS3Service amazonS3Service;
 
     @Override
     @Transactional
@@ -43,7 +43,7 @@ public class PhotoServiceImpl implements PhotoService{
         User user = userRepository.findByPk(userPk);
 
         // S3 업로드
-        FileDetailDto fileDetailDto = fileUploadService.save(multipartFile, userPk);
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, userPk);
 
         if (photoDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
@@ -172,6 +172,7 @@ public class PhotoServiceImpl implements PhotoService{
     @Transactional
     public void removePhoto(Long photoId) {
         Photo photo = photoRepository.findOneById(photoId);
+        amazonS3Service.delete(photo.getMediaUrl());
         photoRepository.delete(photo);
     }
 
