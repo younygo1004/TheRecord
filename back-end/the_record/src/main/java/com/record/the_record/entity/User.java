@@ -93,6 +93,10 @@ public class User implements UserDetails {
         this.profile = uploadName;
     }
 
+    public void addPhotoBooth(TrueAndFalse roomIsOpen) {
+        this.roomIsOpen = roomIsOpen;
+    }
+    
     public void changePassword(String password) {
         this.password = password;
     }
