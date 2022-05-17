@@ -198,6 +198,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean checkVerificationCode(CertificateDto certificateDto){
         Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(certificateDto.getUserEmail());
 
@@ -212,6 +213,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void reissuePassword(CertificateDto certificateDto) {
 
         Optional<User> optionalUser = userRepository.findByEmail(certificateDto.getUserEmail());

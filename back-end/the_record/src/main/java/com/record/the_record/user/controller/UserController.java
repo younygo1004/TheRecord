@@ -5,6 +5,7 @@ import com.record.the_record.user.dto.SearchUserDto;
 import com.record.the_record.user.dto.UserDetailDto;
 import com.record.the_record.user.dto.UserDto;
 import com.record.the_record.user.service.UserService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -79,20 +80,23 @@ public class UserController {
         return ResponseEntity.ok().body(userService.searchUser(name));
     }
 
+    @ApiOperation(value="이메일 인증번호 받기")
     @PostMapping("/email/number")
-    public ResponseEntity<String> joinVerificationCodeSend(@RequestBody CertificateDto certificateDto){
+    public ResponseEntity<String> joinVerificationCodeSend(@ApiParam(value = "이메일") @RequestBody CertificateDto certificateDto){
         userService.sendVerificationCode(certificateDto.getUserEmail());
         return ResponseEntity.ok().body("success");
     }
 
+    @ApiOperation(value = "이메일 인증번호 체크")
     @PostMapping("/email-check")
-    public ResponseEntity<String> verificationCodeCheck(@RequestBody CertificateDto certificateDto) {
+    public ResponseEntity<String> verificationCodeCheck(@ApiParam(value = "인증 정보") @RequestBody CertificateDto certificateDto) {
         userService.checkVerificationCode(certificateDto);
         return ResponseEntity.ok().body("success");
     }
 
+    @ApiOperation(value = "비밀번호 재발급")
     @PostMapping("/password/reissue")
-    public ResponseEntity<String> passwordReissue(@RequestBody CertificateDto certificateDto){
+    public ResponseEntity<String> passwordReissue(@ApiParam(value = "인증 정보") @RequestBody CertificateDto certificateDto){
         userService.reissuePassword(certificateDto);
         return ResponseEntity.ok().body("success");
     }
