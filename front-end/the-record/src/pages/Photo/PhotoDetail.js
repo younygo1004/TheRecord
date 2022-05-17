@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Navigation from '../../components/Navigation';
-import PhotoList from '../../components/Album/PhotoList';
-import '../../styles/photo/album.css';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useLocation, useNavigate } from 'react-router-dom'
+import Navigation from '../../components/Navigation'
+import PhotoList from '../../components/Album/PhotoList'
+import '../../styles/photo/album.css'
 
 function PhotoDetail() {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { photoInfo } = location.state;
-  const [photoDetail, setPhotoDetail] = useState([]);
+  const location = useLocation()
+  const navigate = useNavigate()
+  const { photoInfo } = location.state
+  const [photoDetail, setPhotoDetail] = useState([])
 
   useEffect(() => {
     axios
@@ -20,10 +20,10 @@ function PhotoDetail() {
         },
       })
       .then(res => {
-        console.log(res.data);
-        setPhotoDetail(res.data);
-      });
-  }, [photoInfo]);
+        console.log(res.data)
+        setPhotoDetail(res.data)
+      })
+  }, [photoInfo])
 
   // 사진 수정
   const modifyPhoto = () => {
@@ -31,8 +31,8 @@ function PhotoDetail() {
       state: {
         photoDetail,
       },
-    });
-  };
+    })
+  }
 
   // 사진 삭제
   const deletePhoto = () => {
@@ -45,13 +45,13 @@ function PhotoDetail() {
       },
     })
       .then(res => {
-        console.log(res);
-        navigate('/album');
+        console.log(res)
+        navigate('/album')
       })
       .catch(res => {
-        console.log(res);
-      });
-  };
+        console.log(res)
+      })
+  }
   return (
     <div id="album">
       <div className="bg-white-left">
@@ -82,6 +82,6 @@ function PhotoDetail() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
-export default PhotoDetail;
+export default PhotoDetail

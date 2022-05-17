@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 // import React, { useState, useEffect, useMemo, useCallback } from 'react';
 // import '../../styles/diary/Calendar.scss';
 // import { Year, Month } from 'react-live-clock';
@@ -184,7 +184,7 @@ function Calendar() {
     //         <b>전체 보기</b>
     //         <BiCalendar className={cn('calendarIcon')} />
     //       </div>
-  );
+  )
 }
 
-export default Calendar;
+export default Calendar

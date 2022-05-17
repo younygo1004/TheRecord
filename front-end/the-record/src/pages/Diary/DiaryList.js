@@ -1,5 +1,5 @@
-import React from 'react';
-import '../../styles/diary/diarymain.css';
+import React from 'react'
+import '../../styles/diary/diarymain.css'
 // import ListSubheader from '@mui/material/ListSubheader';
 // import List from '@mui/material/List';
 // import ListItemButton from '@mui/material/ListItemButton';
@@ -11,9 +11,9 @@ import '../../styles/diary/diarymain.css';
 // import ExpandMore from '@mui/icons-material/ExpandMore';
 
 // import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import { useHistory } from 'react-router-dom';
-import DiaryFolder from './DiaryFolder';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
+import { useHistory } from 'react-router-dom'
+import DiaryFolder from './DiaryFolder'
 
 function DiaryList() {
   // 일기목록 불러오는 api 연결
@@ -46,19 +46,19 @@ function DiaryList() {
       record_dt: '2022.XX.XX',
       visible: '',
     },
-  ];
+  ]
 
-  const history = useHistory();
+  const history = useHistory()
 
   const movePhotoDetail = listitem => {
-    console.log('이동');
+    console.log('이동')
     history.push({
       pathname: '/diary/diarydetail',
       state: {
         DiaryInfo: listitem,
       },
-    });
-  };
+    })
+  }
   // const [open, setOpen] = React.useState(true);
 
   // const handleClick = () => {
@@ -106,7 +106,7 @@ function DiaryList() {
         </Collapse>
       </List> */}
     </div>
-  );
+  )
 }
 
-export default DiaryList;
+export default DiaryList

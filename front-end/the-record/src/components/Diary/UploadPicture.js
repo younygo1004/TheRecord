@@ -1,38 +1,38 @@
-import React, { useState, useRef } from 'react';
-import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined';
-import '../../styles/diary/makediary.css';
+import React, { useState, useRef } from 'react'
+import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined'
+import '../../styles/diary/makediary.css'
 
 function UploadPicture({ sendPhoto }) {
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState('')
 
-  const imageInput = useRef();
+  const imageInput = useRef()
 
   const clickUpload = () => {
-    imageInput.current.click();
-  };
+    imageInput.current.click()
+  }
 
   const upLoadFile = event => {
     if (event.target.files[0]) {
-      event.preventDefault();
-      const reader = new FileReader();
-      reader.readAsDataURL(event.target.files[0]);
+      event.preventDefault()
+      const reader = new FileReader()
+      reader.readAsDataURL(event.target.files[0])
       reader.onloadend = e => {
-        setPhoto(e.target.result);
+        setPhoto(e.target.result)
         // 미리 보기 끝
-        const data = window.atob(e.target.result.split(',')[1]);
-        const array = [];
+        const data = window.atob(e.target.result.split(',')[1])
+        const array = []
         for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i));
+          array.push(data.charCodeAt(i))
         }
-        const file = new File([new Uint8Array(array)], { type: 'image/png' });
-        const formdata = new FormData();
-        formdata.append('file', file);
+        const file = new File([new Uint8Array(array)], { type: 'image/png' })
+        const formdata = new FormData()
+        formdata.append('file', file)
         // sendPhoto(formdata);
         // 임시설정
-        console.log(sendPhoto);
-      };
+        console.log(sendPhoto)
+      }
     }
-  };
+  }
 
   return (
     <div className="upload-picture">
@@ -62,7 +62,7 @@ function UploadPicture({ sendPhoto }) {
       />
       <textarea className="record-text" />
     </div>
-  );
+  )
 }
 
-export default UploadPicture;
+export default UploadPicture

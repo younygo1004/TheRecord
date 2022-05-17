@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useLocation } from 'react-router';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useLocation } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
-import { styled } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import Navigation from '../../components/Navigation';
-import PhotoList from '../../components/Album/PhotoList';
+import { styled } from '@mui/material/styles'
+import Switch from '@mui/material/Switch'
+import Navigation from '../../components/Navigation'
+import PhotoList from '../../components/Album/PhotoList'
 // import PhotoUpload from '../../components/Album/PhotoUpload';
-import '../../styles/photo/album.css';
+import '../../styles/photo/album.css'
 
 function PhotoEdit() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
+  const navigate = useNavigate()
+  const { state } = useLocation()
   const [photoDto, setPhotoDto] = useState({
     title: state.photoDetail.title,
     visible: state.photoDetail.visible,
-  });
+  })
 
-  const [checked, setChecked] = useState();
+  const [checked, setChecked] = useState()
 
   // 토글
   const AntSwitch = styled(Switch)(({ theme }) => ({
@@ -66,31 +66,31 @@ function PhotoEdit() {
           : 'rgba(0,0,0,.25)',
       boxSizing: 'border-box',
     },
-  }));
+  }))
 
   // 접근 권한
   const handleChange = event => {
-    setChecked(event.target.checked);
-  };
+    setChecked(event.target.checked)
+  }
   useEffect(() => {
     // 접근 권한이 바뀔 때
-    if (state.photoDetail.visible === 'PUBLIC') setChecked(true);
-    else setChecked(false);
-  }, [state.photoDetail.visible]);
+    if (state.photoDetail.visible === 'PUBLIC') setChecked(true)
+    else setChecked(false)
+  }, [state.photoDetail.visible])
 
   useEffect(() => {
     // 토글이 바뀔 때
     if (checked) {
-      setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }));
+      setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }))
     } else {
-      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }));
+      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }))
     }
-  }, [checked]);
+  }, [checked])
 
   // 제목 변경
   const onChangTitle = e => {
-    setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }));
-  };
+    setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }))
+  }
 
   // 사진첩 저장
   const saveModifyPhoto = () => {
@@ -108,14 +108,14 @@ function PhotoEdit() {
       },
     })
       .then(res => {
-        console.log(res);
-        navigate('/album');
+        console.log(res)
+        navigate('/album')
       })
       .catch(res => {
-        alert('문제가 발생했습니다.');
-        console.log(res);
-      });
-  };
+        alert('문제가 발생했습니다.')
+        console.log(res)
+      })
+  }
 
   return (
     <div id="album">
@@ -149,7 +149,7 @@ function PhotoEdit() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
 
-export default PhotoEdit;
+export default PhotoEdit

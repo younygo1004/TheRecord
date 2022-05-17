@@ -1,9 +1,9 @@
-import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Grid, TextField, FormHelperText } from '@mui/material';
-import '../../styles/signup.css';
-import { makeStyles } from '@mui/styles';
-import axios from 'axios';
+import React, { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Grid, TextField, FormHelperText } from '@mui/material'
+import '../../styles/signup.css'
+import { makeStyles } from '@mui/styles'
+import axios from 'axios'
 
 function SignUp() {
   const useStyles = makeStyles({
@@ -20,10 +20,10 @@ function SignUp() {
         },
       },
     },
-  });
+  })
 
-  const navigate = useNavigate();
-  const [timer, setTimer] = useState(0);
+  const navigate = useNavigate()
+  const [timer, setTimer] = useState(0)
 
   const [form, setForm] = useState({
     userId: '',
@@ -32,18 +32,17 @@ function SignUp() {
     certification: '',
     password: '',
     confirmPassword: '',
-  });
+  })
 
-  const { userId, name, email, certification, password, confirmPassword } =
-    form;
+  const { userId, name, email, certification, password, confirmPassword } = form
 
   const onChange = e => {
     const nextForm = {
       ...form,
       [e.target.name]: e.target.value,
-    };
-    setForm(nextForm);
-  };
+    }
+    setForm(nextForm)
+  }
 
   const [valid, setValid] = useState({
     validId: true,
@@ -52,26 +51,26 @@ function SignUp() {
     validCertification: true,
     validPassword: true,
     validConfirmPassword: true,
-  });
+  })
 
   const checkValid = ({ category, status }) => {
     const validation = {
       ...valid,
       [category]: status,
-    };
-    setValid(validation);
-  };
+    }
+    setValid(validation)
+  }
 
   const goLogin = () => {
-    navigate('/');
+    navigate('/')
     // 회원가입
-  };
+  }
 
   const idValidation = e => {
     // 존재하는 아이디 확인 api 연결
     if (form.userId.trim().length > 0) {
       if (timer) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
       const newTimer = setTimeout(async () => {
         try {
@@ -81,131 +80,131 @@ function SignUp() {
             )
             .then(res => {
               if (res.data === true) {
-                return checkValid({ category: 'validId', status: false });
+                return checkValid({ category: 'validId', status: false })
               }
-              return checkValid({ category: 'validId', status: true });
-            });
+              return checkValid({ category: 'validId', status: true })
+            })
         } catch (err) {
-          console.error('error', err);
+          console.error('error', err)
         }
-      }, 500);
-      setTimer(newTimer);
+      }, 500)
+      setTimer(newTimer)
     }
-  };
+  }
 
   function IdHelperText() {
     if (form.userId.length > 0) {
       const helperText = useMemo(() => {
         if (valid.validId) {
-          return '사용가능';
+          return '사용가능'
         }
-        return '이미 존재하는 아이디입니다.';
-      }, []);
-      return helperText;
+        return '이미 존재하는 아이디입니다.'
+      }, [])
+      return helperText
     }
-    return '';
+    return ''
   }
 
   const nameValidation = () => {
     if (form.name.length > 0) {
-      checkValid({ category: 'validName', status: true });
-      return false;
+      checkValid({ category: 'validName', status: true })
+      return false
     }
-    checkValid({ category: 'validName', status: false });
-    return true;
-  };
+    checkValid({ category: 'validName', status: false })
+    return true
+  }
 
   function NameHelperText() {
     const helperText = useMemo(() => {
       if (valid.validName) {
-        return '';
+        return ''
       }
-      return '이름은 공백일 수 없습니다.';
-    }, []);
-    return helperText;
+      return '이름은 공백일 수 없습니다.'
+    }, [])
+    return helperText
   }
 
-  const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
   const emailValidation = e => {
     if (re.test(e.target.value) || e.target.value.length === 0) {
-      checkValid({ category: 'validEmail', status: true });
-      return false;
+      checkValid({ category: 'validEmail', status: true })
+      return false
     }
-    checkValid({ category: 'validEmail', status: false });
-    return true;
-  };
+    checkValid({ category: 'validEmail', status: false })
+    return true
+  }
 
   function EmailHelperText() {
     if (form.email.length > 0) {
       const helperText = useMemo(() => {
         if (valid.validEmail) {
-          return '사용가능';
+          return '사용가능'
         }
-        return '이메일 형식이 아닙니다';
-      }, []);
-      return helperText;
+        return '이메일 형식이 아닙니다'
+      }, [])
+      return helperText
     }
-    return '';
+    return ''
   }
 
   const pwValidation = e => {
     if (e.target.value.length < 8 && e.target.value.length > 0) {
-      checkValid({ category: 'validPassword', status: false });
-      return true;
+      checkValid({ category: 'validPassword', status: false })
+      return true
     }
-    checkValid({ category: 'validPassword', status: true });
-    return false;
-  };
+    checkValid({ category: 'validPassword', status: true })
+    return false
+  }
 
   function PwHelperText() {
     if (form.password.length > 0) {
       const helperText = useMemo(() => {
         if (valid.validPassword) {
-          return '사용가능';
+          return '사용가능'
         }
-        return '비밀번호는 8자 이상입니다';
-      }, []);
-      return helperText;
+        return '비밀번호는 8자 이상입니다'
+      }, [])
+      return helperText
     }
-    return '';
+    return ''
   }
 
   const checkPwValidation = e => {
     if (form.password === e.target.value && e.target.value.length > 0) {
-      checkValid({ category: 'validConfirmPassword', status: true });
-      return true;
+      checkValid({ category: 'validConfirmPassword', status: true })
+      return true
     }
-    checkValid({ category: 'validConfirmPassword', status: false });
-    return false;
-  };
+    checkValid({ category: 'validConfirmPassword', status: false })
+    return false
+  }
 
   function CheckPwHelperText() {
     if (form.confirmPassword.length > 0) {
       const helperText = useMemo(() => {
         if (valid.validConfirmPassword) {
-          return '';
+          return ''
         }
-        return '입력하신 비밀번호와 다릅니다.';
-      }, []);
-      return helperText;
+        return '입력하신 비밀번호와 다릅니다.'
+      }, [])
+      return helperText
     }
-    return '';
+    return ''
   }
 
   const sendNum = () => {
     // 인증번호 전송 api 연결
-    console.log(form.email);
+    console.log(form.email)
     axios
       .post('https://the-record.co.kr:8080/api/user/email/number', {
         userEmail: form.email,
       })
       .then(() => {
-        alert('인증번호를 전송했습니다.');
+        alert('인증번호를 전송했습니다.')
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   const checkNum = () => {
     // 인증번호 확인 api 연결
@@ -217,18 +216,18 @@ function SignUp() {
       },
     })
       .then(res => {
-        console.log('인증번호 확인');
+        console.log('인증번호 확인')
         if (res.data === 'SUCCESS') {
-          checkValid({ category: 'validConfirmPassword', status: true });
-          alert('인증되었습니다.');
+          checkValid({ category: 'validConfirmPassword', status: true })
+          alert('인증되었습니다.')
         }
-        checkValid({ category: 'validConfirmPassword', status: false });
-        alert('인증번호를 다시 입력해주세요');
+        checkValid({ category: 'validConfirmPassword', status: false })
+        alert('인증번호를 다시 입력해주세요')
       })
       .catch(err => {
-        console.log(err);
-      });
-  };
+        console.log(err)
+      })
+  }
 
   const onSubmit = () => {
     // 회원가입 api 연결
@@ -243,13 +242,13 @@ function SignUp() {
       },
     })
       .then(() => {
-        alert('회원가입이 완료되었습니다.');
-        goLogin();
+        alert('회원가입이 완료되었습니다.')
+        goLogin()
       })
       .catch(() => {
-        alert('회원가입 작성 문항을 확인해주세요');
-      });
-  };
+        alert('회원가입 작성 문항을 확인해주세요')
+      })
+  }
 
   function signupButton() {
     if (
@@ -270,7 +269,7 @@ function SignUp() {
         <button type="button" onClick={onSubmit} className="signup-btn">
           회원가입
         </button>
-      );
+      )
     }
     return (
       <button
@@ -281,7 +280,7 @@ function SignUp() {
       >
         회원가입
       </button>
-    );
+    )
   }
 
   function sendEmailButton() {
@@ -290,13 +289,13 @@ function SignUp() {
         <button type="button" className="check-btn" onClick={sendNum}>
           전송
         </button>
-      );
+      )
     }
     return (
       <button type="button" className="grey-check-btn" disabled>
         전송
       </button>
-    );
+    )
   }
 
   function checkNumberButton() {
@@ -305,13 +304,13 @@ function SignUp() {
         <button type="button" className="check-btn" onClick={checkNum}>
           인증
         </button>
-      );
+      )
     }
     return (
       <button type="button" className="grey-check-btn" disabled>
         인증
       </button>
-    );
+    )
   }
 
   return (
@@ -330,8 +329,8 @@ function SignUp() {
                 placeholder="아이디"
                 name="userId"
                 onChange={e => {
-                  onChange(e);
-                  idValidation(e);
+                  onChange(e)
+                  idValidation(e)
                 }}
                 size="small"
                 fullWidth
@@ -358,7 +357,7 @@ function SignUp() {
                 placeholder="이름"
                 name="name"
                 onChange={e => {
-                  onChange(e);
+                  onChange(e)
                 }}
                 onBlur={() => nameValidation()}
                 value={name}
@@ -378,8 +377,8 @@ function SignUp() {
                 placeholder="이메일"
                 name="email"
                 onChange={e => {
-                  onChange(e);
-                  emailValidation(e);
+                  onChange(e)
+                  emailValidation(e)
                 }}
                 value={email}
               />
@@ -406,7 +405,7 @@ function SignUp() {
                 placeholder="인증번호"
                 name="certification"
                 onChange={e => {
-                  onChange(e);
+                  onChange(e)
                 }}
                 value={certification}
               />
@@ -423,8 +422,8 @@ function SignUp() {
                 placeholder="비밀번호"
                 name="password"
                 onChange={e => {
-                  onChange(e);
-                  pwValidation(e);
+                  onChange(e)
+                  pwValidation(e)
                 }}
                 value={password}
                 autoComplete="off"
@@ -450,8 +449,8 @@ function SignUp() {
                 placeholder="비밀번호 확인"
                 name="confirmPassword"
                 onChange={e => {
-                  onChange(e);
-                  checkPwValidation(e);
+                  onChange(e)
+                  checkPwValidation(e)
                 }}
                 value={confirmPassword}
                 autoComplete="off"
@@ -479,7 +478,7 @@ function SignUp() {
         <Grid item sm={1} md={4} />
       </form>
     </div>
-  );
+  )
 }
 
-export default SignUp;
+export default SignUp

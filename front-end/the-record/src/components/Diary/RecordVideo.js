@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react'
 // import axios from 'axios';
 
 function RecordVideo({ sendVideo }) {
-  const videoRef = useRef(null);
-  const [recorded, setRecorded] = useState(false);
-  const [recordedVideoURL, setrecordedVideoURL] = useState();
-  const [videoRecorder, setVideoRecorder] = useState({});
+  const videoRef = useRef(null)
+  const [recorded, setRecorded] = useState(false)
+  const [recordedVideoURL, setrecordedVideoURL] = useState()
+  const [videoRecorder, setVideoRecorder] = useState({})
   // const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_API_TOKEN;
 
   const sendSpeech = result => {
-    console.log('전송');
-    console.log(result);
+    console.log('전송')
+    console.log(result)
 
     // fetch(
     //   `https://speech.googleapis.com/v1/speech:recognize?key=${GOOGLE_API_TOKEN}`,
@@ -37,54 +37,54 @@ function RecordVideo({ sendVideo }) {
     //   .catch(err => {
     //     console.log('Error: ', err);
     //   });
-  };
+  }
 
   const recordingStart = mediaStream => {
-    console.log('video capture start');
+    console.log('video capture start')
 
-    const videoData = [];
+    const videoData = []
     const newVideoRecorder = new MediaRecorder(mediaStream, {
       mimeType: 'video/webm; codecs=vp9',
-    });
+    })
 
     newVideoRecorder.ondataavailable = event => {
       if (event.data?.size > 0) {
-        videoData.push(event.data);
+        videoData.push(event.data)
       }
-    };
+    }
 
     newVideoRecorder.onstop = () => {
-      const videoBlob = new Blob(videoData, { type: 'video/webm' });
-      setrecordedVideoURL(window.URL.createObjectURL(videoBlob));
-      const reader = new FileReader();
-      reader.readAsDataURL(videoBlob);
+      const videoBlob = new Blob(videoData, { type: 'video/webm' })
+      setrecordedVideoURL(window.URL.createObjectURL(videoBlob))
+      const reader = new FileReader()
+      reader.readAsDataURL(videoBlob)
       reader.onloadend = () => {
         // 구글 스피치 보내기
-        sendSpeech(reader.result);
-        const data = reader.result.split('base64,')[1];
-        console.log(data);
-        const array = [];
+        sendSpeech(reader.result)
+        const data = reader.result.split('base64,')[1]
+        console.log(data)
+        const array = []
         for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i));
+          array.push(data.charCodeAt(i))
         }
-        const file = new File([new Uint8Array(array)], { type: 'video/webm' });
-        const formdata = new FormData();
-        formdata.append('file', file);
-        console.log(file);
+        const file = new File([new Uint8Array(array)], { type: 'video/webm' })
+        const formdata = new FormData()
+        formdata.append('file', file)
+        console.log(file)
         // 임시 설정
         // sendVideo(formdata);
-        console.log(sendVideo);
-        console.log('video capture end');
-      };
-    };
+        console.log(sendVideo)
+        console.log('video capture end')
+      }
+    }
 
-    newVideoRecorder.start();
-    console.log(newVideoRecorder);
-    setVideoRecorder(newVideoRecorder);
-  };
+    newVideoRecorder.start()
+    console.log(newVideoRecorder)
+    setVideoRecorder(newVideoRecorder)
+  }
 
   const videoCaptureStart = () => {
-    setrecordedVideoURL(null);
+    setrecordedVideoURL(null)
     navigator.mediaDevices
       .getUserMedia({
         audio: true,
@@ -94,24 +94,24 @@ function RecordVideo({ sendVideo }) {
         },
       })
       .then(mediaStream => {
-        videoRef.current.srcObject = mediaStream;
+        videoRef.current.srcObject = mediaStream
         videoRef.onloadedmetadata = () => {
-          videoRef.play();
-        };
-        setRecorded(true);
-        recordingStart(mediaStream);
+          videoRef.play()
+        }
+        setRecorded(true)
+        recordingStart(mediaStream)
       })
-      .catch(err => console.log(err));
-  };
+      .catch(err => console.log(err))
+  }
 
   const VideoCaptureEnd = () => {
-    console.log(videoRecorder);
+    console.log(videoRecorder)
     if (videoRecorder) {
-      videoRecorder.stop();
-      setVideoRecorder(null);
-      setRecorded(false);
+      videoRecorder.stop()
+      setVideoRecorder(null)
+      setRecorded(false)
     }
-  };
+  }
 
   return (
     <div className="record-video">
@@ -121,7 +121,7 @@ function RecordVideo({ sendVideo }) {
             type="button"
             className="record-video-cancel-btn"
             onClick={() => {
-              VideoCaptureEnd();
+              VideoCaptureEnd()
             }}
           >
             녹화 끝
@@ -131,7 +131,7 @@ function RecordVideo({ sendVideo }) {
             type="button"
             className="record-video-btn"
             onClick={() => {
-              videoCaptureStart();
+              videoCaptureStart()
             }}
           >
             녹화 시작
@@ -160,7 +160,7 @@ function RecordVideo({ sendVideo }) {
         ) : null}
       </div>
     </div>
-  );
+  )
 }
 
-export default RecordVideo;
+export default RecordVideo

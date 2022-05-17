@@ -7,14 +7,14 @@
 }
 
 .Year {
-  font-family: "SEBANG";
+  font-family: 'SEBANG';
   font-size: 2.4rem;
   font-style: italic;
   color: #1864ab;
 }
 
 .Month {
-  font-family: "SEBANG";
+  font-family: 'SEBANG';
   font-size: 1.55rem;
   font-style: italic;
   color: #1864ab;
@@ -36,7 +36,7 @@
     // 요일별 색상 분리하기
     //평일 검정, 공휴일/일요일 빨간색/ 토요일 파란색
     .Weaklist {
-      font-family: "Nanum Myeongjo";
+      font-family: 'Nanum Myeongjo';
       font-size: 0.8em;
       width: 5rem;
       height: 4rem;
@@ -50,7 +50,7 @@
 
   /* 오늘자 기준 날짜 배열 Daylist */
   .Daylist {
-    font-family: "SEBANG";
+    font-family: 'SEBANG';
     font-size: 1.3rem;
     width: 5rem;
     height: 4rem;

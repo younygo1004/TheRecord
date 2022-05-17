@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import store from '../store';
-import { actions } from '../actions/common';
-import '../styles/common/navigation.css';
+import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import store from '../store'
+import { actions } from '../actions/common'
+import '../styles/common/navigation.css'
 
 function Navigation() {
   const switchNav = navPage => {
-    store.dispatch(actions.setValue('navPage', navPage));
-  };
+    store.dispatch(actions.setValue('navPage', navPage))
+  }
 
   useEffect(() => {
-    const nowPage = store.getState().common.navPage;
-    const navBar = document.querySelector(`#${nowPage}`);
-    navBar.style.backgroundColor = 'white';
-    navBar.style.color = 'black';
-    navBar.style.borderLeft = '2px solid white';
-  }, []);
+    const nowPage = store.getState().common.navPage
+    const navBar = document.querySelector(`#${nowPage}`)
+    navBar.style.backgroundColor = 'white'
+    navBar.style.color = 'black'
+    navBar.style.borderLeft = '2px solid white'
+  }, [])
 
   return (
     <div id="navigation">
@@ -29,7 +29,7 @@ function Navigation() {
         사진첩
       </Link>
     </div>
-  );
+  )
 }
 
-export default Navigation;
+export default Navigation

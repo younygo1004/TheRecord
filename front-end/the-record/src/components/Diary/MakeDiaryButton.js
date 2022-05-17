@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 function MakeDiaryButton({ clickUpload }) {
   return (
@@ -14,7 +14,7 @@ function MakeDiaryButton({ clickUpload }) {
         업로드
       </button>
     </div>
-  );
+  )
 }
 
-export default MakeDiaryButton;
+export default MakeDiaryButton

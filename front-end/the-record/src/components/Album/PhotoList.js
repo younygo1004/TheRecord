@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import '../../styles/photo/album.css';
-import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import '../../styles/photo/album.css'
+import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
+import { useNavigate } from 'react-router-dom'
 
 function PhotoList() {
   // 일기목록 불러오는 api 연결
-  const [photolist, setPhotolist] = useState([]);
+  const [photolist, setPhotolist] = useState([])
 
   useEffect(() => {
     axios
@@ -16,19 +16,19 @@ function PhotoList() {
         },
       })
       .then(res => {
-        setPhotolist(res.data);
-      });
-  }, []);
+        setPhotolist(res.data)
+      })
+  }, [])
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const movePhotoDetail = listitem => {
     navigate('/album/photodetail', {
       state: {
         photoInfo: listitem,
       },
-    });
-  };
+    })
+  }
 
   return (
     <div className="photolist">
@@ -51,7 +51,7 @@ function PhotoList() {
         ))}
       </div>
     </div>
-  );
+  )
 }
 
-export default PhotoList;
+export default PhotoList

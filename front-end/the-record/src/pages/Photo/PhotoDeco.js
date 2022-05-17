@@ -1,20 +1,20 @@
-import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import ImageEditor from '@toast-ui/react-image-editor';
-import Navigation from '../../components/Navigation';
+import React, { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ImageEditor from '@toast-ui/react-image-editor'
+import Navigation from '../../components/Navigation'
 
-import 'tui-image-editor/dist/tui-image-editor.css';
+import 'tui-image-editor/dist/tui-image-editor.css'
 
-import PhotoList from '../../components/Album/PhotoList';
-import '../../styles/photo/album.css';
+import PhotoList from '../../components/Album/PhotoList'
+import '../../styles/photo/album.css'
 
 // import TuiImageEditor from 'tui-image-editor';
 // import 'tui-image-editor/dist/tui-image-editor.css';
 // import 'tui-color-picker/dist/tui-color-picker.css';
 
 function PhotoDeco() {
-  const editorRef = useRef();
-  const navigate = useNavigate();
+  const editorRef = useRef()
+  const navigate = useNavigate()
 
   const myTheme = {
     'common.bisize.width': '0',
@@ -100,16 +100,16 @@ function PhotoDeco() {
     //         rotatingPointOffset: 70,
     //       },
     //     },
-  };
+  }
 
   const uploadPhotoList = () => {
-    const canvas = document.querySelector('.lower-canvas');
-    console.log(canvas);
-    const dataURL = canvas.toDataURL('image/png');
-    console.log(dataURL);
+    const canvas = document.querySelector('.lower-canvas')
+    console.log(canvas)
+    const dataURL = canvas.toDataURL('image/png')
+    console.log(dataURL)
 
-    navigate('/album/photodeco/upload', { state: dataURL });
-  };
+    navigate('/album/photodeco/upload', { state: dataURL })
+  }
   return (
     <div id="album">
       <div className="bg-white-left">
@@ -155,7 +155,7 @@ function PhotoDeco() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
 
-export default PhotoDeco;
+export default PhotoDeco
