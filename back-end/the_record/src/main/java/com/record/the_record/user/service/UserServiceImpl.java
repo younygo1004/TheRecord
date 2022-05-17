@@ -242,10 +242,10 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByPk(photoBoothDto.getUserPk());
         String roomIsOpen = String.valueOf(user.getRoomIsOpen());
-
-        if (roomIsOpen.equals("TRUE")) {
-            throw new ExistUserRoomException();
-        }
+//
+//        if (roomIsOpen.equals("TRUE")) {
+//            throw new ExistUserRoomException();
+//        }
 
         user.addPhotoBooth(TrueAndFalse.TRUE);
         userRepository.save(user);
