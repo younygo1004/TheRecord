@@ -1,6 +1,5 @@
 package com.record.the_record.user.service;
 
-import com.record.the_record.entity.User;
 import com.record.the_record.entity.enums.TrueAndFalse;
 import com.record.the_record.user.dto.*;
 import org.springframework.web.multipart.MultipartFile;
