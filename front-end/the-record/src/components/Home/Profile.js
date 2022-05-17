@@ -10,47 +10,29 @@ function Profile() {
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
 
   useEffect(() => {});
-  // const handleEnter = sentence => {
-  //   const newSentence = sentence.split('\n').map((line, index) => {
-  //     return (
-  //       <p key={(line, index)}>
-  //         {line}
-  //         <br />
-  //       </p>
-  //     );
-  //   });
-  //   return newSentence;
-  // };
+  const handleEnter = sentence => {
+    const newSentence = sentence.split('\n').map((line, index) => {
+      return (
+        <p key={(line, index)}>
+          {line}
+          <br />
+        </p>
+      );
+    });
+    return newSentence;
+  };
 
-  const imagUrl = (userPk, profile) => {
-    if (profile === 'default.png') {
-      return `https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/default.png`;
-    }
-    return `https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${userPk}/${profile}`;
+  const imageUrl = profile => {
+    return `https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${profile}`;
   };
 
   const handleHostProfile = () => {
-    if (homePageHostInfo.introduce == null) {
-      return (
-        <div className="profile-info">
-          <img
-            src={imagUrl(homePageHostInfo.userPk, homePageHostInfo.profile)}
-            alt="일촌 홈피"
-          />
-          <div className="profile-text">
-            <p style={{ textAlign: 'center' }}>자기소개를 등록해주세요</p>
-          </div>
-        </div>
-      );
-    }
     return (
       <div className="profile-info">
-        <img
-          src={imagUrl(homePageHostInfo.userPk, homePageHostInfo.profile)}
-          alt="일촌 홈피"
-        />
-        {/* <div className="profile-text">{handleEnter(homePageHostInfo.introduce)}</div> */}
-        <div className="profile-text">{homePageHostInfo.introduce}</div>
+        <img src={imageUrl(homePageHostInfo.profile)} alt="일촌 홈피" />
+        <div className="profile-text">
+          {handleEnter(homePageHostInfo.introduce)}
+        </div>
       </div>
     );
   };

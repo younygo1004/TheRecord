@@ -7,14 +7,22 @@ import { API_HOST } from './constant';
  * @param {string} param.url
  * @param {object=} param.params
  * @param {object=} param.data
+ * @param {object=} param.headers
  */
-export default function callApi({ method = 'get', url, params, data }) {
+export default function callApi({
+  method = 'get',
+  url,
+  params,
+  data,
+  headers,
+}) {
   return axios({
     url,
     method,
     baseURL: API_HOST,
     headers: {
       'X-AUTH-TOKEN': sessionStorage.getItem('jwt'),
+      ...headers,
     },
     params,
     data,

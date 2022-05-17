@@ -20,7 +20,7 @@ function MyNeighborList() {
     });
     navigate('/home');
   };
-  // useEffect 로그인한 유저의 일촌 목록 불러오기
+
   useEffect(() => {
     const handleNeighbor = async () => {
       const res = await callApi({ url: '/api/user/neighbor' });

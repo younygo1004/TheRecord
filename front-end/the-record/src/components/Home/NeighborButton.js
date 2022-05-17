@@ -34,7 +34,6 @@ function NeighborButton() {
   };
 
   const searchNeighbor = async () => {
-    console.log('검색', neighborName);
     const res = await callApi({ url: `/api/user/${neighborName}` });
     setNeighborList(res);
 

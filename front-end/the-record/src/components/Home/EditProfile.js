@@ -9,16 +9,15 @@ import FaceIcon from '@mui/icons-material/Face';
 import EditButton from '../../assets/edit_button.png';
 import '../../styles/home/edit-profile.css';
 import callApi from '../../common/api';
+import store from '../../store';
+import { types } from '../../actions/common';
 
 function EditProfile() {
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
   const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
   const [tempImg, setTempImg] = useState(null);
-  const [profileText, setProfileText] = useState(() =>
-    homePageHostInfo.introduce === null
-      ? '자기소개가 아직 없습니다'
-      : homePageHostInfo.introduce,
-  );
+  const [imageFile, setImageFile] = useState(null);
+  const [profileText, setProfileText] = useState(homePageHostInfo.introduce);
 
   const handleText = e => {
     setProfileText(e.currentTarget.value);
@@ -28,7 +27,7 @@ function EditProfile() {
 
   const handleProfileImg = e => {
     if (e.target.files[0]) {
-      console.log(e.target.files[0]);
+      setImageFile(e.target.files[0]);
     } else {
       console.log('취소');
       return;
@@ -44,19 +43,43 @@ function EditProfile() {
     reader.readAsDataURL(e.target.files[0]);
   };
 
-  const updateProfile = () => {
-    // callApi({url: ``})
+  const updateProfile = async () => {
+    if (imageFile !== null) {
+      const formData = new FormData();
+      formData.append('profile', imageFile);
+      await callApi({
+        method: 'put',
+        url: `/api/user/profile`,
+        data: formData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+    }
+
+    if (profileText !== homePageHostInfo.introduce) {
+      await callApi({
+        method: 'put',
+        url: `/api/user/introduction`,
+        data: { introduce: profileText },
+      });
+    }
+
+    store.dispatch({
+      type: types.FETCH_USER_INFO,
+      userInfo: homePageHostInfo,
+      key: 'homePageHostInfo',
+    });
+    store.dispatch({
+      type: types.FETCH_USER_INFO,
+      userInfo: homePageHostInfo,
+      key: 'loginUserInfo',
+    });
 
     setEditProfileDialogOpen(false);
   };
 
   const handleClose = () => {
     setTempImg(() => null);
-    setProfileText(() =>
-      homePageHostInfo.introduce === null
-        ? '자기소개가 아직 없습니다'
-        : homePageHostInfo.introduce,
-    );
+    setProfileText(() => homePageHostInfo.introduce);
     setEditProfileDialogOpen(false);
   };
 
