@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import iro from '@jaames/iro';
 import '../../styles/photo/album.css';
@@ -13,6 +14,7 @@ import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
 function MakeBoothButton() {
   const navigate = useNavigate();
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo);
   const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false);
   const [colorDialogOpen, setColorDialogOpen] = useState(false);
   const [peopleNum, setPeopleNum] = useState(4);
@@ -66,9 +68,8 @@ function MakeBoothButton() {
 
   const movePhotobooth = () => {
     navigate('/album/photobooth', {
-      state: { peopleNum, backgroundColor },
+      state: { peopleNum, backgroundColor, sessionHost: loginUserInfo.name },
     });
-    console.log(peopleNum, backgroundColor);
     setColorDialogOpen(false);
     setPeopleNum(4);
     setmakeBoothDialogOpen(false);

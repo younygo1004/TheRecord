@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Navigation from '../../components/Navigation';
 import UploadButton from '../../components/Album/UploadButton';
 import EnterBoothButton from '../../components/Album/EnterBoothButton';
@@ -8,6 +9,9 @@ import PhotoList from '../../components/Album/PhotoList';
 import '../../styles/photo/album.css';
 
 function Album() {
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo);
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
+
   return (
     <div id="album">
       <div className="bg-white-left">
@@ -24,8 +28,12 @@ function Album() {
             />
             업로드 하기
           </button> */}
-          <UploadButton />
-          <MakeBoothButton />
+          {loginUserInfo.name === homePageHostInfo.name ? (
+            <UploadButton />
+          ) : (
+            <div />
+          )}
+          {loginUserInfo.name === homePageHostInfo.name && <MakeBoothButton />}
           <EnterBoothButton />
         </div>
         <PhotoPreview />

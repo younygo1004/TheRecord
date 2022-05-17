@@ -20,10 +20,10 @@ import '../../styles/photo/photobooth.css';
 import UserVideoComponent from '../../components/Album/UserVideoComponent';
 
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443';
-// const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
+const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET;
 const { REACT_APP_REMOVEBG_API_TOKEN } = process.env;
 // const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
-const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
+// const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 class PhotoBooth extends Component {
   constructor(props) {
@@ -55,7 +55,11 @@ class PhotoBooth extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload);
     this.joinSession();
-    console.log(this.props.location.state);
+    const { peopleNum, backgroundColor, sessionHost } =
+      this.props.location.state;
+    console.log(peopleNum);
+    console.log(backgroundColor);
+    console.log(sessionHost);
 
     // 방 만든사람과 사용자가 일치할 경우만
     // if () {
