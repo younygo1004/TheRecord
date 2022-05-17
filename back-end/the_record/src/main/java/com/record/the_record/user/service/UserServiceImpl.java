@@ -72,19 +72,33 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void addUser(UserDto userDto) {
-        User user = User.builder()
-                .userId(userDto.getUserId())
-                .password(passwordEncoder.encode(userDto.getPassword()))
-                .name(userDto.getName())
-                .email(userDto.getEmail())
-                .profile("default.png")
-                .roomIsOpen(TrueAndFalse.FALSE)
-                .userRole(UserRole.valueOf("ROLE_USER")).build();
 
-        folderRepository.save(Folder.builder()
-                .user(user)
-                .name("기본 폴더").build());
-        userRepository.save(user);
+        Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(userDto.getEmail());
+
+        optionalUserVerification.ifPresent(userVerification -> {
+
+            checkVerificationCode(CertificateDto.builder()
+                    .certificateNum(userDto.getCertificateNum())
+                    .userEmail(userDto.getEmail())
+                    .build());
+
+            User user = User.builder()
+                    .userId(userDto.getUserId())
+                    .password(passwordEncoder.encode(userDto.getPassword()))
+                    .name(userDto.getName())
+                    .email(userDto.getEmail())
+                    .profile("default.png")
+                    .userRole(UserRole.valueOf("ROLE_USER")).build();
+
+            folderRepository.save(Folder.builder()
+                    .user(user)
+                    .name("기본 폴더").build());
+            userRepository.save(user);
+            userVerificationRepository.delete(userVerification);
+        });
+
+        optionalUserVerification.orElseThrow(VerificationCodeNotExistException::new);
+
     }
 
     @Override
@@ -184,7 +198,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void checkVerificationCode(CertificateDto certificateDto){
+    public boolean checkVerificationCode(CertificateDto certificateDto){
         Optional<UserVerification> optionalUserVerification = userVerificationRepository.findById(certificateDto.getUserEmail());
 
         optionalUserVerification.ifPresent(userVerification -> {
@@ -194,6 +208,7 @@ public class UserServiceImpl implements UserService {
 
         optionalUserVerification.orElseThrow(VerificationCodeNotExistException::new);
 
+        return true;
     }
 
     @Override
@@ -202,7 +217,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findByEmail(certificateDto.getUserEmail());
 
         optionalUser.ifPresent(user -> {
-
+            checkVerificationCode(certificateDto);
+            user.changePassword(getRandomString());
+            userVerificationRepository.delete(userVerificationRepository.findById(certificateDto.getUserEmail()).get());
         });
 
     }

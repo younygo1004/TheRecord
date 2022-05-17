@@ -26,5 +26,7 @@ public class UserDto {
     private String introduce;
     @ApiModelProperty("프로필 사진 경로")
     private String profile;
+    @ApiModelProperty("인증번호")
+    private String certificateNum;
 
 }

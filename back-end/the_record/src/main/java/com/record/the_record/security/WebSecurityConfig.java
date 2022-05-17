@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] NO_ROLE_URLS = {"/api/user/signup",
-            "/api/user/id-check/**", "/api/user/login", "/api/user/email/number", "/api/user/email-check",
+            "/api/user/id-check/**", "/api/user/login", "/api/user/email/number", "/api/user/email-check", "/api/user/password/reissue",
             /* swagger v2 */
             "/v2/api-docs",
             "/swagger-resources/**",
