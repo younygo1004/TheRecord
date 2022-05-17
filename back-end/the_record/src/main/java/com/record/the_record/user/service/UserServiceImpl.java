@@ -217,7 +217,7 @@ public class UserServiceImpl implements UserService {
 
         optionalUser.ifPresent(user -> {
             checkVerificationCode(certificateDto);
-            user.changePassword(getRandomString());
+            user.changePassword(passwordEncoder.encode(getRandomString()));
             userVerificationRepository.delete(userVerificationRepository.findById(certificateDto.getUserEmail()).get());
         });
 
