@@ -212,6 +212,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addPhotoBooth(PhotoBoothDto photoBoothDto) {
 
         User user = userRepository.findByPk(photoBoothDto.getUserPk());
@@ -223,5 +224,26 @@ public class UserServiceImpl implements UserService {
 
         user.addPhotoBooth(TrueAndFalse.TRUE);
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public TrueAndFalse checkPhotoBoothIsOpen(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        return user.get().getRoomIsOpen();
+    }
+
+    @Override
+    public void removePhotoBooth(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        User host = userRepository.findByPk(user.get().getPk());
+        String roomIsOpen = String.valueOf(host.getRoomIsOpen());
+
+        if (roomIsOpen.equals("FALSE")) {
+            throw new ExistUserRoomException("생성된 방이 없습니다.");
+        }
+
+        host.addPhotoBooth(TrueAndFalse.FALSE);
+        userRepository.save(host);
     }
 }
