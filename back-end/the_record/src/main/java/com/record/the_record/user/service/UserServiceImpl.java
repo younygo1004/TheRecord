@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
                     .name(userDto.getName())
                     .email(userDto.getEmail())
                     .profile("default.png")
+                    .introduce("자기 소개가 아직 없습니다.")
                     .userRole(UserRole.valueOf("ROLE_USER")).build();
 
             folderRepository.save(Folder.builder()
