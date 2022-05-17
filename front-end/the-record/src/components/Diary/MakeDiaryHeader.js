@@ -3,8 +3,9 @@ import { styled } from '@mui/material/styles';
 import Switch from '@mui/material/Switch';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
-function MakeDiaryHeader() {
+function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
@@ -54,8 +55,8 @@ function MakeDiaryHeader() {
 
   const [checked, setChecked] = useState(true);
   const [folderListOpen, setFolderListOpen] = useState(false);
-  const [selectedFolder, setSelectedFolder] = useState('');
   // 폴더 조회 api 연결
+  const [selectedFolder, setSelectedFolder] = useState('');
   const folderlist = [
     {
       folderId: 2,
@@ -63,7 +64,7 @@ function MakeDiaryHeader() {
     },
     {
       folderId: 3,
-      folderName: 'CSS 너무 어렵다 ㅠㅠㅠㅠㅠㅠㅠ',
+      folderName: '분분분분분분분분분분분분분분분분분분분분',
     },
   ];
 
@@ -73,40 +74,47 @@ function MakeDiaryHeader() {
 
   return (
     <div className="make-diary-header">
-      {/* 일기 제목 글자 제한 몇 글자? */}
-      <input type="text" maxLength="20" />
+      <input
+        type="text"
+        maxLength="20"
+        placeholder="일기 제목을 입력해주세요"
+        onChange={e => sendTitle(e.target.value)}
+      />
       <div className="make-diary-header-div">
         <div>
           <button
             type="button"
             onClick={() => setFolderListOpen(!folderListOpen)}
-            // className="make-dialog-input"
+            className="make-diary-input"
           >
+            <FolderOpenIcon
+              sx={{ fontSize: 'medium' }}
+              style={{ marginRight: '3px' }}
+            />
             {selectedFolder}
             {folderListOpen ? (
-              <ArrowDropUpIcon
-                color="action"
-                // className="make-dialog-input-btn"
-              />
+              <ArrowDropUpIcon color="action" />
             ) : (
-              <ArrowDropDownIcon
-                color="action"
-                // className="make-dialog-input-btn"
-              />
+              <ArrowDropDownIcon color="action" />
             )}
           </button>
-          <div className="photobooth-num-list">
+          <div className="make-diary-list">
             {folderListOpen
               ? folderlist.map(folder => (
                   <button
                     type="button"
-                    // className="photobooth-num-listitem"
+                    className="make-diary-listitem"
                     key={folder.folderId}
                     onClick={() => [
                       setSelectedFolder(folder.folderName),
                       setFolderListOpen(false),
+                      sendFolder(folder.folderId),
                     ]}
                   >
+                    <FolderOpenIcon
+                      sx={{ fontSize: 'medium' }}
+                      style={{ marginRight: '3px' }}
+                    />
                     {folder.folderName}
                   </button>
                 ))
@@ -117,7 +125,10 @@ function MakeDiaryHeader() {
           <p>나만 보기</p>
           <AntSwitch
             checked={checked}
-            onChange={event => handleChange(event)}
+            onChange={event => [
+              handleChange(event),
+              sendVisible(event.target.checked),
+            ]}
             inputProps={{ 'aria-label': 'ant design' }}
           />
         </div>
