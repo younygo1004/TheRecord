@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 import fetchLogin from './service';
+import store from '../../store';
+import { types } from '../../actions/common';
 
 function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const moveHome = () => {
-    // 로그인한 사람의 정보를 세션에 올려놓음
-    sessionStorage.setItem('homePageHost', '5_waterglass');
-
-    navigate('home');
-    console.log(location.pathname);
-  };
 
   const [account, setAccount] = useState({
     id: '',
@@ -27,12 +22,32 @@ function Login() {
     try {
       const JWT = await fetchLogin(account);
 
-      console.log(JWT);
+      const decodeJWT = jwtDecode(JWT);
+      const userInfo = {
+        userPk: decodeJWT.userPk,
+        userId: decodeJWT.userId,
+      };
+      sessionStorage.setItem('jwt', JWT);
+      store.dispatch({
+        type: types.FETCH_USER_INFO,
+        userInfo,
+        key: 'loginUserInfo',
+      });
+      store.dispatch({
+        type: types.FETCH_USER_INFO,
+        userInfo,
+        key: 'homePageHostInfo',
+      });
 
-      // sessionStorage.setItem('jwt', JWT);
-      navigate('/home');
+      if (store.getState().common.homePageHostInfo) {
+        navigate('/home');
+      } else {
+        setTimeout(() => {
+          navigate('/home');
+        }, 300);
+      }
     } catch (error) {
-      alert(error);
+      alert('로그인 정보가 일치하지 않습니다');
     }
   };
 
@@ -70,7 +85,7 @@ function Login() {
               alignItems: 'center',
             }}
           >
-            <LoginButton onClick={onSubmitAccount}>로그인</LoginButton>
+            <LoginButton onClick={() => onSubmitAccount()}>로그인</LoginButton>
             <ForgotPwd>비밀번호를 잊으셨나요?</ForgotPwd>
           </div>
         </DivStyle>
@@ -84,9 +99,6 @@ function Login() {
           아직 계정이 없으신가요?{' '}
           <Join onClick={() => navigate('signup')}>가입하기</Join>
         </JoinText>
-        <button type="button" onClick={() => moveHome()}>
-          click
-        </button>
       </Container2>
     </Container>
   );

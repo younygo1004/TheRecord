@@ -1,55 +1,88 @@
-import React from 'react';
-import myProfilePhoto from '../../assets/my_profile_photo.png';
-import otherProfilePhoto from '../../assets/other_profile_photo.png';
+import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { types } from '../../actions/common';
+import callApi from '../../common/api';
+import store from '../../store';
 import NeighborButton from './NeighborButton';
 
 function Profile() {
-  // 현재 로그인 상태 세션에 올려놓음(userInfo)
-  const loginUser = '5_waterglass';
-  const loginUserProfileText =
-    '다가가볼까...?\n말건네볼까...?\n이런 생각을 dddddddddddddddddddddddddddddddddddddddd하면서 망설였습니다.\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그리고, 결심하고 뒤를 돌아보자\n그사람은 이미 떠나고 없었습니다.';
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo);
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
 
-  // 현재 보고있는 홈피 주인 정보
-  const homePageHost = sessionStorage.getItem('homePageHost');
-  const otherProfileText =
-    '난... ㄱㅏ끔...\n눈물을 흘린ㄷㅏ....\nㄱㅏ끔은 눈물을 참을 수 없는\nㄴㅐ가 별루ㄷㅏ...\n';
+  useEffect(() => {});
+  // const handleEnter = sentence => {
+  //   const newSentence = sentence.split('\n').map((line, index) => {
+  //     return (
+  //       <p key={(line, index)}>
+  //         {line}
+  //         <br />
+  //       </p>
+  //     );
+  //   });
+  //   return newSentence;
+  // };
 
-  const handleEnter = sentence => {
-    const newSentence = sentence.split('\n').map((line, index) => {
-      return (
-        <p key={(line, index)}>
-          {line}
-          <br />
-        </p>
-      );
-    });
-    return newSentence;
+  const imagUrl = (userPk, profile) => {
+    if (profile === 'default.png') {
+      return `https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/default.png`;
+    }
+    return `https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${userPk}/${profile}`;
   };
 
   const handleHostProfile = () => {
-    // 다른사람 홈페이지 방문
-    if (loginUser !== homePageHost) {
+    if (homePageHostInfo.introduce == null) {
       return (
         <div className="profile-info">
-          <img src={otherProfilePhoto} alt="일촌 홈피" />
-          <div className="profile-text">{handleEnter(otherProfileText)}</div>
+          <img
+            src={imagUrl(homePageHostInfo.userPk, homePageHostInfo.profile)}
+            alt="일촌 홈피"
+          />
+          <div className="profile-text">
+            <p style={{ textAlign: 'center' }}>자기소개를 등록해주세요</p>
+          </div>
         </div>
       );
     }
-
-    // 내 홈페이지 (userInfo 내의 Profile 정보)
     return (
       <div className="profile-info">
-        <img src={myProfilePhoto} alt="내 홈피" />
-        <div className="profile-text">{handleEnter(loginUserProfileText)}</div>
+        <img
+          src={imagUrl(homePageHostInfo.userPk, homePageHostInfo.profile)}
+          alt="일촌 홈피"
+        />
+        {/* <div className="profile-text">{handleEnter(homePageHostInfo.introduce)}</div> */}
+        <div className="profile-text">{homePageHostInfo.introduce}</div>
       </div>
     );
   };
 
+  const handleFriendship = async () => {
+    await callApi({
+      method: 'post',
+      url: `/api/user/neighbor`,
+      data: { userPk: homePageHostInfo.userPk },
+    });
+    store.dispatch({
+      type: types.FETCH_USER_INFO,
+      userInfo: homePageHostInfo,
+      key: 'homePageHostInfo',
+    });
+  };
+
   const handleNeighborButton = () => {
-    if (loginUser !== homePageHost) {
+    if (loginUserInfo.name !== homePageHostInfo.name) {
+      if (homePageHostInfo.neighbor) {
+        return (
+          <button disabled type="button" className="already-ilchon-button">
+            일촌 입니다
+          </button>
+        );
+      }
       return (
-        <button type="button" className="ilchon-button">
+        <button
+          type="button"
+          className="ilchon-button"
+          onClick={() => handleFriendship()}
+        >
           일촌 맺기
         </button>
       );

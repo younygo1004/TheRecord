@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { useRef, useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -6,43 +8,55 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import FaceIcon from '@mui/icons-material/Face';
 import EditButton from '../../assets/edit_button.png';
 import '../../styles/home/edit-profile.css';
+import callApi from '../../common/api';
 
 function EditProfile() {
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
   const [editProfileDialogOpen, setEditProfileDialogOpen] = useState(false);
-  // 초기값 = 처음 로그인할 때 세션에 올려놓은 자기소개(useEffect)
-  // eslint-disable-next-line
-  const [profileText, setProfileText] = useState('자기소개 입니다');
-
-  // profile 사진은 세션에 올려둔 userInfo에서 가져옴
-  // eslint-disable-next-line
-  const [profileImg, setProfileImg] = useState(
-    '../../assets/my_profile_photo.png',
+  const [tempImg, setTempImg] = useState(null);
+  const [profileText, setProfileText] = useState(() =>
+    homePageHostInfo.introduce === null
+      ? '자기소개가 아직 없습니다'
+      : homePageHostInfo.introduce,
   );
-  // console.log(setProfileImg);
-  const fileInput = useRef(null);
+
+  const handleText = e => {
+    setProfileText(e.currentTarget.value);
+  };
+
+  const fileInput = useRef();
 
   const handleProfileImg = e => {
     if (e.target.files[0]) {
-      console.log('변경');
-      // setProfileImg(e.target.files[0]);
+      console.log(e.target.files[0]);
     } else {
-      // 업로드 취소할 시
       console.log('취소');
+      return;
     }
 
     // 화면에 프로필 사진 표시
-    // const reader = new FileReader();
-    // reader.onload = () => {
-    //   if (reader.readyState === 2) {
-    //     setImage(reader.result);
-    //   }
-    // };
-    // reader.readAsDataURL(e.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setTempImg(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   const updateProfile = () => {
-    // axios로 변경 사항 요청 보내기
+    // callApi({url: ``})
 
+    setEditProfileDialogOpen(false);
+  };
+
+  const handleClose = () => {
+    setTempImg(() => null);
+    setProfileText(() =>
+      homePageHostInfo.introduce === null
+        ? '자기소개가 아직 없습니다'
+        : homePageHostInfo.introduce,
+    );
     setEditProfileDialogOpen(false);
   };
 
@@ -61,7 +75,7 @@ function EditProfile() {
       <div>
         <Dialog
           open={editProfileDialogOpen}
-          onClose={() => setEditProfileDialogOpen(false)}
+          onClose={() => handleClose()}
           id="dialog"
           aria-labelledby="dialog-container"
           aria-describedby="dialog-description"
@@ -83,7 +97,7 @@ function EditProfile() {
                 minWidth: 36,
                 height: 49,
               }}
-              onClick={() => setEditProfileDialogOpen(false)}
+              onClick={() => handleClose()}
             >
               <CloseRoundedIcon
                 sx={{
@@ -96,10 +110,14 @@ function EditProfile() {
           <div className="dialog-body-box">
             <div className="dialog-body edit-profile-dialog-body">
               <div className="edit-profile-img">
-                <img
-                  src={require('../../assets/my_profile_photo.png')}
-                  alt="myProfile"
-                />
+                {tempImg === null ? (
+                  <img
+                    src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${homePageHostInfo.profile}`}
+                    alt="myProfile"
+                  />
+                ) : (
+                  <img src={tempImg} alt="변경" />
+                )}
                 <input
                   type="file"
                   style={{ display: 'none' }}
@@ -120,10 +138,7 @@ function EditProfile() {
                   </button>
                 </div>
               </div>
-              <textarea
-                value={profileText}
-                onChange={e => setProfileText(e.currentTarget.value)}
-              />
+              <textarea value={profileText} onChange={e => handleText(e)} />
               <button
                 className="edit-done-button"
                 type="submit"

@@ -1,34 +1,31 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import EditProfile from './EditProfile';
 import '../../styles/home/home-header.css';
 import store from '../../store';
-import { ADD_NAVPAGE } from '../../actions/navigation';
+import { actions } from '../../actions/common';
 
 function HomeHeader() {
   const navigate = useNavigate();
-  // 현재 로그인 상태 세션에 올려놓음(userInfo)
-  const loginUser = '5_waterglass';
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo);
 
   // 현재 보고있는 홈피 주인 이름
-  // 원래는 유저 친구목록 -> userPK로 요청해서 정보를 얻어올 것임 -> persist-state에 올리기
-  const homePageHost = sessionStorage.getItem('homePageHost');
-
-  const userName = () => {
-    if (loginUser !== homePageHost) {
-      return homePageHost;
-    }
-    return loginUser;
-  };
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
 
   const moveMyPage = () => {
-    sessionStorage.setItem('homePageHost', loginUser);
-    store.dispatch({ type: ADD_NAVPAGE, data: 'nav-home' });
+    store.dispatch(actions.setValue('homePageHostInfo', loginUserInfo));
+    store.dispatch(actions.setValue('navPage', 'nav-home'));
     navigate('/home');
   };
 
+  const logOut = () => {
+    navigate('');
+    sessionStorage.clear();
+  };
+
   const headerProfileButton = () => {
-    if (loginUser !== homePageHost) {
+    if (loginUserInfo.name !== homePageHostInfo.name) {
       return (
         <button
           className="header-right-button"
@@ -41,12 +38,6 @@ function HomeHeader() {
         </button>
       );
     }
-
-    const logOut = () => {
-      navigate('');
-      sessionStorage.clear();
-    };
-
     return (
       <div className="header-right">
         <div className="header-right-button">
@@ -65,7 +56,7 @@ function HomeHeader() {
 
   return (
     <div id="home-header">
-      <p className="header-left">{userName()} 님의 미니홈피</p>
+      <p className="header-left">{homePageHostInfo.name} 님의 미니홈피</p>
       <div>{headerProfileButton()}</div>
     </div>
   );

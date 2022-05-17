@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -9,21 +8,24 @@ import HomeIcon from '@mui/icons-material/Home';
 import StarIcon from '@mui/icons-material/Star';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import MyNeighborList from './MyNeighborList';
+import callApi from '../../common/api';
+import store from '../../store';
+import { types } from '../../actions/common';
 
 function NeighborButton() {
   const navigate = useNavigate();
   const handleHost = neighbor => {
-    console.log(neighbor);
-    // neighbor.userPk로 사용자 정보 요청해서 history로 넘겨주기
-
-    sessionStorage.setItem('homePageHost', neighbor.name);
+    store.dispatch({
+      type: types.FETCH_USER_INFO,
+      userInfo: neighbor,
+      key: 'homePageHostInfo',
+    });
     navigate('/home');
   };
 
   const [neighborName, setNeighborName] = useState('');
   const [neighborDialogOpen, setNeighborDialogOpen] = useState(false);
   const [neighborList, setNeighborList] = useState([]);
-  console.log(neighborDialogOpen);
 
   const handleClose = () => {
     setNeighborDialogOpen(false);
@@ -31,43 +33,10 @@ function NeighborButton() {
     setNeighborList([]);
   };
 
-  const searchNeighbor = () => {
+  const searchNeighbor = async () => {
     console.log('검색', neighborName);
-    // api 요청 (검색어와 일치하는 이름의 이용자)
-    const res = [
-      {
-        userPk: 0,
-        userId: 'aaa123',
-        name: '김유정',
-      },
-      {
-        userPk: 1,
-        userId: 'bbb123',
-        name: '장성태',
-      },
-      {
-        userPk: 2,
-        userId: 'ccc123',
-        name: '오은진',
-      },
-      {
-        userPk: 3,
-        userId: 'aaa123',
-        name: '이주형',
-      },
-      {
-        userPk: 4,
-        userId: 'bbb123',
-        name: '조용구',
-      },
-      {
-        userPk: 5,
-        userId: 'ccc123',
-        name: '오수경',
-      },
-    ];
+    const res = await callApi({ url: `/api/user/${neighborName}` });
     setNeighborList(res);
-    console.log(neighborList);
 
     // document.querySelector('.neighbor-input').value = '';
   };

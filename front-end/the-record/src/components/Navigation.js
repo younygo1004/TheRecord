@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import store from '../store';
-import { ADD_NAVPAGE } from '../actions/navigation';
+import { actions } from '../actions/common';
 import '../styles/common/navigation.css';
 
 function Navigation() {
   const switchNav = navPage => {
-    store.dispatch({ type: ADD_NAVPAGE, data: navPage });
+    store.dispatch(actions.setValue('navPage', navPage));
   };
 
   useEffect(() => {
-    const nowPage = store.getState().navigation.navPage;
+    const nowPage = store.getState().common.navPage;
     const navBar = document.querySelector(`#${nowPage}`);
     navBar.style.backgroundColor = 'white';
     navBar.style.color = 'black';

@@ -2,16 +2,16 @@ import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
 
-import navigation from './navigation';
+import common from './common';
 
 const persistConfig = {
-  key: 'nowPage',
+  key: 'commonInfo',
   storage,
-  whitelist: ['navigation'],
+  whitelist: ['common'],
 };
 
 const rootReducer = combineReducers({
-  navigation,
+  common,
 });
 
 export default persistReducer(persistConfig, rootReducer);
