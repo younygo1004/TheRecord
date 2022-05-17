@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { API_HOST } from './constant';
+import axios from 'axios'
+import { API_HOST } from './constant'
 
 /**
  * @param {object} param
@@ -29,9 +29,9 @@ export default function callApi({
     witchCredentials: true,
   })
     .then(response => {
-      return response.data;
+      return response.data
     })
     .catch(err => {
-      console.log(err);
-    });
+      console.log(err)
+    })
 }

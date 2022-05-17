@@ -1,5 +1,5 @@
 /* 친구 찾기 */
-#dialog .dialog-body .neighbor-search{
+#dialog .dialog-body .neighbor-search {
   display: flex;
   justify-content: space-between;
   width: 368px;
@@ -17,7 +17,7 @@
   outline: none;
 }
 
-#dialog .dialog-body .neighbor-search button{
+#dialog .dialog-body .neighbor-search button {
   width: 100px;
   font-size: 16px;
   font-family: 'dunggeunmo';
@@ -34,15 +34,14 @@
   scrollbar-width: none;
 }
 
-
-#dialog .neighbor-searchlist-item{
+#dialog .neighbor-searchlist-item {
   width: 368px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid #000000;
-}  
+}
 
 #dialog .neighbor-searchlist-item button {
   font-size: 15px;
@@ -62,7 +61,6 @@
   padding: 30px;
 }
 
-
 /* 일촌 파도타기 */
 #dialog #my-neighbor-list {
   margin-top: 40px;
@@ -71,7 +69,7 @@
 #dialog #my-neighbor-list > button {
   width: 368px;
   height: 50px;
-  background: #E9F2FF;
+  background: #e9f2ff;
   border: 3px solid #848484;
   font-family: 'dunggeunmo';
   display: flex;
@@ -79,7 +77,6 @@
   justify-content: space-between;
   cursor: pointer;
 }
-
 
 #dialog #my-neighbor-list .ilchon-surf-button {
   display: flex;
@@ -116,7 +113,7 @@
 
 @media (min-width: 1600px) {
   /* 친구 찾기 */
-  #dialog .dialog-body .neighbor-search{
+  #dialog .dialog-body .neighbor-search {
     width: 428px;
     height: 40px;
   }
@@ -127,7 +124,7 @@
     font-size: 20px;
   }
 
-  #dialog .dialog-body .neighbor-search button{
+  #dialog .dialog-body .neighbor-search button {
     width: 100px;
     font-size: 20px;
     padding-bottom: 8px;
@@ -138,11 +135,10 @@
     height: 150px;
   }
 
-
-  #dialog .neighbor-searchlist-item{
+  #dialog .neighbor-searchlist-item {
     width: 428px;
     height: 50px;
-  }  
+  }
 
   #dialog .neighbor-searchlist-item button {
     font-size: 18px;
@@ -154,7 +150,6 @@
     border-radius: 24px;
     padding: 30px;
   }
-
 
   #dialog #my-neighbor-list {
     margin-top: 40px;

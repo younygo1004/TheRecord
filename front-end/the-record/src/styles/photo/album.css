@@ -147,8 +147,6 @@
   font-weight: 500;
 }
 
-
-
 .photobooth-dialog .photobooth-dialog-title {
   margin: 4%;
   font-size: 28px;
@@ -252,10 +250,9 @@
   padding: 40px;
 }
 
-.photobooth-dialog .background-color-box canvas{
+.photobooth-dialog .background-color-box canvas {
   width: 125px;
   height: 180px;
   border-radius: 12px;
   background-color: rgb(194, 225, 255);
 }
-

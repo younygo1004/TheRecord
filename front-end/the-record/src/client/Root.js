@@ -1,24 +1,24 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import React from 'react'
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
 import {
   ThemeProvider,
   unstable_createMuiStrictModeTheme as createMuiTheme,
-} from '@mui/material/styles';
-import App from '../App';
-import Login from '../pages/User/Login';
-import SignUp from '../pages/User/SignUp';
-import '../styles/common/app.css';
-import '../styles/common/background.css';
-import store from '../store';
+} from '@mui/material/styles'
+import App from '../App'
+import Login from '../pages/User/Login'
+import SignUp from '../pages/User/SignUp'
+import '../styles/common/app.css'
+import '../styles/common/background.css'
+import store from '../store'
 
-const persistor = persistStore(store);
-const theme = createMuiTheme();
+const persistor = persistStore(store)
+const theme = createMuiTheme()
 
 function RootRouter() {
-  const location = useLocation();
+  const location = useLocation()
   return (
     <Routes>
       <Route index element={<Login />} />
@@ -27,7 +27,7 @@ function RootRouter() {
         <Route path="/*" element={<App />} />
       )}
     </Routes>
-  );
+  )
 }
 
 function Root() {
@@ -41,7 +41,7 @@ function Root() {
         </Provider>
       </ThemeProvider>
     </BrowserRouter>
-  );
+  )
 }
 
-export default Root;
+export default Root
