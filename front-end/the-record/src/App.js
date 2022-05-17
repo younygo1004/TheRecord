@@ -6,7 +6,9 @@ import DiaryDetail from './pages/Diary/DiaryDetail';
 import Album from './pages/Photo/Album';
 import HomeHeader from './components/Home/HomeHeader';
 import PhotoDetail from './pages/Photo/PhotoDetail';
+import PhotoEdit from './pages/Photo/PhotoEdit';
 import PhotoBooth from './pages/Photo/PhotoBooth';
+import SubscribersPhotoBooth from './pages/Photo/SubscribersPhotoBooth';
 import PhotoDeco from './pages/Photo/PhotoDeco';
 import PhotoDecoUpload from './pages/Photo/PhotoDecoUpload';
 import MakeDiary from './pages/Diary/MakeDiary';
@@ -27,7 +29,12 @@ function App() {
                 <Route path="/diary/makediary" element={<MakeDiary />} />
                 <Route path="/album" element={<Album />} />
                 <Route path="/album/photodetail" element={<PhotoDetail />} />
+                <Route path="/album/photoedit" element={<PhotoEdit />} />
                 <Route path="/album/photobooth" element={<PhotoBooth />} />
+                <Route
+                  path="/album/subscribersphotobooth"
+                  element={<SubscribersPhotoBooth />}
+                />
                 <Route path="/album/photodeco" element={<PhotoDeco />} />
                 <Route
                   path="/album/photodeco/upload"

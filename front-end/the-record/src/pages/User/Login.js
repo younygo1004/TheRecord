@@ -29,7 +29,7 @@ function Login() {
 
       console.log(JWT);
 
-      // sessionStorage.setItem('jwt', JWT);
+      sessionStorage.setItem('jwt', JWT);
       navigate('/home');
     } catch (error) {
       alert(error);

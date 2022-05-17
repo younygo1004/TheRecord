@@ -1,44 +1,45 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { useNavigate } from 'react-router-dom';
 
 function DiaryItem({ folder }) {
   const navigate = useNavigate();
   //  폴더명으로 일기 목록 조회 api 연결
-  // const [diaryItems, setDiaryItems] = useState([]);
+  const [diaryItems, setDiaryItems] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get('url{folder}', {
-  //       headers: {
-  //         "x-auth-token": sessiontStorage.getItem("jwt"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //         setDiaryItems(res.data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get('url{folder}', {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setDiaryItems(res.data);
+      });
+  }, []);
 
-  const diaryItems = [
-    {
-      diaryId: 1,
-      title: '닥터스트레인지 보고온 날~~~~',
-      recordDt: '2022.05.09',
-      visible: true,
-    },
-    {
-      diaryId: 2,
-      title: '한강에서 치맥',
-      recordDt: '2022.05.09',
-      visible: true,
-    },
-    {
-      diaryId: 3,
-      title: '불금에 노는 법',
-      recordDt: '2022.05.09',
-      visible: true,
-    },
-  ];
+  // const diaryItems = [
+  //   {
+  //     diaryId: 1,
+  //     title: '닥터스트레인지 보고온 날~~~~',
+  //     recordDt: '2022.05.09',
+  //     visible: true,
+  //   },
+  //   {
+  //     diaryId: 2,
+  //     title: '한강에서 치맥',
+  //     recordDt: '2022.05.09',
+  //     visible: true,
+  //   },
+  //   {
+  //     diaryId: 3,
+  //     title: '불금에 노는 법',
+  //     recordDt: '2022.05.09',
+  //     visible: true,
+  //   },
+  // ];
 
   const moveDiaryDetail = diaryId => {
     navigate('/diary/diarydetail', {
