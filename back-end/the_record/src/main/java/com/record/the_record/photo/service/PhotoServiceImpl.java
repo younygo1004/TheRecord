@@ -43,7 +43,7 @@ public class PhotoServiceImpl implements PhotoService{
         User user = userRepository.findByPk(userPk);
 
         // S3 업로드
-        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, userPk);
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, "photo", userPk);
 
         if (photoDto.getTitle().isEmpty()) {
             throw new TitleValidateException();

@@ -43,7 +43,7 @@ public final class MultipartUtil {
      * @param format 파일 확장자
      * @return 유저PK/날짜_UUID.확장자 형태로 반환
      */
-    public static String createPath(Long userPk, String fileId, String format) {
-        return String.format("%s/%s.%s", userPk, new SimpleDateFormat("yyMMdd").format(new Date()) + "_" + fileId, format);
+    public static String createPath(Long userPk, String folderType, String fileId, String format) {
+        return String.format("%s/%s/%s.%s", userPk, folderType, new SimpleDateFormat("yyMMdd").format(new Date()) + "_" + fileId, format);
     }
 }

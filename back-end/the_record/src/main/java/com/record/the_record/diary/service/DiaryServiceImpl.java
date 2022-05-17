@@ -49,7 +49,7 @@ public class DiaryServiceImpl implements DiaryService {
         Long userPk = userService.currentUser();
         User user = userRepository.findByPk(userPk);
         Folder folder = folderRepository.findOneById(diaryDto.getFolderId());
-        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, userPk);
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, "diary/" + folder.getId(), userPk);
 
         if (diaryDto.getTitle().isEmpty()) {
             throw new TitleValidateException();
