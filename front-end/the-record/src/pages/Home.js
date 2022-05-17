@@ -1,9 +1,9 @@
-import React from 'react';
-import Profile from '../components/Home/Profile';
-import UpdatedNews from '../components/Home/UpdatedNews';
-import Navigation from '../components/Navigation';
-import '../styles/home/home.css';
-import '../styles/home/neighbor-button.css';
+import React from 'react'
+import Profile from '../components/Home/Profile'
+import UpdatedNews from '../components/Home/UpdatedNews'
+import Navigation from '../components/Navigation'
+import '../styles/home/home.css'
+import '../styles/home/neighbor-button.css'
 
 function Home() {
   return (
@@ -16,7 +16,7 @@ function Home() {
         <Navigation />
       </div>
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

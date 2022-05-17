@@ -1,26 +1,50 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/photo/album.css';
-import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../../styles/photo/album.css'
+import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import axios from 'axios'
+import enterPhotoBooth from '../../assets/enterPhotoBooth.png'
 
 function EnterBoothButton() {
-  const navigate = useNavigate();
-  const [enterBoothDialogOpen, setenterBoothDialogOpen] = useState(false);
-  const [roomcode, setRoomcode] = useState('');
+  const navigate = useNavigate()
+  const [enterBoothDialogOpen, setenterBoothDialogOpen] = useState(false)
+  const [roomcode, setRoomcode] = useState('')
   const handleClose = () => {
-    setenterBoothDialogOpen(false);
-    setRoomcode('');
-  };
-
+    setenterBoothDialogOpen(false)
+    setRoomcode('')
+  }
   const movePhotobooth = () => {
     // 방 코드 유효성 검사 필요
-    navigate('/album/photobooth');
-  };
+    axios.get(
+      'url',
+      {
+        // headers: { 'x-auth-token': sessiontStorage.getItem('jwt') },
+      }
+        .then(res => {
+          console.log(res)
+          if (roomcode === res) {
+            navigate('/album/subscribersphotobooth', {
+              state: {
+                roomcode,
+              },
+            })
+          } else {
+            alert('룸 코드를 확인해주세요')
+          }
+        })
+        .catch(error => {
+          alert(error)
+        }),
+    )
+  }
+
+  useEffect(() => {
+    console.log(roomcode)
+  }, [roomcode])
 
   return (
     <div>
@@ -28,7 +52,7 @@ function EnterBoothButton() {
         type="button"
         className="album-btn"
         onClick={() => {
-          setenterBoothDialogOpen(true);
+          setenterBoothDialogOpen(true)
         }}
       >
         <LinkedCameraOutlinedIcon className="album-btn-icon" fontSize="small" />
@@ -59,7 +83,7 @@ function EnterBoothButton() {
                 height: 49,
               }}
               onClick={() => {
-                handleClose();
+                handleClose()
               }}
             >
               <CloseRoundedIcon
@@ -77,7 +101,7 @@ function EnterBoothButton() {
               <input
                 className="enter-dialog-input"
                 onChange={e => {
-                  setRoomcode(e.target.value);
+                  setRoomcode(e.target.value)
                 }}
               />
               {roomcode ? (
@@ -102,7 +126,7 @@ function EnterBoothButton() {
         </Dialog>
       </div>
     </div>
-  );
+  )
 }
 
-export default EnterBoothButton;
+export default EnterBoothButton

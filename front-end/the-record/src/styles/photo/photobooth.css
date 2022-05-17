@@ -61,6 +61,16 @@
     margin-right: 30px;
 }
 
+#photobooth .disable-photo-btn{
+    border-radius: 12px;
+    width: 200px;
+    height: 50px;
+    font-size: 18px;
+    border: none;
+    font-family: 'dunggeunmo';
+    margin-right: 30px;
+}
+
 #photobooth .finish-photo-btn{
     background: rgba(75, 182, 209, 0.87);
     border-radius: 12px;

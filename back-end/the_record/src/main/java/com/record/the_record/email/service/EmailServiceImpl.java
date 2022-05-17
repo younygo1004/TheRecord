@@ -33,6 +33,7 @@ public class EmailServiceImpl implements EmailService {
 
             emailSender.send(message);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new EmailSendException();
         }
 

@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import iro from '@jaames/iro';
-import '../../styles/photo/album.css';
-import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import iro from '@jaames/iro'
+import '../../styles/photo/album.css'
+import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import enterPhotoBooth from '../../assets/enterPhotoBooth.png'
+import callApi from '../../common/api'
 
 function MakeBoothButton() {
-  const navigate = useNavigate();
-  const loginUserInfo = useSelector(state => state.common.loginUserInfo);
-  const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false);
-  const [colorDialogOpen, setColorDialogOpen] = useState(false);
-  const [peopleNum, setPeopleNum] = useState(4);
-  const [numListOpen, setnumListOpen] = useState(false);
-  const [colorPicker, setColorPicker] = useState();
-  const [backgroundColor, setBackgroundColor] = useState('rgb(194, 225, 255)');
+  const navigate = useNavigate()
+  const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false)
+  const [colorDialogOpen, setColorDialogOpen] = useState(false)
+  const [peopleNum, setPeopleNum] = useState(4)
+  const [numListOpen, setnumListOpen] = useState(false)
+  const [colorPicker, setColorPicker] = useState()
+  const [backgroundColor, setBackgroundColor] = useState('rgb(194, 225, 255)')
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
 
   useEffect(() => {
     if (colorDialogOpen === true) {
@@ -30,50 +32,82 @@ function MakeBoothButton() {
             width: 200,
             color: 'rgb(194, 225, 255)',
           }),
-      );
+      )
     }
-  }, [colorDialogOpen]);
+  }, [colorDialogOpen])
 
   useEffect(() => {
     if (colorPicker) {
       colorPicker.on('color:change', color => {
-        const backgroundrgb = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b})`;
-        setBackgroundColor(() => backgroundrgb);
-      });
+        const backgroundrgb = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b})`
+        setBackgroundColor(() => backgroundrgb)
+      })
     }
-  }, [colorPicker]);
+  }, [colorPicker])
 
   useEffect(() => {
     if (colorDialogOpen === true) {
-      const canvas = document.querySelector('#bgcolor-preview');
-      canvas.style.backgroundColor = backgroundColor;
+      const canvas = document.querySelector('#bgcolor-preview')
+      canvas.style.backgroundColor = backgroundColor
     }
-  }, [backgroundColor]);
+  }, [backgroundColor])
 
   const closeMakeDialog = () => {
-    setmakeBoothDialogOpen(false);
-    setnumListOpen(false);
-  };
+    setmakeBoothDialogOpen(false)
+    setnumListOpen(false)
+  }
 
   const closeColorDialog = () => {
-    setColorDialogOpen(false);
-    setmakeBoothDialogOpen(false);
-  };
+    setColorDialogOpen(false)
+    setmakeBoothDialogOpen(false)
+  }
 
   const moveColorDialog = () => {
-    setColorDialogOpen(true);
+    setColorDialogOpen(true)
     // 모달 넘어갈 때 깜빡여서 수정
     // setmakeBoothDialogOpen(false);
-  };
+  }
 
-  const movePhotobooth = () => {
-    navigate('/album/photobooth', {
-      state: { peopleNum, backgroundColor, sessionHost: loginUserInfo.name },
-    });
-    setColorDialogOpen(false);
-    setPeopleNum(4);
-    setmakeBoothDialogOpen(false);
-  };
+  const movePhotobooth = async () => {
+    // 방 생성 여부 확인, 생성시 DB에 저장
+    const isExist = await callApi({
+      url: `/api/photobooth/${loginUserInfo.userId}`,
+    })
+    if (isExist === 'FALSE') {
+      axios({
+        method: 'put',
+        url: 'https://the-record.co.kr/api/photobooth',
+        data: {
+          userId: loginUserInfo.userId,
+          userPk: loginUserInfo.userPk,
+        },
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+        .then(res => {
+          console.log(res)
+          if (res.data === 'success') {
+            setColorDialogOpen(false)
+            setPeopleNum(4)
+            setmakeBoothDialogOpen(false)
+            navigate('/album/photobooth', {
+              state: {
+                peopleNum,
+                backgroundColor,
+                loginUserInfo,
+              },
+            })
+          }
+        })
+        .catch(err => {
+          alert('방이 이미 생성되어 있습니다.')
+          console.log(err)
+        })
+    } else {
+      alert('이미 방을 생성하셨습니다. 입장해주세요')
+    }
+  }
 
   return (
     <div>
@@ -111,7 +145,7 @@ function MakeBoothButton() {
               height: 49,
             }}
             onClick={() => {
-              closeMakeDialog();
+              closeMakeDialog()
             }}
           >
             <CloseRoundedIcon
@@ -202,7 +236,7 @@ function MakeBoothButton() {
               height: 49,
             }}
             onClick={() => {
-              closeColorDialog();
+              closeColorDialog()
             }}
           >
             <CloseRoundedIcon
@@ -230,7 +264,7 @@ function MakeBoothButton() {
         </div>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default MakeBoothButton;
+export default MakeBoothButton

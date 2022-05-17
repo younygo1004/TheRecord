@@ -1,44 +1,44 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import HomeIcon from '@mui/icons-material/Home';
-import StarIcon from '@mui/icons-material/Star';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
-import MyNeighborList from './MyNeighborList';
-import callApi from '../../common/api';
-import store from '../../store';
-import { types } from '../../actions/common';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import HomeIcon from '@mui/icons-material/Home'
+import StarIcon from '@mui/icons-material/Star'
+import SearchRoundedIcon from '@mui/icons-material/SearchRounded'
+import MyNeighborList from './MyNeighborList'
+import callApi from '../../common/api'
+import store from '../../store'
+import { types } from '../../actions/common'
 
 function NeighborButton() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleHost = neighbor => {
     store.dispatch({
       type: types.FETCH_USER_INFO,
       userInfo: neighbor,
       key: 'homePageHostInfo',
-    });
-    navigate('/home');
-  };
+    })
+    navigate('/home')
+  }
 
-  const [neighborName, setNeighborName] = useState('');
-  const [neighborDialogOpen, setNeighborDialogOpen] = useState(false);
-  const [neighborList, setNeighborList] = useState([]);
+  const [neighborName, setNeighborName] = useState('')
+  const [neighborDialogOpen, setNeighborDialogOpen] = useState(false)
+  const [neighborList, setNeighborList] = useState([])
 
   const handleClose = () => {
-    setNeighborDialogOpen(false);
-    setNeighborName('');
-    setNeighborList([]);
-  };
+    setNeighborDialogOpen(false)
+    setNeighborName('')
+    setNeighborList([])
+  }
 
   const searchNeighbor = async () => {
-    const res = await callApi({ url: `/api/user/${neighborName}` });
-    setNeighborList(res);
+    const res = await callApi({ url: `/api/user/${neighborName}` })
+    setNeighborList(res)
 
     // document.querySelector('.neighbor-input').value = '';
-  };
+  }
 
   const searchResult = () => {
     if (neighborList.length === 0) {
@@ -46,7 +46,7 @@ function NeighborButton() {
         <p style={{ width: '100%', textAlign: 'center' }}>
           이름을 입력하여 친구를 찾아보세요
         </p>
-      );
+      )
     }
     return neighborList.map(neighbor => (
       <div className="neighbor-searchlist-item" key={neighbor.userPk}>
@@ -58,8 +58,8 @@ function NeighborButton() {
           {neighbor.name}({neighbor.userId})
         </button>
       </div>
-    ));
-  };
+    ))
+  }
 
   return (
     <div id="neighbor-button">
@@ -67,7 +67,7 @@ function NeighborButton() {
         className="ilchon-button"
         type="button"
         onClick={() => {
-          setNeighborDialogOpen(true);
+          setNeighborDialogOpen(true)
         }}
       >
         <StarIcon sx={{ mr: 1 }} />
@@ -99,7 +99,7 @@ function NeighborButton() {
                 height: 49,
               }}
               onClick={() => {
-                handleClose();
+                handleClose()
               }}
             >
               <CloseRoundedIcon
@@ -124,11 +124,11 @@ function NeighborButton() {
                     className="neighbor-input"
                     placeholder="친구 찾기"
                     onChange={e => {
-                      setNeighborName(e.target.value);
+                      setNeighborName(e.target.value)
                     }}
                     onKeyDown={e => {
                       if (e.keyCode === 13) {
-                        searchNeighbor();
+                        searchNeighbor()
                       }
                     }}
                   />
@@ -144,7 +144,7 @@ function NeighborButton() {
         </Dialog>
       </div>
     </div>
-  );
+  )
 }
 
-export default NeighborButton;
+export default NeighborButton

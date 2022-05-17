@@ -8,7 +8,7 @@
 }
 
 *::-webkit-scrollbar {
-  width: 8px;  /* 스크롤바의 너비 */
+  width: 8px; /* 스크롤바의 너비 */
 }
 
 *::-webkit-scrollbar-thumb {
@@ -22,7 +22,7 @@
 html {
   margin: 0;
   padding: 0;
-  height:100%;
+  height: 100%;
 }
 
 @font-face {
@@ -35,7 +35,7 @@ body {
   width: 100%;
   height: 100%;
 
-  background-image: url("../../assets/background.jpg");
+  background-image: url('../../assets/background.jpg');
   font-family: 'dunggeunmo';
 }
 

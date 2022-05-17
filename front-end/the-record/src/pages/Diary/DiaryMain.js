@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import Navigation from '../../components/Navigation';
-import DiaryList from '../../components/Diary/DiaryList';
-import Calender from '../../components/Diary/Calendar';
-import DiaryDetailContainer from '../../components/Diary/DiaryDetailContainer';
-import '../../styles/diary/diarymain.css';
-import '../../styles/diary/diarydetail.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import Navigation from '../../components/Navigation'
+import DiaryList from '../../components/Diary/DiaryList'
+import Calender from '../../components/Diary/Calendar'
+import DiaryDetailContainer from '../../components/Diary/DiaryDetailContainer'
+import '../../styles/diary/diarymain.css'
+import '../../styles/diary/diarydetail.css'
 
 function DiaryMain() {
-  const navigate = useNavigate();
-  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate()
+  const [openDialog, setOpenDialog] = useState(false)
   // 로그인 유저 받아오기!
-  const loginUser = '5_waterglass';
-  const homePageHost = sessionStorage.getItem('homePageHost');
+  // const loginUser = '5_waterglass'
+  // const homePageHost = sessionStorage.getItem('homePageHost')
 
   // 전체 다이어리 목록 조회 api 연결
   // const [diarys, setDiarys] = useState([]);
@@ -64,19 +64,19 @@ function DiaryMain() {
       recordDt: '2022.05.07',
       visible: 'true',
     },
-  ];
+  ]
 
   const openSelectDialog = () => {
-    setOpenDialog(true);
-  };
+    setOpenDialog(true)
+  }
 
   const handleClose = () => {
-    setOpenDialog(false);
-  };
+    setOpenDialog(false)
+  }
 
   const moveMakeDiary = category => {
-    navigate('/diary/makediary', { state: category });
-  };
+    navigate('/diary/makediary', { state: category })
+  }
 
   return (
     <div id="diarymain">
@@ -89,19 +89,29 @@ function DiaryMain() {
         <div className="diarymain-box">
           <div className="diarymain-header">
             <p className="diarymain-header-title">전체 일기</p>
-            {loginUser === homePageHost ? (
+            <button
+              type="button"
+              className="make-diary-btn"
+              onClick={() => {
+                openSelectDialog()
+              }}
+            >
+              일기 작성하기
+            </button>
+            {/* 유저 확인하기 */}
+            {/* {loginUser === homePageHost ? (
               <button
                 type="button"
                 className="make-diary-btn"
                 onClick={() => {
-                  openSelectDialog();
+                  openSelectDialog()
                 }}
               >
                 일기 작성하기
               </button>
             ) : (
               ''
-            )}
+            )} */}
           </div>
           <Calender />
           <div className="diarymain-content">
@@ -138,7 +148,7 @@ function DiaryMain() {
               height: 49,
             }}
             onClick={() => {
-              handleClose();
+              handleClose()
             }}
           >
             <CloseRoundedIcon
@@ -154,7 +164,7 @@ function DiaryMain() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('picture');
+                moveMakeDiary('picture')
               }}
             >
               <img
@@ -168,7 +178,7 @@ function DiaryMain() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('video');
+                moveMakeDiary('video')
               }}
             >
               <img
@@ -182,7 +192,7 @@ function DiaryMain() {
               type="button"
               className=" diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('voice');
+                moveMakeDiary('voice')
               }}
             >
               <img
@@ -196,7 +206,7 @@ function DiaryMain() {
         </div>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default DiaryMain;
+export default DiaryMain

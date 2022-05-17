@@ -1,43 +1,43 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../../styles/photo/album.css';
-import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import '../../styles/photo/album.css'
+import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
+import enterPhotoBooth from '../../assets/enterPhotoBooth.png'
 
 function UploadButton() {
-  const navigate = useNavigate();
-  const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false);
-  const [colorDialogOpen, setColorDialogOpen] = useState(false);
-  const [peopleNum, setPeopleNum] = useState(4);
-  const [numListOpen, setnumListOpen] = useState(false);
+  const navigate = useNavigate()
+  const [makeBoothDialogOpen, setmakeBoothDialogOpen] = useState(false)
+  const [colorDialogOpen, setColorDialogOpen] = useState(false)
+  const [peopleNum, setPeopleNum] = useState(4)
+  const [numListOpen, setnumListOpen] = useState(false)
   const closeMakeDialog = () => {
-    setmakeBoothDialogOpen(false);
-    setPeopleNum(4);
-    setnumListOpen(false);
-  };
+    setmakeBoothDialogOpen(false)
+    setPeopleNum(4)
+    setnumListOpen(false)
+  }
 
   const closeColorDialog = () => {
-    setColorDialogOpen(false);
-    setmakeBoothDialogOpen(false);
-  };
+    setColorDialogOpen(false)
+    setmakeBoothDialogOpen(false)
+  }
 
   const moveColorDialog = () => {
-    setColorDialogOpen(true);
+    setColorDialogOpen(true)
     // 모달 넘어갈 때 깜빡여서 수정
     // setmakeBoothDialogOpen(false);
-  };
+  }
 
   const movePhotobooth = () => {
-    navigate('/album/photobooth');
-    setColorDialogOpen(false);
-    setmakeBoothDialogOpen(false);
-  };
+    navigate('/album/photobooth')
+    setColorDialogOpen(false)
+    setmakeBoothDialogOpen(false)
+  }
 
   return (
     <div>
@@ -73,7 +73,7 @@ function UploadButton() {
               height: 49,
             }}
             onClick={() => {
-              closeMakeDialog();
+              closeMakeDialog()
             }}
           >
             <CloseRoundedIcon
@@ -162,7 +162,7 @@ function UploadButton() {
               height: 49,
             }}
             onClick={() => {
-              closeColorDialog();
+              closeColorDialog()
             }}
           >
             <CloseRoundedIcon
@@ -186,7 +186,7 @@ function UploadButton() {
         </div>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default UploadButton;
+export default UploadButton

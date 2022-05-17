@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import Navigation from '../../components/Navigation';
-import DiaryList from '../../components/Diary/DiaryList';
-import DiaryDetailContainer from '../../components/Diary/DiaryDetailContainer';
-import '../../styles/diary/diarydetail.css';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import Navigation from '../../components/Navigation'
+import DiaryList from '../../components/Diary/DiaryList'
+import DiaryDetailContainer from '../../components/Diary/DiaryDetailContainer'
+import '../../styles/diary/diarydetail.css'
 
 function DiaryDetail() {
-  const navigate = useNavigate();
-  const [openDialog, setOpenDialog] = useState(false);
+  const navigate = useNavigate()
+  const [openDialog, setOpenDialog] = useState(false)
   //  로그인 유저 받아오기!
-  const loginUser = '5_waterglass';
-  const homePageHost = sessionStorage.getItem('homePageHost');
+  const loginUser = '5_waterglass'
+  const homePageHost = sessionStorage.getItem('homePageHost')
 
   // 일기 상세 정보 조회 api 연결
   // const diaryId = useLocation().state;
@@ -40,19 +40,19 @@ function DiaryDetail() {
     title: '백만원씩 모아와',
     recordDt: '2022.05.02',
     visible: 'true',
-  };
+  }
 
   const openSelectDialog = () => {
-    setOpenDialog(true);
-  };
+    setOpenDialog(true)
+  }
 
   const handleClose = () => {
-    setOpenDialog(false);
-  };
+    setOpenDialog(false)
+  }
 
   const moveMakeDiary = category => {
-    navigate('/diary/makediary', { state: category });
-  };
+    navigate('/diary/makediary', { state: category })
+  }
 
   return (
     <div id="diarydetail">
@@ -69,7 +69,7 @@ function DiaryDetail() {
                 type="button"
                 className="make-diary-btn"
                 onClick={() => {
-                  openSelectDialog();
+                  openSelectDialog()
                 }}
               >
                 일기 작성하기
@@ -106,7 +106,7 @@ function DiaryDetail() {
               height: 49,
             }}
             onClick={() => {
-              handleClose();
+              handleClose()
             }}
           >
             <CloseRoundedIcon
@@ -122,7 +122,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('picture');
+                moveMakeDiary('picture')
               }}
             >
               <img
@@ -136,7 +136,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('video');
+                moveMakeDiary('video')
               }}
             >
               <img
@@ -150,7 +150,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('voice');
+                moveMakeDiary('voice')
               }}
             >
               <img
@@ -164,7 +164,7 @@ function DiaryDetail() {
         </div>
       </Dialog>
     </div>
-  );
+  )
 }
 
-export default DiaryDetail;
+export default DiaryDetail

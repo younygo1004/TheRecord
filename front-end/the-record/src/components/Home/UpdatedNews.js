@@ -1,49 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import fourPhoto from '../../assets/fourphoto.png';
-import store from '../../store';
-import { actions } from '../../actions/common';
-import callApi from '../../common/api';
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import fourPhoto from '../../assets/fourphoto.png'
+import store from '../../store'
+import { actions } from '../../actions/common'
+import callApi from '../../common/api'
 
 function UpdatedNews() {
-  const navigate = useNavigate();
-  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo);
-  const [updatedPhotos, setUpdatedPhotos] = useState([]);
-  const [updatedDiary, setUpdatedDiary] = useState([]);
-  const [updatedMonth, setUpdatedMonth] = useState({});
+  const navigate = useNavigate()
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
+  const [updatedPhotos, setUpdatedPhotos] = useState([])
+  const [updatedDiary, setUpdatedDiary] = useState([])
+  const [updatedMonth, setUpdatedMonth] = useState({})
 
   const handleUpdatedDiary = async () => {
     const res = await callApi({
       url: `/api/home/user/${homePageHostInfo.userPk}/diary`,
-    });
-    setUpdatedDiary(() => res);
-  };
+    })
+    setUpdatedDiary(() => res)
+  }
 
   const handleUpdatedPhoto = async () => {
     const res = await callApi({
       url: `/api/home/user/${homePageHostInfo.userPk}/diary`,
-    });
-    setUpdatedPhotos(() => res);
-  };
+    })
+    setUpdatedPhotos(() => res)
+  }
 
   const handleUpdatedNews = async () => {
     const res = await callApi({
       url: `/api/home/user/${homePageHostInfo.userPk}/month`,
-    });
-    setUpdatedMonth(() => res);
-  };
+    })
+    setUpdatedMonth(() => res)
+  }
 
   const goDiaryDetails = diaryId => {
-    store.dispatch(actions.setValue('navPage', 'nav-diary'));
-    navigate('/diary/detail', { state: diaryId });
-  };
+    store.dispatch(actions.setValue('navPage', 'nav-diary'))
+    navigate('/diary/detail', { state: diaryId })
+  }
 
   useEffect(() => {
-    handleUpdatedPhoto();
-    handleUpdatedDiary();
-    handleUpdatedNews();
-  }, [homePageHostInfo]);
+    handleUpdatedPhoto()
+    handleUpdatedDiary()
+    handleUpdatedNews()
+  }, [homePageHostInfo])
 
   return (
     <div id="updated-news">
@@ -106,7 +106,7 @@ function UpdatedNews() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default UpdatedNews;
+export default UpdatedNews
