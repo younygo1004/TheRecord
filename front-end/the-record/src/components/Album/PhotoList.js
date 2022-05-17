@@ -3,18 +3,22 @@ import axios from 'axios'
 import '../../styles/photo/album.css'
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 function PhotoList() {
-  // 일기목록 불러오는 api 연결
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
   const [photolist, setPhotolist] = useState([])
 
   useEffect(() => {
     axios
-      .get('https://the-record.co.kr:8080/api/photo/list/2', {
-        headers: {
-          'x-auth-token': sessionStorage.getItem('jwt'),
+      .get(
+        `https://the-record.co.kr:8080/api/photo/list/${homePageHostInfo.userPk}`,
+        {
+          headers: {
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
         },
-      })
+      )
       .then(res => {
         setPhotolist(res.data)
       })

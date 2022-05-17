@@ -195,7 +195,7 @@ function SignUp() {
     // 인증번호 전송 api 연결
     console.log(form.email)
     axios
-      .post('https://the-record.co.kr:8080/api/user/email/number', {
+      .post('https://the-record.co.kr/api/user/email/number', {
         userEmail: form.email,
       })
       .then(() => {

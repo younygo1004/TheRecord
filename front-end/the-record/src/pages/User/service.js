@@ -1,6 +1,6 @@
 const fetchLogin = async ({ id, password }) => {
   const data = { userId: id, password }
-  return fetch('https://the-record.co.kr:8080/api/user/login', {
+  return fetch('https://the-record.co.kr/api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -8,7 +8,7 @@ import Switch from '@mui/material/Switch'
 import Navigation from '../../components/Navigation'
 import PhotoList from '../../components/Album/PhotoList'
 // import PhotoUpload from '../../components/Album/PhotoUpload';
-import '../../styles/photo/album.css'
+import '../../styles/photo/photo-upload.css'
 
 function PhotoDecoUpload() {
   const navigate = useNavigate()
@@ -153,32 +153,44 @@ function PhotoDecoUpload() {
   }
 
   return (
-    <div id="album">
+    <div id="album" className="photo-upload">
       <div className="bg-white-left">
         <div className="album-photolist">
           <PhotoList />
         </div>
       </div>
       <div className="bg-white-right">
-        <input
-          placeholder="제목을 입력해주세요"
-          id="title"
-          onChange={onChangTitle}
-        />
-        <div>
-          <p>나만 보기</p>
-          <AntSwitch
-            checked={checked}
-            onChange={event => handleChange(event)}
-            inputProps={{ 'aria-label': 'ant design' }}
-          />
+        <div className="photo-upload-box">
+          <div className="upload-info-box">
+            <div className="photo-upload-header">
+              <input
+                placeholder="제목을 입력해주세요"
+                id="title"
+                onChange={onChangTitle}
+              />
+              <div className="private-btn">
+                <p>나만 보기</p>
+                <AntSwitch
+                  checked={checked}
+                  onChange={event => handleChange(event)}
+                  inputProps={{ 'aria-label': 'ant design' }}
+                />
+              </div>
+            </div>
+            <div className="photo-upload-img">
+              <img alt="DecoImg" src={state} />
+            </div>
+          </div>
+          <button
+            type="button"
+            className="photo-upload-btn"
+            onClick={saveDecoPhoto}
+          >
+            사진첩에 저장하기
+          </button>
+          {/* <PhotoUpload /> */}
+          <Navigation />
         </div>
-        <img alt="DecoImg" src={state} />
-        <button type="button" onClick={saveDecoPhoto}>
-          사진첩에 저장하기
-        </button>
-        {/* <PhotoUpload /> */}
-        <Navigation />
       </div>
     </div>
   )

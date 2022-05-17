@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import '../../styles/photo/album.css'
@@ -6,10 +7,10 @@ import ArrowLeftOutlinedIcon from '@mui/icons-material/ArrowLeftOutlined'
 import ArrowRightOutlinedIcon from '@mui/icons-material/ArrowRightOutlined'
 import Pagination from '@mui/material/Pagination'
 import Stack from '@mui/material/Stack'
-import fourphoto from '../../assets/fourphoto.png'
 
 function PhotoPreview() {
   const navigate = useNavigate()
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
   const [photolist, setPhotolist] = useState([])
   const [page, setPage] = React.useState(0)
   const [totalPage, setTotalPage] = useState(0)
@@ -17,12 +18,15 @@ function PhotoPreview() {
   // 일기목록 페이지 별로 불러오는 api 연결
   useEffect(() => {
     axios
-      .get(`https://the-record.co.kr:8080/api/photo/2/${page}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': sessionStorage.getItem('jwt'),
+      .get(
+        `https://the-record.co.kr:8080/api/photo/${homePageHostInfo.userPk}/${page}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
         },
-      })
+      )
       .then(res => {
         console.log(res.data)
         setPhotolist(res.data)
@@ -31,12 +35,15 @@ function PhotoPreview() {
   // 인생네컷 전체 페이지 수 불러오는 api 연결
   useEffect(() => {
     axios
-      .get(`https://the-record.co.kr:8080/api/photo/2/page`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'x-auth-token': sessionStorage.getItem('jwt'),
+      .get(
+        `https://the-record.co.kr:8080/api/photo/${homePageHostInfo.userPk}/page`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
         },
-      })
+      )
       .then(res => {
         console.log(res.data)
         setTotalPage(res.data)
@@ -79,20 +86,28 @@ function PhotoPreview() {
         ) : (
           <ArrowLeftOutlinedIcon className="preview-no-btn" />
         )}
-        {photolist.map(photo => (
-          <div
-            key={photo.photoId}
-            className="preview-item"
-            role="button"
-            tabIndex={0}
-            onClick={() => movePhotoDetail(photo)}
-            onKeyUp={() => movePhotoDetail(photo)}
-          >
-            <div className="preview-title">{photo.title}</div>
-            <img src={fourphoto} alt="인생네컷" className="preview-img" />
-            <div className="preview-date">{photo.record_dt}</div>
-          </div>
-        ))}
+        {photolist.length === 0 ? (
+          <div>아직 업로드한 사진이 없습니다</div>
+        ) : (
+          photolist.map(photo => (
+            <div
+              key={photo.photoId}
+              className="preview-item"
+              role="button"
+              tabIndex={0}
+              onClick={() => movePhotoDetail(photo)}
+              onKeyUp={() => movePhotoDetail(photo)}
+            >
+              <div className="preview-title">{photo.title}</div>
+              <img
+                src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${photo.mediaUrl}`}
+                alt="인생네컷"
+                className="preview-img"
+              />
+              <div className="preview-date">{photo.record_dt}</div>
+            </div>
+          ))
+        )}
         {totalPage > 0 && page !== totalPage ? (
           <button
             type="button"

@@ -12,13 +12,13 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/sort-comp */
 import React, { Component } from 'react'
-
 import { OpenVidu } from 'openvidu-browser'
 import axios from 'axios'
 import withRouter from '../../components/withRouter'
 import Navigation from '../../components/Navigation'
 import '../../styles/photo/photobooth.css'
 import UserVideoComponent from '../../components/Album/UserVideoComponent'
+import callApi from '../../common/api'
 
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443'
 const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET
@@ -31,8 +31,8 @@ class PhotoBooth extends Component {
     super(props)
 
     this.state = {
-      mySessionId: 'SingleBungle',
-      myUserName: '내 아이디',
+      mySessionId: '',
+      myUserName: '',
       session: undefined,
       mainStreamManager: undefined,
       publisher: undefined,
@@ -56,15 +56,17 @@ class PhotoBooth extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload)
     this.joinSession()
-    console.log(this.props.location.state)
+    const { peopleNum, backgroundColor, loginUserInfo } =
+      this.props.location.state
 
-    // 방 만든사람과 사용자가 일치할 경우만
-    // if () {
-    //   this.setState({
-    //     peopleNum: this.props.location.state.peopleNum,
-    //     backgroundColor: this.props.location.state.backgroundColor,
-    //   });
-    // }
+    console.log(loginUserInfo)
+    this.setState({
+      peopleNum,
+      backgroundColor,
+      mySessionId: loginUserInfo.userId,
+      myUserName: loginUserInfo.name,
+      loginUserInfo,
+    })
   }
 
   // componentDidUpdate() {
@@ -239,6 +241,12 @@ class PhotoBooth extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
     })
+
+    callApi({
+      method: 'put',
+      url: `/api/photobooth/${this.state.loginUserInfo.userId}`,
+    })
+    this.props.navigate('/album')
   }
 
   async switchCamera() {
@@ -364,7 +372,7 @@ class PhotoBooth extends Component {
         //   .catch(error => {
         //     return console.error('Request failed:', error);
         //   });
-        ctx.fillStyle = 'rgb(194, 225, 255)'
+        ctx.fillStyle = this.state.backgroundColor
         ctx.fillRect(
           15,
           element.clientHeight * index + 20,
@@ -432,10 +440,22 @@ class PhotoBooth extends Component {
                 <div id="session-header">
                   {/* <h1 id="session-title">{mySessionId}</h1> */}
                   <input
+                    style={{
+                      width: 130,
+                      height: 40,
+                      marginBottom: 15,
+                      backgroundColor: '#4BB6D1',
+                      fontFamily: 'dunggeunmo',
+                      color: 'white',
+                      fontSize: '16px',
+                      border: 'none',
+                      borderRadius: '16px',
+                      cursor: 'pointer',
+                    }}
                     type="button"
                     id="buttonLeaveSession"
                     onClick={this.leaveSession}
-                    value="Leave session"
+                    value="방 떠나기"
                   />
                 </div>
 
@@ -478,13 +498,20 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
-              <button
-                className="take-photo-btn"
-                onClick={this.takePhoto}
-                type="button"
-              >
-                찰칵
-              </button>
+              {this.state.peopleNum === this.state.subscribers.length ? (
+                <button
+                  className="take-photo-btn"
+                  onClick={this.takePhoto}
+                  type="button"
+                >
+                  찰칵
+                </button>
+              ) : (
+                <button disabled className="disable-photo-btn" type="button">
+                  찰칵
+                </button>
+              )}
+
               <button
                 className="finish-photo-btn"
                 onClick={this.finishPhoto}
@@ -532,7 +559,7 @@ class PhotoBooth extends Component {
           },
         })
         .then(response => {
-          console.log('CREATE SESION', response)
+          // console.log('CREATE SESION', response)
           resolve(response.data.id)
         })
         .catch(response => {
@@ -576,7 +603,7 @@ class PhotoBooth extends Component {
           },
         )
         .then(response => {
-          console.log('TOKEN', response)
+          // console.log('TOKEN', response)
           resolve(response.data.token)
         })
         .catch(error => reject(error))

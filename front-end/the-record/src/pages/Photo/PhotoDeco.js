@@ -7,6 +7,7 @@ import 'tui-image-editor/dist/tui-image-editor.css'
 
 import PhotoList from '../../components/Album/PhotoList'
 import '../../styles/photo/album.css'
+import '../../styles/photo/photo-deco.css'
 
 // import TuiImageEditor from 'tui-image-editor';
 // import 'tui-image-editor/dist/tui-image-editor.css';
@@ -20,7 +21,7 @@ function PhotoDeco() {
     'common.bisize.width': '0',
     'common.bisize.height': '0',
     'common.backgroundColor': '#fff',
-
+    'header.margin': '0 -60px 0',
     //     // header
     //     'header.backgroundImage': 'none',
     //     'header.backgroundColor': 'transparent',
@@ -111,14 +112,14 @@ function PhotoDeco() {
     navigate('/album/photodeco/upload', { state: dataURL })
   }
   return (
-    <div id="album">
+    <div id="photo-deco">
       <div className="bg-white-left">
         <div className="album-photolist">
           <PhotoList />
         </div>
       </div>
       <div className="bg-white-right">
-        <div>
+        <div className="photo-editor-box">
           <ImageEditor
             ref={editorRef}
             includeUI={{
@@ -135,23 +136,27 @@ function PhotoDeco() {
               ],
               initMenu: 'filter',
               uiSize: {
-                width: '900px',
-                height: '500px',
+                width: '100%',
+                height: '90%',
               },
               menuBarPosition: 'left',
             }}
-            cssMaxHeight={500}
-            cssMaxWidth={700}
+            // cssMaxHeight={500}
+            // cssMaxWidth={700}
             selectionStyle={{
               cornerSize: 20,
               rotatingPointOffset: 70,
             }}
             usageStatistics={false}
           />
+          <button
+            type="button"
+            className="upload-btn"
+            onClick={uploadPhotoList}
+          >
+            사진첩에 올리기
+          </button>
         </div>
-        <button type="button" onClick={uploadPhotoList}>
-          사진첩에 올리기
-        </button>
         <Navigation />
       </div>
     </div>
