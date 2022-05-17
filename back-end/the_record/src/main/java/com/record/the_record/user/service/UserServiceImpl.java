@@ -227,13 +227,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public TrueAndFalse checkPhotoBoothIsOpen(String userId) {
         Optional<User> user = userRepository.findByUserId(userId);
         return user.get().getRoomIsOpen();
     }
 
     @Override
+    @Transactional
     public void removePhotoBooth(String userId) {
         Optional<User> user = userRepository.findByUserId(userId);
         User host = userRepository.findByPk(user.get().getPk());
