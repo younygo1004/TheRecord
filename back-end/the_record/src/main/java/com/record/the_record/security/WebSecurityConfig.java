@@ -57,7 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않음
                 .and()
                 .authorizeRequests()
-//                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(NO_ROLE_URLS)
                 .permitAll()
                 .anyRequest().hasRole("USER")
