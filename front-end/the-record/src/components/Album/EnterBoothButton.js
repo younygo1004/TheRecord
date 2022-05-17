@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/photo/album.css';
 import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined';
@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
+import axios from 'axios';
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png';
 
 function EnterBoothButton() {
@@ -16,11 +17,34 @@ function EnterBoothButton() {
     setenterBoothDialogOpen(false);
     setRoomcode('');
   };
-
   const movePhotobooth = () => {
     // 방 코드 유효성 검사 필요
-    navigate('/album/photobooth');
+    axios.get(
+      'url',
+      {
+        // headers: { 'x-auth-token': sessiontStorage.getItem('jwt') },
+      }
+        .then(res => {
+          console.log(res);
+          if (roomcode === res) {
+            navigate('/album/subscribersphotobooth', {
+              state: {
+                roomcode,
+              },
+            });
+          } else {
+            alert('룸 코드를 확인해주세요');
+          }
+        })
+        .catch(error => {
+          alert(error);
+        }),
+    );
   };
+
+  useEffect(() => {
+    console.log(roomcode);
+  }, [roomcode]);
 
   return (
     <div>

@@ -10,14 +10,15 @@ import PhotoList from '../../components/Album/PhotoList';
 // import PhotoUpload from '../../components/Album/PhotoUpload';
 import '../../styles/photo/album.css';
 
-function PhotoDecoUpload() {
+function PhotoEdit() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [photoDto, setPhotoDto] = useState({
-    title: '',
-    visible: 'PUBLIC',
+    title: state.photoDetail.title,
+    visible: state.photoDetail.visible,
   });
-  const [checked, setChecked] = useState(true);
+
+  const [checked, setChecked] = useState();
 
   // 토글
   const AntSwitch = styled(Switch)(({ theme }) => ({
@@ -71,6 +72,11 @@ function PhotoDecoUpload() {
   const handleChange = event => {
     setChecked(event.target.checked);
   };
+  useEffect(() => {
+    // 접근 권한이 바뀔 때
+    if (state.photoDetail.visible === 'PUBLIC') setChecked(true);
+    else setChecked(false);
+  }, [state.photoDetail.visible]);
 
   useEffect(() => {
     // 토글이 바뀔 때
@@ -81,64 +87,23 @@ function PhotoDecoUpload() {
     }
   }, [checked]);
 
-  useEffect(() => {
-    // 접근 권한이 바뀔 때
-    if (photoDto.visible === 'PUBLIC') {
-      console.log(photoDto);
-      console.log('트루');
-    } else {
-      setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }));
-      console.log(photoDto);
-      console.log('페일');
-    }
-  }, [photoDto.visible]);
-
   // 제목 변경
   const onChangTitle = e => {
     setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  useEffect(() => {
-    console.log(photoDto);
-  }, [photoDto.title]);
-
   // 사진첩 저장
-  const saveDecoPhoto = () => {
-    // base64 -> 파일화
-    const blobBin = atob(state.split(',')[1]); // base64 데이터 디코딩
-    const array = [];
-    for (let i = 0; i < blobBin.length; i += 1) {
-      array.push(blobBin.charCodeAt(i));
-    }
-
-    const file = new File([new Uint8Array(array)], 'blobtofile.png', {
-      type: 'image/png',
-    });
-
-    const formData = new FormData(); // formData 생성
-    formData.append('file', file);
-    // 'key'라는 이름으로 위에서 담은 data를 formData에 append한다. type은 json
-    formData.append(
-      'photoDto',
-      new Blob([JSON.stringify(photoDto)], { type: 'application/json' }),
-    );
-
-    console.log(file);
-    console.log(photoDto);
-    // console.log(...formData.getHeaders());
-    console.log(sessionStorage.getItem('jwt'));
-    // formData 확인
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of formData.keys()) {
-      console.log(key);
-    }
-
+  const saveModifyPhoto = () => {
     axios({
-      method: 'post',
+      method: 'put',
       url: 'https://the-record.co.kr:8080/api/photo',
-      data: formData,
+      data: {
+        photoId: state.photoDetail.photoId,
+        title: photoDto.title,
+        visible: photoDto.visible,
+      },
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
     })
@@ -161,7 +126,7 @@ function PhotoDecoUpload() {
       </div>
       <div className="bg-white-right">
         <input
-          placeholder="제목을 입력해주세요"
+          placeholder={photoDto.title}
           id="title"
           onChange={onChangTitle}
         />
@@ -173,8 +138,11 @@ function PhotoDecoUpload() {
             inputProps={{ 'aria-label': 'ant design' }}
           />
         </div>
-        <img alt="DecoImg" src={state} />
-        <button type="button" onClick={saveDecoPhoto}>
+        <img
+          alt="DecoImg"
+          src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${state.photoDetail.mediaUrl}`}
+        />
+        <button type="button" onClick={saveModifyPhoto}>
           사진첩에 저장하기
         </button>
         {/* <PhotoUpload /> */}
@@ -184,4 +152,4 @@ function PhotoDecoUpload() {
   );
 }
 
-export default PhotoDecoUpload;
+export default PhotoEdit;

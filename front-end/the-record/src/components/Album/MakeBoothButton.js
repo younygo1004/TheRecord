@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import iro from '@jaames/iro';
 import '../../styles/photo/album.css';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
@@ -65,13 +66,33 @@ function MakeBoothButton() {
   };
 
   const movePhotobooth = () => {
-    navigate('/album/photobooth', {
-      state: { peopleNum, backgroundColor },
-    });
-    console.log(peopleNum, backgroundColor);
-    setColorDialogOpen(false);
-    setPeopleNum(4);
-    setmakeBoothDialogOpen(false);
+    // 방 생성 여부 확인, 생성시 DB에 저장
+    axios({
+      method: 'post',
+      url: 'url',
+      data: {
+        // sessionStorage.getItem('id'),
+      },
+      headers: {
+        'x-auth-token': sessionStorage.getItem('jwt'),
+      },
+    })
+      .then(res => {
+        if (res !== '사용자아이디') {
+          console.log(res);
+          navigate('/album/photobooth', {
+            state: { peopleNum, backgroundColor },
+          });
+          console.log(peopleNum, backgroundColor);
+          setColorDialogOpen(false);
+          setPeopleNum(4);
+          setmakeBoothDialogOpen(false);
+        } else alert('방이 이미 생성되어 있습니다.');
+      })
+      .catch(res => {
+        alert('문제가 발생했습니다.');
+        console.log(res);
+      });
   };
 
   return (

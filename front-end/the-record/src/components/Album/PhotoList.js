@@ -1,46 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../../styles/photo/album.css';
 import InsertPhotoOutlinedIcon from '@mui/icons-material/InsertPhotoOutlined';
 import { useNavigate } from 'react-router-dom';
 
 function PhotoList() {
   // 일기목록 불러오는 api 연결
-  // const [photolist, setPhotolist] = useState([]);
+  const [photolist, setPhotolist] = useState([]);
 
-  // useEffect(() => {
-  //   axios
-  //     .get('url', {
-  //       headers: {
-  //         "x-auth-token": sessiontStorage.getItem("jwt"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //         setPhotolist(res.data);
-  //     });
-  // }, []);
-  const list = [
-    {
-      photoId: 1,
-      title: '싸피친구들과',
-      media_url: '',
-      record_dt: '2022.XX.XX',
-      visible: '',
-    },
-    {
-      photoId: 2,
-      title: '여행가서 한 컷',
-      media_url: '',
-      record_dt: '2022.XX.XX',
-      visible: '',
-    },
-    {
-      photoId: 3,
-      title: '이렇게길게쓰면어떻게되나요',
-      media_url: '',
-      record_dt: '2022.XX.XX',
-      visible: '',
-    },
-  ];
+  useEffect(() => {
+    axios
+      .get('https://the-record.co.kr:8080/api/photo/list/2', {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setPhotolist(res.data);
+      });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -57,7 +35,7 @@ function PhotoList() {
       <p className="photolist-text">나만의 네컷 목록</p>
       <hr />
       <div className="photolist-box">
-        {list.map(listitem => (
+        {photolist.map(listitem => (
           <div
             key={listitem.photoId}
             role="button"
