@@ -19,13 +19,13 @@ public class FileDetailDto {
     @Builder.Default
     private LocalDateTime created = LocalDateTime.now();
 
-    public static FileDetailDto convertFile(Long userPk, MultipartFile multipartFile) {
+    public static FileDetailDto convertFile(Long userPk, String folderType, MultipartFile multipartFile) {
         final String filedId = MultipartUtil.createFileId();
         final String format = MultipartUtil.getFormat(multipartFile.getContentType());
         return FileDetailDto.builder()
                 .format(format)
                 .originName(multipartFile.getOriginalFilename())
-                .uploadName(MultipartUtil.createPath(userPk, filedId, format))
+                .uploadName(MultipartUtil.createPath(userPk, folderType, filedId, format))
                 .build();
     }
 }

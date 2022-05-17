@@ -24,8 +24,8 @@ public class AmazonS3Service {
     private String bucket;
     private final AmazonS3Client amazonS3Client;        // Config에서 등록한 AwsS3Client 빈이 주입됨
 
-    public FileDetailDto save(MultipartFile multipartFile, Long userPk) throws Exception {
-        FileDetailDto fileDetailDto = FileDetailDto.convertFile(userPk, multipartFile);     // multipartfile을 FileDetailDto로 변환
+    public FileDetailDto save(MultipartFile multipartFile, String type, Long userPk) throws Exception {
+        FileDetailDto fileDetailDto = FileDetailDto.convertFile(userPk, type, multipartFile);     // multipartfile을 FileDetailDto로 변환
         File file = new File(MultipartUtil.getLocalHomeDirectory(), fileDetailDto.getOriginName());
 
         try {

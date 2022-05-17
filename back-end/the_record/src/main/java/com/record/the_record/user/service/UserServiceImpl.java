@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
                     .name(userDto.getName())
                     .email(userDto.getEmail())
                     .profile("default.png")
-                    .introduce("자기 소개가 아직 없습니다.")
+                    .introduce("자기소개가 아직 없습니다.")
                     .userRole(UserRole.valueOf("ROLE_USER")).build();
 
             folderRepository.save(Folder.builder()
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void modifyProfile(MultipartFile multipartFile) throws Exception {
         User user = userRepository.findByPk(currentUser());
-        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, user.getPk());
+        FileDetailDto fileDetailDto = amazonS3Service.save(multipartFile, "profile", user.getPk());
 
         if (StringUtils.hasText(user.getProfile()) && !user.getProfile().equals("default.png")) {
             amazonS3Service.delete(user.getProfile());
