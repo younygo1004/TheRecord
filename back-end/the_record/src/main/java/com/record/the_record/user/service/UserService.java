@@ -29,7 +29,7 @@ public interface UserService {
     // 유저 검색
     List<SearchUserDto> searchUser(String name);
     void sendVerificationCode(String email);
-    void checkVerificationCode(CertificateDto certificateDto);
+    boolean checkVerificationCode(CertificateDto certificateDto);
     void reissuePassword(CertificateDto certificateDto);
     String getRandomString();
 

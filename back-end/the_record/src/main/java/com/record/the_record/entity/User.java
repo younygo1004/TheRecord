@@ -96,4 +96,8 @@ public class User implements UserDetails {
     public void addPhotoBooth(TrueAndFalse roomIsOpen) {
         this.roomIsOpen = roomIsOpen;
     }
+    
+    public void changePassword(String password) {
+        this.password = password;
+    }
 }

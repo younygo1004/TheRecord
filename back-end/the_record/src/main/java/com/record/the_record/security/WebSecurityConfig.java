@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final String[] NO_ROLE_URLS = {"/api/user/signup",
-            "/api/user/id-check/**", "/api/user/login", "/api/user/email/number", "/api/user/email-check",
+            "/api/user/id-check/**", "/api/user/login", "/api/user/email/number", "/api/user/email-check", "/api/user/password/reissue",
             /* swagger v2 */
             "/v2/api-docs",
             "/swagger-resources/**",
@@ -51,13 +51,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         /* Spring Security 설정 */
         http
                 .httpBasic().disable() // rest api 만을 고려하여 기본 설정은 해제
-                .cors().configurationSource(corsConfigurationSource())
+                .cors().configurationSource(corsConfigurationSource())  // CORS 글로벌 설정
                 .and()
                 .csrf().disable() // csrf 보안 토큰 disable처리
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로 세션 역시 사용하지 않음
                 .and()
                 .authorizeRequests()
-//                .mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(NO_ROLE_URLS)
                 .permitAll()
                 .anyRequest().hasRole("USER")
@@ -65,13 +64,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }
 
+    // CORS 설정
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(Arrays.asList("https://the-record.co.kr", "http://localhost:3000"));    // 허용 url
         configuration.setAllowedMethods(Arrays.asList("OPTIONS", "GET", "POST", "PUT", "DELETE"));              // 허용 메소드
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));       // 허용 헤더
+        configuration.setAllowedHeaders(Collections.singletonList("*"));       // 허용 헤더
         configuration.setAllowCredentials(true);
         configuration.setExposedHeaders(Collections.singletonList("X-AUTH-TOKEN"));
 
