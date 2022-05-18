@@ -20,12 +20,18 @@
 .photo-detail .photo-detail-box .detail-info-box {
   width: 90%;
   height: 100%;
-  padding: 10px;
+  padding: 20px;
   border: 2px solid rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.photo-detail .diary-title-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .photo-detail .photo-detail-header {
@@ -35,15 +41,15 @@
 }
 
 .photo-detail-header .photo-detail-title {
-  display: inline;
   color: #1d8eae;
-  padding-left: 5px;
+  padding: 0 8px;
   font-size: 20px;
 }
 .photo-detail-header .photo-detail-date {
-  display: inline;
   color: #848484;
   padding-left: 8px;
+  font-size: 14px;
+  padding-top: 5px;
 }
 
 .photo-detail-header .photo-detail-btn {
@@ -54,6 +60,7 @@
   color: #848484;
   cursor: pointer;
 }
+
 .detail-info-box > hr {
   margin: 10px 0;
   width: 100%;
@@ -73,7 +80,35 @@
 
 .photo-detail img {
   display: flex;
-  width: 80%;
-  height: 75%;
+  width: 70%;
+  height: 80%;
   object-fit: contain;
+}
+
+@media (min-width:1600px) {
+  .photo-detail .photo-detail-box .detail-info-box {
+    padding: 30px;
+  }
+
+  .photo-detail-header .photo-detail-title {
+    font-size: 23px;
+    padding-bottom: 5px;
+  }
+
+  .photo-detail-header .photo-detail-date {
+    padding-left: 10px;
+    font-size: 15px;
+    padding-top: 6px;
+  }
+
+  .photo-detail-header .photo-detail-btn {
+    padding: 0 8px;
+    font-size: 15px;
+    padding-top: 8px;
+  }
+
+  .detail-info-box .photo-detail-private {
+    font-size: 14px;
+    padding-right: 5px;
+  }
 }

@@ -63,9 +63,11 @@ function PhotoDetail() {
         <div className="photo-detail-box">
           <div className="detail-info-box">
             <div className="photo-detail-header">
-              <div>
+              <div className="diary-title-box">
                 <div className="photo-detail-title">{photoInfo.title}</div>
-                <div className="photo-detail-date">{photoInfo.recordDt}</div>
+                <div className="photo-detail-date">
+                  {photoInfo.recordDt.replace('-', '.').replace('-', '.')}
+                </div>
               </div>
               <div>
                 <button
