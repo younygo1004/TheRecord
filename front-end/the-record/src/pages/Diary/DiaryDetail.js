@@ -113,7 +113,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('picture')
+                moveMakeDiary('PICTURE')
               }}
             >
               <img
@@ -127,7 +127,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('video')
+                moveMakeDiary('VIDEO')
               }}
             >
               <img
@@ -141,7 +141,7 @@ function DiaryDetail() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('voice')
+                moveMakeDiary('VOICE')
               }}
             >
               <img

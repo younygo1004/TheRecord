@@ -32,9 +32,9 @@ function RecordVoice({ sendVoice, sendText }) {
 
           if (event.results[i].isFinal) {
             finalTranscripts += transcript
-            // setRecordingText(recordingText + transcript)
           }
           setRecordingText(finalTranscripts)
+          sendText(finalTranscripts)
         }
       }
 
@@ -64,6 +64,7 @@ function RecordVoice({ sendVoice, sendText }) {
 
   const voiceRecordStop = () => {
     console.log('중지')
+    speechRecognizer.stop()
     localStream.getTracks()[0].stop()
     media.ondataavailable = e => {
       const blob = new Blob([e.data], { type: 'audio/webm' })
@@ -71,7 +72,6 @@ function RecordVoice({ sendVoice, sendText }) {
       formdata.append('file', blob)
       sendVoice(formdata)
     }
-    speechRecognizer.stop()
     media.stop()
   }
 

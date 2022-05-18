@@ -78,9 +78,9 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
       })
   }, [])
 
-  const handleChange = event => {
-    setChecked(event.target.checked)
-  }
+  // const handleChange = event => {
+  //   setChecked(event.target.checked)
+  // }
 
   return (
     <div className="make-diary-header">
@@ -137,7 +137,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
           <AntSwitch
             checked={checked}
             onChange={event => [
-              handleChange(event),
+              setChecked(event.target.checked),
               sendVisible(event.target.checked),
             ]}
             inputProps={{ 'aria-label': 'ant design' }}

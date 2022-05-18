@@ -36,6 +36,7 @@ function RecordVideo({ sendVideo, sendText }) {
             // setRecordingText(recordingText + transcript)
           }
           setRecordingText(finalTranscripts)
+          sendText(finalTranscripts)
         }
       }
 

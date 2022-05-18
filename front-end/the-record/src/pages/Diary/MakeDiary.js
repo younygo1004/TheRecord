@@ -16,7 +16,8 @@ function MakeDiary() {
   const navigate = useNavigate()
   const [diaryDto, setDiaryDto] = useState({
     folderId: '',
-    category: '',
+    // eslint-disable-next-line
+    category: category,
     content: '',
     title: '',
     visible: 'PRIVATE',
@@ -37,23 +38,23 @@ function MakeDiary() {
   }
 
   const checkCategory = () => {
-    if (category === 'video') {
+    if (category === 'VIDEO') {
       return (
         <RecordVideo
           sendVideo={e => [
             setForm(e),
-            setDto({ item: 'category', value: 'VIDEO' }),
+            // setDto({ item: 'category', value: 'VIDEO' }),
           ]}
           sendText={e => setDto({ item: 'content', value: e })}
         />
       )
     }
-    if (category === 'picture') {
+    if (category === 'PICTURE') {
       return (
         <UploadPicture
           sendPhoto={e => [
             setForm(e),
-            setDto({ item: 'category', value: 'PICTURE' }),
+            // setDto({ item: 'category', value: 'PICTURE' }),
           ]}
           sendText={e => setDto({ item: 'content', value: e })}
         />
@@ -63,7 +64,7 @@ function MakeDiary() {
       <RecordVoice
         sendVoice={e => [
           setForm(e),
-          setDto({ item: 'category', value: 'VOICE' }),
+          // setDto({ item: 'category', value: 'VOICE' }),
         ]}
         sendText={e => setDto({ item: 'content', value: e })}
       />
@@ -72,6 +73,8 @@ function MakeDiary() {
 
   const uploadDiary = () => {
     console.log('일기 저장')
+    console.log(diaryDto)
+    console.log(form)
     if (form && diaryDto.folderId && diaryDto.folderId) {
       form.append(
         'diaryDto',
