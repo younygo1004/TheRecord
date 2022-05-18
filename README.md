@@ -1,17 +1,17 @@
-# 🎥 The Record - 당신의 소중한 기억을 기록하는 서비스
+# 🎥 The Record - 당신의 소중한 추억을 기록하는 서비스
 
 <div align="center">
 <div>
 <img src="./assets/TheRecord.png" width="350px">
 </div>
-<image src="https://img.shields.io/static/v1?label=Java&message=open-jdk-8&color=ffffff&logo=java">
-<image src="https://img.shields.io/static/v1?label=Spring%20Boot&message=2.5.12&color=ffffff&logo=springBoot&logoColor=white">
+<img src="https://img.shields.io/static/v1?label=Java&message=open-jdk-8&color=ffffff&logo=java"/>
+<img src="https://img.shields.io/static/v1?label=Spring%20Boot&message=2.5.12&color=ffffff&logo=springBoot&logoColor=white"/>
 <img src="https://img.shields.io/badge/Swagger-3.0.0-green?logo=Swagger&logoColor=white"/>
 <img src="https://img.shields.io/badge/JPA-59666C?style=flat&logo=Hibernate&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=white"/>
 <img src="https://img.shields.io/badge/MySQL-8.0.28-4479A1?style=flat&logo=MySQL&logoColor=white"/>
-<image src="https://img.shields.io/static/v1?label=aws&message=EC2&color=ffffff&logo=amazonaws">
-<image src="https://img.shields.io/static/v1?label=aws&message=S3&color=ffffff&logo=amazons3&logoColor=white">
+<img src="https://img.shields.io/static/v1?label=aws&message=EC2&color=ffffff&logo=amazonaws">
+<img src="https://img.shields.io/static/v1?label=aws&message=S3&color=ffffff&logo=amazons3&logoColor=white">
 <img src="https://img.shields.io/badge/Ubuntu-20.04.3%20LTS-E95420?style=flat&logo=Ubuntu&logoColor=white"/>
 <img src="https://img.shields.io/badge/React-17.0.2-4FC08D?style=flat&logo=React&logoColor=white"/>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/>
@@ -50,55 +50,36 @@
 
 ## 🔍 주요 기능
 
-- 추후 작성
-
-<!-- ### 로그인 & 설문 페이지
-
-- 로그인  
-  <img src="./assets/login.gif" width="300px">
-
-- 설문 페이지  
-  <img src="./assets/survey.gif" width="300px">
-
 ### 메인 페이지
 
-- 전체 상품 보기  
-  <img src="./assets/allBeer.gif" width="300px">
+- 최신 일기 목록
+- 이번 달 업데이트 현황
+- 최신 인생 네 컷 목록
 
-- 맥주 분류 별 보기  
-  <img src="./assets/beercategory.gif" width="300px">
+### 🌟일촌 관리
 
-### 🌟추천 기능
+- 일촌 검색
+- 일촌 목록
+- 일촌 추가
 
-- 맥주 추천  
-  <img src="./assets/recommend.gif" width="300px">
+### 다이어리
 
-- 맥주 상세 페이지의 비슷한 맥주 추천  
-  <img src="./assets/similar.gif" width="300px">
+- 폴더 추가 및 수정, 삭제
+- 사진, 영상, 음성으로 일기 작성
 
-### 장바구니
+### 사진첩
 
-- 맥주 장바구니 담기  
-  <img src="./assets/basket.gif" width="300px">
-
-### 검색 기능
-
-- 찾고 싶은 맥주를 검색  
-  <img src="./assets/search.gif" width="300px">
+- 인생 네 컷 목록
+- 포토부스 생성 및 입장
+- 인생 네 컷 꾸미기 & 업로드
 
 ### 마이페이지
 
-- 냉장고 둘러보기  
-  <img src="./assets/refrigerator.gif" width="300px">
-
-- MacBTI  
-  <img src="./assets/MacBTI.gif" width="300px"> -->
+- 내 정보 수정 - 프로필 사진, 자기소개
 
 ## 📊 Gantt Chart
 
-- 작성 중
-
-<!-- ![Gantt Chart](./assets/Gantt%20Chart.png) -->
+<img src="./assets/GanttChart.png">
 
 ## 📌 개발 약속
 
@@ -113,34 +94,19 @@
 
 ## 🛠️ 프로젝트 구조
 
-- 추후 작성
-
-<!-- ![pjt_struct](./assets/pjt_struct.png) -->
+<img src="./assets/pjtStruct.png">
 
 ## 🌐 ERD
 
-- 추후 작성
+<img src="./assets/erd.png">
 
-<!-- ![erd](./assets/erd.png) -->
+## 👨‍👨‍👧‍👦 팀원 소개 및 역할 분담
 
-## 👨‍👨‍👧‍👦 팀원 소개
-
-| Name   | Role                        | Position         | Git           |
-| ------ | --------------------------- | ---------------- | ------------- |
-| 장성태 | 팀장 / 발표                 | Frontend         |               |
-| 김유정 | React 노력왕                | Frontend         | @yujeong23    |
-| 오수경 | Director / Front 고수       | Frontend         | @ghkdlxld     |
-| 오은진 | DB Robot / Back 고수        | Backend          | @Oh-EunJin    |
-| 이주형 | Back 왕고수 (PM)            | Backend          | @leeejuhyeong |
-| 조용구 | Server / Backend            | Backend          | @younygo1004  |
-
-## 👨‍👨‍👧‍👦 역할 분담
-
-| Name   | Position         | Role                               |
-| ------ | ---------------- | ---------------------------------- |
-| 장성태 | Frontend         | 각자 역할 작성                     |
-| 김유정 | Frontend         | 각자 역할 작성                     |
-| 오수경 | Frontend         | 각자 역할 작성                     |
-| 오은진 | Backend          | 각자 역할 작성                     |
-| 이주형 | Backend          | 각자 역할 작성                     |
-| 조용구 | Backend          | 각자 역할 작성                     |
+| Name   | Position         | Role                               | Git           |
+| ------ | ---------------- | ---------------------------------- | ------------- |
+| 장성태 | Frontend         | `팀장` `발표`                      |               |
+| 김유정 | Frontend         | 다이어리, 싸이월드 갬성충만        | @yujeong23    |
+| 오수경 | Frontend         | 네컷장인, 누끼꾼                   | @ghkdlxld     |
+| 오은진 | Backend          | PM, 싸이월드 감성충만              | @Oh-EunJin    |
+| 이주형 | Backend          | 백 지휘자, S3 서버 마스터, 🌟멋쟁이 | @leeejuhyeong |
+| 조용구 | Backend          | 배포, 환경변수 살인마              | @younygo1004  |

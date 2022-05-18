@@ -1,16 +1,5 @@
 import React from 'react'
 import '../../styles/diary/diarymain.css'
-// import ListSubheader from '@mui/material/ListSubheader';
-// import List from '@mui/material/List';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import Collapse from '@mui/material/Collapse';
-
-// import ExpandLess from '@mui/icons-material/ExpandLess';
-// import ExpandMore from '@mui/icons-material/ExpandMore';
-
-// import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import { useHistory } from 'react-router-dom'
 import DiaryFolder from './DiaryFolder'
@@ -86,25 +75,6 @@ function DiaryList() {
           </div>
         ))}
       </div>
-      {/* <List>
-        <ListItemButton onClick={handleClick}>
-          <ListItemIcon>
-            <FolderOpenIcon />
-          </ListItemIcon>
-          <ListItemText primary="전체일기" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItemButton sx={{ pl: 4 }}>
-              <ListItemIcon>
-                <HorizontalRuleIcon />
-              </ListItemIcon>
-              <ListItemText primary="닥터스트레인지 스포일러" />
-            </ListItemButton>
-          </List>
-        </Collapse>
-      </List> */}
     </div>
   )
 }

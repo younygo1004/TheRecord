@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -14,57 +16,23 @@ import '../../styles/diary/diarydetail.css'
 function DiaryMain() {
   const navigate = useNavigate()
   const [openDialog, setOpenDialog] = useState(false)
-  // 로그인 유저 받아오기!
-  // const loginUser = '5_waterglass'
-  // const homePageHost = sessionStorage.getItem('homePageHost')
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
 
-  // 전체 다이어리 목록 조회 api 연결
-  // const [diarys, setDiarys] = useState([]);
+  // 전체 다이어리 목록 조회 api 연결 -> 인피니티 스크롤 필요
+  const [diarys, setDiarys] = useState([])
 
-  // useEffect(() => {
-  //   axios
-  //     .get('url{folder}', {
-  //       headers: {
-  //         "x-auth-token": sessiontStorage.getItem("jwt"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //         setDiarys(res.data);
-  //     });
-  // }, []);
-
-  const diarys = [
-    {
-      diaryId: 1,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '백만원씩 모아와',
-      recordDt: '2022.05.02',
-      visible: 'true',
-    },
-    {
-      diaryId: 2,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '이백만원씩 모아와',
-      recordDt: '2022.05.05',
-      visible: 'true',
-    },
-    {
-      diaryId: 3,
-      category: '전체공개',
-      mediaUrl: '',
-      content:
-        '성태가 돈을 모아오라고했다. 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...',
-      title: '삼백만원씩 모아와',
-      recordDt: '2022.05.07',
-      visible: 'true',
-    },
-  ]
+  useEffect(() => {
+    axios
+      .get(`https://the-record.co.kr/api/diary/${loginUserInfo.userPk}/0`, {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setDiarys(res.data)
+      })
+  }, [diarys])
 
   const openSelectDialog = () => {
     setOpenDialog(true)
@@ -89,17 +57,7 @@ function DiaryMain() {
         <div className="diarymain-box">
           <div className="diarymain-header">
             <p className="diarymain-header-title">전체 일기</p>
-            <button
-              type="button"
-              className="make-diary-btn"
-              onClick={() => {
-                openSelectDialog()
-              }}
-            >
-              일기 작성하기
-            </button>
-            {/* 유저 확인하기 */}
-            {/* {loginUser === homePageHost ? (
+            {loginUserInfo.name === homePageHostInfo.name ? (
               <button
                 type="button"
                 className="make-diary-btn"
@@ -111,7 +69,7 @@ function DiaryMain() {
               </button>
             ) : (
               ''
-            )} */}
+            )}
           </div>
           <Calender />
           <div className="diarymain-content">
@@ -164,7 +122,7 @@ function DiaryMain() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('picture')
+                moveMakeDiary('PICTURE')
               }}
             >
               <img
@@ -178,7 +136,7 @@ function DiaryMain() {
               type="button"
               className="diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('video')
+                moveMakeDiary('VIDEO')
               }}
             >
               <img
@@ -192,7 +150,7 @@ function DiaryMain() {
               type="button"
               className=" diary-dialog-btns"
               onClick={() => {
-                moveMakeDiary('voice')
+                moveMakeDiary('VOICE')
               }}
             >
               <img

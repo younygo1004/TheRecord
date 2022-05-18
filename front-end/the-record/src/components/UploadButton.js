@@ -29,8 +29,6 @@ function UploadButton() {
 
   const moveColorDialog = () => {
     setColorDialogOpen(true)
-    // 모달 넘어갈 때 깜빡여서 수정
-    // setmakeBoothDialogOpen(false);
   }
 
   const movePhotobooth = () => {

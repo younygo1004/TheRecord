@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 import '../../styles/diary/diarymain.css'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 import Button from '@mui/material/Button'
@@ -16,35 +18,20 @@ function DiaryList() {
   const [folder, setFolder] = useState(-1)
   const [deleteFolderId, setDeleteFolderId] = useState(-1)
   const [folderName, setFolderName] = useState('')
-  // 로그인 유저 받아오기!
-  const loginUser = '5_waterglass'
-  const homePageHost = sessionStorage.getItem('homePageHost')
-
-  // 일기폴더 조회 api 연결
-  // const [diarylist, setDiarylist] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('url', {
-  //       headers: {
-  //         "x-auth-token": sessiontStorage.getItem("jwt"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //         setDiarylist(res.data);
-  //     });
-  // }, []);
-
-  const [diarylist, setDiarylist] = useState([
-    {
-      folderId: 2,
-      folderName: '기분 좋은 날',
-    },
-    {
-      folderId: 3,
-      folderName: 'CSS 너무 어렵다 ㅠㅠㅠㅠㅠㅠㅠ',
-    },
-  ])
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
+  const [diarylist, setDiarylist] = useState([])
+  useEffect(() => {
+    axios
+      .get(`https://the-record.co.kr:8080/api/folder/${loginUserInfo.userPk}`, {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setDiarylist(res.data)
+      })
+  }, [])
 
   const openList = folderId => {
     if (folderId === folder) {
@@ -56,56 +43,43 @@ function DiaryList() {
   }
 
   const resetFolder = () => {
-    setDiarylist([
-      {
-        folderId: 2,
-        folderName: '기분 좋은 날',
-      },
-      {
-        folderId: 3,
-        folderName: 'CSS 너무 어렵다 ㅠㅠㅠㅠㅠㅠㅠ',
-      },
-    ])
-    // 일기 폴더 조회 api 연결
-    //   axios
-    //     .get('url', {
-    //       headers: {
-    //         "x-auth-token": sessiontStorage.getItem("jwt"),
-    //       },
-    //     })
-    //     .then((res) => {
-    //         setDiarylist(res.data);
-    //     });
+    console.log('reset')
+    axios
+      .get(`https://the-record.co.kr:8080/api/folder/${loginUserInfo.userPk}`, {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setDiarylist(res.data)
+      })
   }
 
   // id가 있을 경우 -> 폴더 이름 수정
   const changeFolderName = id => {
     console.log('수정')
-    console.log(id)
     if (folderName.length === 0) {
       alert('폴더 이름을 입력해주세요')
     } else {
-      resetFolder()
+      axios({
+        method: 'put',
+        url: 'https://the-record.co.kr:8080/api/folder',
+        data: {
+          folderId: id,
+          name: folderName,
+        },
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+        .then(() => {
+          console.log('수정 성공')
+          resetFolder()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
-    // 폴더 수정 api 연결 & 다시 조회 api 불러오기(resetFolder)
-    // axios({
-    //   method: 'put',
-    //   url: 'https://the-record.co.kr:8080/',
-    //   data: {
-    //     folderId: id,
-    //     name: folderName,
-    //   },
-    //   headers: {
-    //     'x-auth-token': sessionStorage.getItem('jwt'),
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log('성공');
-    //     resetFolder();
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
   }
 
   const checkDelete = id => {
@@ -114,50 +88,41 @@ function DiaryList() {
   }
 
   const deleteFolder = () => {
-    console.log(deleteFolderId)
-    resetFolder()
-    // 폴더 삭제 api 연결
-    // axios({
-    //   method: 'delete',
-    //   url: '/api/folder/deleteFolderId',
-    //   headers: {
-    //     'x-auth-token': sessionStorage.getItem('jwt'),
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log('성공');
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+    axios({
+      method: 'delete',
+      url: `https://the-record.co.kr/api/folder/${deleteFolderId}`,
+      headers: {
+        'x-auth-token': sessionStorage.getItem('jwt'),
+      },
+    })
+      .then(res => {
+        if (res.data === 'success') {
+          console.log('삭제 성공')
+          resetFolder()
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const addFolder = () => {
-    // 폴더 추가 api 연결 & 다시 조회 api 불러오기(resetFolder)
-    // axios({
-    //   method: 'POST',
-    //   url: 'https://the-record.co.kr:8080/api/folder,
-    //   data: {
-    //     name: '새 폴더',
-    //   },
-    //   headers: {
-    //     'x-auth-token': sessionStorage.getItem('jwt'),
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log('성공');
-    //     resetFolder();
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    // api 연결 후 밑의 내용 삭제
-    setDiarylist(
-      diarylist.concat({
-        folderId: '',
-        folderName: '',
-      }),
-    )
+    axios({
+      method: 'POST',
+      url: 'https://the-record.co.kr:8080/api/folder',
+      data: {
+        name: '새 폴더',
+      },
+      headers: {
+        'x-auth-token': sessionStorage.getItem('jwt'),
+      },
+    })
+      .then(() => {
+        resetFolder()
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   const openSelectDialog = () => {
@@ -177,7 +142,7 @@ function DiaryList() {
     <div className="diarylist">
       <div className="diarylist-header">
         <p className="diarylist-text">일기목록</p>
-        {loginUser === homePageHost ? (
+        {loginUserInfo.name === homePageHostInfo.name ? (
           <button
             type="button"
             className="diarylist-folder-btn"
@@ -201,12 +166,10 @@ function DiaryList() {
               tabIndex={0}
               className="diarylist-item"
               onClick={() => openList(listitem.folderId)}
-              onKeyUp={() => openList(listitem)}
+              onKeyUp={() => openList(listitem.folderId)}
             >
               <FolderOpenIcon className="diarylist-icon" />
-              <div className="diarylist-title">
-                {listitem.folderName} &nbsp;
-              </div>
+              <div className="diarylist-title">{listitem.name} &nbsp;</div>
             </div>
             {listitem.folderId === folder && open ? (
               <DiaryItem folder={folder} />
@@ -270,7 +233,7 @@ function DiaryList() {
                       <input
                         type="text"
                         className="folder-dialog-title"
-                        defaultValue={listitem.folderName}
+                        defaultValue={listitem.name}
                         maxLength={30}
                         onBlur={() => {
                           changeFolderName(listitem.folderId)
