@@ -1,47 +1,54 @@
 import React, { useRef, useState } from 'react'
 // import axios from 'axios';
 
-function RecordVideo({ sendVideo }) {
+function RecordVideo({ sendVideo, sendText }) {
   const videoRef = useRef(null)
   const [recorded, setRecorded] = useState(false)
   const [recordedVideoURL, setrecordedVideoURL] = useState()
   const [videoRecorder, setVideoRecorder] = useState({})
-  // const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_API_TOKEN;
+  const [speechRecognizer, setSpeechRecognizer] = useState({})
+  const [recordingText, setRecordingText] = useState('')
 
-  const sendSpeech = result => {
-    console.log('전송')
-    console.log(result)
+  const voiceTextStart = () => {
+    if ('webkitSpeechRecognition' in window) {
+      console.log('텍스트 시작')
+      // eslint-disable-next-line
+      const NewSpeechRecognizer = new window.webkitSpeechRecognition()
+      NewSpeechRecognizer.continuous = true
 
-    // fetch(
-    //   `https://speech.googleapis.com/v1/speech:recognize?key=${GOOGLE_API_TOKEN}`,
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       config: {
-    //         encoding: 'LINEAR16',
-    //         languageCode: 'ko-KR',
-    //       },
-    //       audio: {
-    //         content: result,
-    //       },
-    //     }),
-    //   },
-    // )
-    //   .then(resp => resp.json())
-    //   .then(data => {
-    //     console.log(data);
-    //   })
-    //   .catch(err => {
-    //     console.log('Error: ', err);
-    //   });
+      NewSpeechRecognizer.interimResults = true
+
+      NewSpeechRecognizer.lang = 'ko-KR'
+
+      NewSpeechRecognizer.start()
+
+      setSpeechRecognizer(NewSpeechRecognizer)
+
+      let finalTranscripts = ''
+
+      NewSpeechRecognizer.onresult = event => {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const { transcript } = event.results[i][0]
+          transcript.replace('\n', '<br>')
+
+          if (event.results[i].isFinal) {
+            finalTranscripts += transcript
+            // setRecordingText(recordingText + transcript)
+          }
+          setRecordingText(finalTranscripts)
+          sendText(finalTranscripts)
+        }
+      }
+
+      NewSpeechRecognizer.onerror = () => {
+        console.log('error')
+      }
+    }
   }
 
   const recordingStart = mediaStream => {
     console.log('video capture start')
-
+    voiceTextStart()
     const videoData = []
     const newVideoRecorder = new MediaRecorder(mediaStream, {
       mimeType: 'video/webm; codecs=vp9',
@@ -54,28 +61,13 @@ function RecordVideo({ sendVideo }) {
     }
 
     newVideoRecorder.onstop = () => {
-      const videoBlob = new Blob(videoData, { type: 'video/webm' })
+      const videoBlob = new Blob(videoData, { type: 'video/mp4' })
       setrecordedVideoURL(window.URL.createObjectURL(videoBlob))
-      const reader = new FileReader()
-      reader.readAsDataURL(videoBlob)
-      reader.onloadend = () => {
-        // 구글 스피치 보내기
-        sendSpeech(reader.result)
-        const data = reader.result.split('base64,')[1]
-        console.log(data)
-        const array = []
-        for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i))
-        }
-        const file = new File([new Uint8Array(array)], { type: 'video/webm' })
-        const formdata = new FormData()
-        formdata.append('file', file)
-        console.log(file)
-        // 임시 설정
-        // sendVideo(formdata);
-        console.log(sendVideo)
-        console.log('video capture end')
-      }
+      // api 전송
+      const formdata = new FormData()
+      formdata.append('file', videoBlob)
+      sendVideo(formdata)
+      console.log('video capture end')
     }
 
     newVideoRecorder.start()
@@ -105,7 +97,13 @@ function RecordVideo({ sendVideo }) {
   }
 
   const VideoCaptureEnd = () => {
-    console.log(videoRecorder)
+    console.log('녹화 끝')
+    speechRecognizer.stop()
+    const tracks = videoRef.current.srcObject.getTracks()
+    tracks.forEach(track => {
+      track.stop()
+    })
+
     if (videoRecorder) {
       videoRecorder.stop()
       setVideoRecorder(null)
@@ -155,7 +153,11 @@ function RecordVideo({ sendVideo }) {
             >
               <track kind="captions" />
             </video>
-            <textarea className="record-video-text" />
+            <textarea
+              className="record-video-text"
+              defaultValue={recordingText}
+              onChange={e => sendText(e.target.value)}
+            />
           </>
         ) : null}
       </div>

@@ -1,36 +1,47 @@
 import React, { useState } from 'react'
 import '../../styles/diary/makediary.css'
-// import axios from 'axios';
 
-function RecordVoice({ sendVoice }) {
+function RecordVoice({ sendVoice, sendText }) {
   const [media, setMedia] = useState()
   const [isRecord, setIsRecord] = useState(false)
-  // const GOOGLE_API_TOKEN = process.env.REACT_APP_GOOGLE_API_TOKEN;
+  const [speechRecognizer, setSpeechRecognizer] = useState({})
+  const [recordingText, setRecordingText] = useState('')
+  const [localStream, setLocalStream] = useState('')
 
-  const sendSpeech = async result => {
-    console.log('전송')
-    console.log(result)
-    // const url = `https://speech.googleapis.com/v1/speech:longrunningrecognize?key=${GOOGLE_API_TOKEN}`;
-    // const request = {
-    //   audio: { content: result },
-    //   config: {
-    //     encoding: 'WEBM_OPUS',
-    //     languageCode: 'ko-KR',
-    //     sampleRateHertz: 48000,
-    //     enableWordTimeOffsets: true,
-    //   },
-    // };
-    // const text = await axios.request({
-    //   url,
-    //   method: 'POST',
-    //   data: request,
-    // });
-    // .then(response => {
-    //   console.log(response.data.results);
-    // })
-    // .catch(err => {
-    //   console.log('err :', err);
-    // });
+  const voiceTextStart = () => {
+    if ('webkitSpeechRecognition' in window) {
+      console.log('텍스트 시작')
+      // eslint-disable-next-line
+      const NewSpeechRecognizer = new window.webkitSpeechRecognition()
+      NewSpeechRecognizer.continuous = true
+
+      NewSpeechRecognizer.interimResults = true
+
+      NewSpeechRecognizer.lang = 'ko-KR'
+
+      NewSpeechRecognizer.start()
+
+      setSpeechRecognizer(NewSpeechRecognizer)
+
+      let finalTranscripts = ''
+
+      NewSpeechRecognizer.onresult = event => {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const { transcript } = event.results[i][0]
+          transcript.replace('\n', '<br>')
+
+          if (event.results[i].isFinal) {
+            finalTranscripts += transcript
+          }
+          setRecordingText(finalTranscripts)
+          sendText(finalTranscripts)
+        }
+      }
+
+      NewSpeechRecognizer.onerror = () => {
+        console.log('error')
+      }
+    }
   }
 
   const voiceRecordStart = () => {
@@ -40,8 +51,10 @@ function RecordVoice({ sendVoice }) {
       })
       .then(stream => {
         const mediaRecorder = new MediaRecorder(stream, {
-          mimeType: 'audio/webm; codecs=opus',
+          mimeType: 'audio/webm',
         })
+        setLocalStream(stream)
+        voiceTextStart()
         mediaRecorder.start()
         setMedia(mediaRecorder)
         console.log(mediaRecorder)
@@ -51,24 +64,13 @@ function RecordVoice({ sendVoice }) {
 
   const voiceRecordStop = () => {
     console.log('중지')
+    speechRecognizer.stop()
+    localStream.getTracks()[0].stop()
     media.ondataavailable = e => {
-      const reader = new FileReader()
-      reader.readAsDataURL(e.data)
-      reader.onloadend = () => {
-        sendSpeech(reader.result.split('base64,')[1])
-        const data = reader.result.split('base64,')[1]
-        const array = []
-        for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i))
-        }
-        const file = new File([new Uint8Array(array)], { type: 'audio/mpeg' })
-        const formdata = new FormData()
-        formdata.append('file', file)
-        console.log(file)
-        // 임시 설정
-        // sendVoice(formdata);
-        console.log(sendVoice)
-      }
+      const blob = new Blob([e.data], { type: 'audio/webm' })
+      const formdata = new FormData()
+      formdata.append('file', blob)
+      sendVoice(formdata)
     }
     media.stop()
   }
@@ -172,7 +174,11 @@ function RecordVoice({ sendVoice }) {
         </div>
       </div>
       <div className="record-text-div">
-        <textarea className="record-text" />
+        <textarea
+          className="record-text"
+          defaultValue={recordingText}
+          onChange={e => sendText(e.target.value)}
+        />
       </div>
     </div>
   )
