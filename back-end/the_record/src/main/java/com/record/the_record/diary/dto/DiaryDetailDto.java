@@ -16,6 +16,8 @@ public class DiaryDetailDto {
     private Long diaryId;
     @ApiModelProperty("폴더 번호")
     private Long folderId;
+    @ApiModelProperty("폴더 이름")
+    private String folderName;
     @ApiModelProperty("일기 제목")
     private String title;
     @ApiModelProperty("일기 내용")
