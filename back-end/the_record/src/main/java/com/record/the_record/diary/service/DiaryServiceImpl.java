@@ -168,12 +168,14 @@ public class DiaryServiceImpl implements DiaryService {
     public DiaryDetailDto findDiaryDetail(Long diaryId) {
 
         Diary diary = diaryRepository.findOneById(diaryId);
+        Folder folder = folderRepository.findOneById(diary.getFolder().getId());
 
         DiaryDetailDto diaryDetailDto = DiaryDetailDto.builder()
                 .diaryId(diary.getId())
                 .folderId(diary.getFolder().getId())
                 .title(diary.getTitle())
                 .content(diary.getContent())
+                .folderName(folder.getName())
                 .category(String.valueOf(diary.getCategory()))
                 .mediaUrl(diary.getMediaUrl())
                 .recordDt(String.valueOf(diary.getRecordDt()).substring(0,10))
