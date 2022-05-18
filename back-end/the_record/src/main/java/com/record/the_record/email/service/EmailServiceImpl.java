@@ -18,19 +18,9 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender emailSender;
 
-    // Test용 코드
-    @Value("${spring.mail.username}")
-    String emailString;
-    @Value("${spring.mail.password}")
-    String passwordString;
-
     @Override
     public void sendEmail(String userEmail, String subject, String msg){
         MimeMessage message = emailSender.createMimeMessage();
-
-        System.out.println(emailString);
-        System.out.println(passwordString);
-        System.out.println(userEmail);
 
         try {
             message.addRecipients(Message.RecipientType.TO, userEmail);

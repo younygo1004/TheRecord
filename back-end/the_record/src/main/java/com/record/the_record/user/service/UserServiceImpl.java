@@ -223,7 +223,14 @@ public class UserServiceImpl implements UserService {
 
         optionalUser.ifPresent(user -> {
             checkVerificationCode(certificateDto);
-            user.changePassword(passwordEncoder.encode(getRandomString()));
+
+            String newPassword = getRandomString();
+
+            System.out.println("이메일 전송");
+            String subject = "새로운 비밀번호가 발급되었습니다.";
+            emailService.sendEmail(certificateDto.getUserEmail(), subject, newPassword);
+
+            user.changePassword(passwordEncoder.encode(newPassword));
             userVerificationRepository.delete(userVerificationRepository.findById(certificateDto.getUserEmail()).get());
         });
 
