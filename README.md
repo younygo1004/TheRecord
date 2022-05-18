@@ -94,13 +94,9 @@
 
 ## 🛠️ 프로젝트 구조
 
-- 추후 작성
-
 <img src="./assets/pjtStruct.png">
 
 ## 🌐 ERD
-
-- 추후 작성
 
 <img src="./assets/erd.png">
 
