@@ -4,8 +4,8 @@
 <div>
 <img src="./assets/TheRecord.png" width="350px">
 </div>
-<image src="https://img.shields.io/static/v1?label=Java&message=open-jdk-8&color=ffffff&logo=java">
-<image src="https://img.shields.io/static/v1?label=Spring%20Boot&message=2.5.12&color=ffffff&logo=springBoot&logoColor=white">
+<image src="https://img.shields.io/static/v1?label=Java&message=open-jdk-8&color=ffffff&logo=java"/>
+<image src="https://img.shields.io/static/v1?label=Spring%20Boot&message=2.5.12&color=ffffff&logo=springBoot&logoColor=white"/>
 <img src="https://img.shields.io/badge/Swagger-3.0.0-green?logo=Swagger&logoColor=white"/>
 <img src="https://img.shields.io/badge/JPA-59666C?style=flat&logo=Hibernate&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring%20Security-6DB33F?style=flat&logo=Spring%20Security&logoColor=white"/>
