@@ -128,11 +128,11 @@
 | Name   | Role                        | Position         | Git           |
 | ------ | --------------------------- | ---------------- | ------------- |
 | 장성태 | 팀장 / 발표                 | Frontend         |               |
-| 김유정 | React 노력왕                | Frontend         | @yujeong23    |
-| 오수경 | Director / Front 고수       | Frontend         | @ghkdlxld     |
+| 김유정 | Front 고수                | Frontend         | @yujeong23    |
+| 오수경 | Director / Front 왕고수       | Frontend         | @ghkdlxld     |
 | 오은진 | DB Robot / Back 고수        | Backend          | @Oh-EunJin    |
 | 이주형 | Back 왕고수 (PM)            | Backend          | @leeejuhyeong |
-| 조용구 | Server / Backend            | Backend          | @younygo1004  |
+| 조용구 | Server / Back 고수            | Backend          | @younygo1004  |
 
 ## 👨‍👨‍👧‍👦 역할 분담
 
