@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import '../../styles/photo/album.css'
@@ -15,18 +15,18 @@ function EnterBoothButton() {
   const [enterBoothDialogOpen, setenterBoothDialogOpen] = useState(false)
   const [roomcode, setRoomcode] = useState('')
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+
   const handleClose = () => {
     setenterBoothDialogOpen(false)
     setRoomcode('')
   }
+
   const movePhotobooth = async () => {
-    console.log(loginUserInfo)
     // 방 코드 유효성 검사 필요
     const isExist = await callApi({
       url: `/api/photobooth/${roomcode}`,
     })
     if (isExist === 'TRUE') {
-      console.log(loginUserInfo.userId)
       navigate('/album/photobooth', {
         state: {
           roomcode,
@@ -38,9 +38,9 @@ function EnterBoothButton() {
     }
   }
 
-  useEffect(() => {
-    console.log(roomcode)
-  }, [roomcode])
+  // useEffect(() => {
+  //   console.log(roomcode)
+  // }, [roomcode])
 
   return (
     <div>

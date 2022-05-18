@@ -59,9 +59,6 @@ class PhotoBooth extends Component {
     const { peopleNum, backgroundColor, loginUserInfo, roomcode } =
       this.props.location.state
 
-    console.log(loginUserInfo)
-    console.log(roomcode)
-
     if (roomcode)
       this.setState({
         peopleNum,
@@ -89,6 +86,7 @@ class PhotoBooth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log('참여자들', this.state.subscribers)
     if (
       this.state.donePhoto >= 4 &&
       this.state.donePhoto !== prevState.donePhoto
@@ -394,7 +392,7 @@ class PhotoBooth extends Component {
         // api 사용시 이후부터 삭제
         // ctx.drawImage(element, 20, element.clientHeight * index + 20)
         // this.setState(state => {
-        //   return { donePhoto: state.donePhoto + 1 }
+        // return { donePhoto: state.donePhoto + 1 }
         // })
       })
     } else {
@@ -408,8 +406,6 @@ class PhotoBooth extends Component {
 
     return (
       <div id="photobooth">
-        <div>{this.state.mySessionId}</div>
-        {/* <div>{this.state.roomcode}</div> */}
         <div className="bg-white-left">
           <div className="photo-preview-box">
             <canvas id="canvas-0" />
@@ -511,6 +507,13 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
+              {/* <button
+                className="take-photo-btn"
+                onClick={this.takePhoto}
+                type="button"
+              >
+                찰칵
+              </button> */}
               {this.state.peopleNum === this.state.subscribers.length ? (
                 <button
                   className="take-photo-btn"

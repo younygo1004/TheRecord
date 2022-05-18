@@ -28,7 +28,6 @@ function PhotoPreview() {
         },
       )
       .then(res => {
-        console.log(res.data)
         setPhotolist(res.data)
       })
   }, [page])
@@ -45,7 +44,6 @@ function PhotoPreview() {
         },
       )
       .then(res => {
-        console.log(res.data)
         setTotalPage(res.data)
       })
   }, [])
