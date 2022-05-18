@@ -138,7 +138,7 @@ function DiaryDetailContainer(props) {
           <div className="diaryinfo-header">
             <div>
               <div className="diaryinfo-header-title">{diaryDto.title}</div>
-              <div className="diaryinfo-header-date">{diaryInfo.recordDt}</div>
+              <div className="diaryinfo-header-date">{diaryDto.recordDt}</div>
             </div>
             {loginUserInfo.name === homePageHostInfo.name ? (
               <div>
@@ -190,6 +190,7 @@ function DiaryDetailContainer(props) {
       ) : (
         <div className="diaryinfo-content">
           <div className="diaryinfo-media">{checkMedia()}</div>
+
           <div className="diaryinfo-text">
             {diaryDto.content
               ? diaryDto.content.split('\n').map(line => {

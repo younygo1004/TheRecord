@@ -24,7 +24,7 @@ function DiaryMain() {
 
   useEffect(() => {
     axios
-      .get(`https://the-record.co.kr/api/diary/${loginUserInfo.userPk}/0`, {
+      .get(`https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/0`, {
         headers: {
           'x-auth-token': sessionStorage.getItem('jwt'),
         },
@@ -73,11 +73,17 @@ function DiaryMain() {
           </div>
           <Calender />
           <div className="diarymain-content">
-            {diarys.map(diary => (
-              <div key={diary.diaryId} className="diarymain-item-content">
-                <DiaryDetailContainer diaryInfo={diary} />
+            {diarys.length === 0 ? (
+              <div className="diarymain-no-content">
+                아직 업로드한 일기가 없습니다.
               </div>
-            ))}
+            ) : (
+              diarys.map(diary => (
+                <div key={diary.diaryId} className="diarymain-item-content">
+                  <DiaryDetailContainer diaryInfo={diary} />
+                </div>
+              ))
+            )}
           </div>
         </div>
         <Navigation />

@@ -23,11 +23,14 @@ function DiaryList() {
   const [diarylist, setDiarylist] = useState([])
   useEffect(() => {
     axios
-      .get(`https://the-record.co.kr:8080/api/folder/${loginUserInfo.userPk}`, {
-        headers: {
-          'x-auth-token': sessionStorage.getItem('jwt'),
+      .get(
+        `https://the-record.co.kr:8080/api/folder/${homePageHostInfo.userPk}`,
+        {
+          headers: {
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
         },
-      })
+      )
       .then(res => {
         setDiarylist(res.data)
       })
@@ -45,11 +48,14 @@ function DiaryList() {
   const resetFolder = () => {
     console.log('reset')
     axios
-      .get(`https://the-record.co.kr:8080/api/folder/${loginUserInfo.userPk}`, {
-        headers: {
-          'x-auth-token': sessionStorage.getItem('jwt'),
+      .get(
+        `https://the-record.co.kr:8080/api/folder/${homePageHostInfo.userPk}`,
+        {
+          headers: {
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
         },
-      })
+      )
       .then(res => {
         setDiarylist(res.data)
       })

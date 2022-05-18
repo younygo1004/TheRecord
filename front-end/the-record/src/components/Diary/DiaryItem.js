@@ -8,11 +8,11 @@ function DiaryItem({ folder }) {
   const navigate = useNavigate()
   //  폴더명으로 일기 목록 조회 api 연결
   const [diaryItems, setDiaryItems] = useState([])
-  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
   useEffect(() => {
     axios
       .get(
-        `https://the-record.co.kr/api/diary/${loginUserInfo.userPk}/folder/${folder}`,
+        `https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/folder/${folder}`,
         {
           headers: {
             'x-auth-token': sessionStorage.getItem('jwt'),
