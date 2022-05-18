@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
 import FolderOpenIcon from '@mui/icons-material/FolderOpen'
 
-function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
+function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
@@ -52,21 +54,29 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
       boxSizing: 'border-box',
     },
   }))
-
-  const [checked, setChecked] = useState(true)
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+  const [checked, setChecked] = useState(info.visible)
   const [folderListOpen, setFolderListOpen] = useState(false)
-  // 폴더 조회 api 연결
-  const [selectedFolder, setSelectedFolder] = useState('')
-  const folderlist = [
-    {
-      folderId: 2,
-      folderName: '기분 좋은 날',
-    },
-    {
-      folderId: 3,
-      folderName: '분분분분분분분분분분분분분분분분분분분분',
-    },
-  ]
+  const [folderlist, setFolderlist] = useState([])
+  const [selectedFolder, setSelectedFolder] = useState(info.folder)
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `https://the-record.co.kr:8080/api/folder/${loginUserInfo.userPk}`,
+      headers: {
+        'x-auth-token': sessionStorage.getItem('jwt'),
+      },
+    })
+      .then(res => {
+        console.log(res.data)
+        setFolderlist(res.data)
+      })
+      .catch(res => {
+        alert('문제가 발생했습니다.')
+        console.log(res)
+      })
+  }, [])
 
   const handleChange = event => {
     setChecked(event.target.checked)
@@ -79,6 +89,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
         maxLength="20"
         placeholder="일기 제목을 입력해주세요"
         onChange={e => sendTitle(e.target.value)}
+        defaultValue={info.title}
       />
       <div className="make-diary-header-div">
         <div>
@@ -106,7 +117,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
                     className="make-diary-listitem"
                     key={folder.folderId}
                     onClick={() => [
-                      setSelectedFolder(folder.folderName),
+                      setSelectedFolder(folder.name),
                       setFolderListOpen(false),
                       sendFolder(folder.folderId),
                     ]}
@@ -115,7 +126,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible }) {
                       sx={{ fontSize: 'medium' }}
                       style={{ marginRight: '3px' }}
                     />
-                    {folder.folderName}
+                    {folder.name}
                   </button>
                 ))
               : ''}

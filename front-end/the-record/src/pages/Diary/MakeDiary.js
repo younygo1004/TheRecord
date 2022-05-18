@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 import { useLocation } from 'react-router'
 import Navigation from '../../components/Navigation'
 import '../../styles/diary/makediary.css'
@@ -11,16 +13,22 @@ import UploadPicture from '../../components/Diary/UploadPicture'
 
 function MakeDiary() {
   const category = useLocation().state
+  const navigate = useNavigate()
   const [diaryDto, setDiaryDto] = useState({
     folderId: '',
     category: '',
     content: '',
     title: '',
-    visible: 'private',
+    visible: 'PRIVATE',
   })
   const [form, setForm] = useState()
+  const info = {
+    title: '',
+    folder: '',
+    visible: false,
+  }
 
-  const setInfo = ({ item, value }) => {
+  const setDto = ({ item, value }) => {
     const newDto = {
       ...diaryDto,
       [item]: value,
@@ -34,8 +42,9 @@ function MakeDiary() {
         <RecordVideo
           sendVideo={e => [
             setForm(e),
-            setInfo({ item: 'category', value: 'video' }),
+            setDto({ item: 'category', value: 'VIDEO' }),
           ]}
+          sendText={e => setDto({ item: 'content', value: e })}
         />
       )
     }
@@ -44,8 +53,9 @@ function MakeDiary() {
         <UploadPicture
           sendPhoto={e => [
             setForm(e),
-            setInfo({ item: 'category', value: 'picture' }),
+            setDto({ item: 'category', value: 'PICTURE' }),
           ]}
+          sendText={e => setDto({ item: 'content', value: e })}
         />
       )
     }
@@ -53,39 +63,55 @@ function MakeDiary() {
       <RecordVoice
         sendVoice={e => [
           setForm(e),
-          setInfo({ item: 'category', value: 'voice' }),
+          setDto({ item: 'category', value: 'VOICE' }),
         ]}
+        sendText={e => setDto({ item: 'content', value: e })}
       />
     )
   }
 
   const uploadDiary = () => {
     console.log('일기 저장')
-    form.append(
-      'diaryDto',
-      new Blob([JSON.stringify(diaryDto)], { type: 'application/json' }),
-    )
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of form.keys()) {
-      console.log(key)
+    if (form && diaryDto.folderId && diaryDto.folderId) {
+      form.append(
+        'diaryDto',
+        new Blob([JSON.stringify(diaryDto)], { type: 'application/json' }),
+      )
+      console.log(diaryDto)
+      // 일기 저장 api 연결
+      axios({
+        method: 'POST',
+        url: 'https://the-record.co.kr:8080/api/diary',
+        data: form,
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+        .then(res => {
+          if (res.data === 'success') {
+            console.log('성공')
+            navigate('/diary')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+          alert('일기 내용을 입력하세요')
+        })
+    } else {
+      alert('일기 내용을 입력하세요')
     }
+  }
 
-    // 일기 저장 api 연결
-    // axios({
-    //   method: 'POST',
-    //   url: 'https://the-record.co.kr:8080/api/diary,
-    //   data: form,
-    //   headers: {
-    //     'x-auth-token': sessionStorage.getItem('jwt'),
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // })
-    //   .then(res => {
-    //     console.log('성공');
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+  const cancelUpload = () => {
+    setDiaryDto({
+      folderId: '',
+      category: '',
+      content: '',
+      title: '',
+      visible: 'PRIVATE',
+    })
+    setForm()
   }
 
   return (
@@ -99,18 +125,22 @@ function MakeDiary() {
         <div className="make-diary-container">
           <div className="make-diary-box">
             <MakeDiaryHeader
-              sendTitle={e => setInfo({ item: 'title', value: e })}
-              sendFolder={e => setInfo({ item: 'folderId', value: e })}
+              info={info}
+              sendTitle={e => setDto({ item: 'title', value: e })}
+              sendFolder={e => setDto({ item: 'folderId', value: e })}
               sendVisible={e =>
-                setInfo({
+                setDto({
                   item: 'visible',
-                  value: e === false ? 'public' : 'private',
+                  value: e === false ? 'PUBLIC' : 'PRIVATE',
                 })
               }
             />
             {checkCategory()}
           </div>
-          <MakeDiaryButton clickUpload={uploadDiary} />
+          <MakeDiaryButton
+            clickUpload={uploadDiary}
+            clickCancel={cancelUpload}
+          />
         </div>
         <Navigation />
       </div>

@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react'
 import PhotoLibraryOutlinedIcon from '@mui/icons-material/PhotoLibraryOutlined'
 import '../../styles/diary/makediary.css'
 
-function UploadPicture({ sendPhoto }) {
+function UploadPicture({ sendPhoto, sendText }) {
   const [photo, setPhoto] = useState('')
 
   const imageInput = useRef()
@@ -19,18 +19,10 @@ function UploadPicture({ sendPhoto }) {
       reader.onloadend = e => {
         setPhoto(e.target.result)
         // 미리 보기 끝
-        const data = window.atob(e.target.result.split(',')[1])
-        const array = []
-        for (let i = 0; i < data.length; i += 1) {
-          array.push(data.charCodeAt(i))
-        }
-        const file = new File([new Uint8Array(array)], { type: 'image/png' })
-        const formdata = new FormData()
-        formdata.append('file', file)
-        // sendPhoto(formdata);
-        // 임시설정
-        console.log(sendPhoto)
       }
+      const formdata = new FormData()
+      formdata.append('file', event.target.files[0])
+      sendPhoto(formdata)
     }
   }
 
@@ -60,7 +52,10 @@ function UploadPicture({ sendPhoto }) {
         style={{ display: 'none' }}
         ref={imageInput}
       />
-      <textarea className="record-text" />
+      <textarea
+        className="record-text"
+        onChange={e => sendText(e.target.value)}
+      />
     </div>
   )
 }

@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useNavigate } from 'react-router'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
@@ -11,36 +14,24 @@ import '../../styles/diary/diarydetail.css'
 
 function DiaryDetail() {
   const navigate = useNavigate()
+  const diaryId = useLocation().state
   const [openDialog, setOpenDialog] = useState(false)
-  //  로그인 유저 받아오기!
-  const loginUser = '5_waterglass'
-  const homePageHost = sessionStorage.getItem('homePageHost')
+  const [diaryInfo, setDiaryInfo] = useState([])
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
 
-  // 일기 상세 정보 조회 api 연결
-  // const diaryId = useLocation().state;
-  // const [diaryInfo, setDiaryInfo] = useState([]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get('url{diaryId}', {
-  //       headers: {
-  //         "x-auth-token": sessiontStorage.getItem("jwt"),
-  //       },
-  //     })
-  //     .then((res) => {
-  //         setDiaryInfo(res.data);
-  //     });
-  // }, []);
-  const diaryInfo = {
-    diaryId: 1,
-    category: '전체공개',
-    mediaUrl: '',
-    content:
-      '성태가 돈을 모아오라고했다. \n 싸피에서 받은 돈은 이미 성태한테 다 바쳤는데...\n 이미 주형이는 형! 여기있어!를 외치며 761,950원을 뺏겼다고 한다. \n 같은 팀하기 무섭다................왜 안되냐.................................................................................스크롤스크롤스크롤스크롤스크롤스크롤',
-    title: '백만원씩 모아와',
-    recordDt: '2022.05.02',
-    visible: 'true',
-  }
+  useEffect(() => {
+    console.log(diaryId)
+    axios
+      .get(`https://the-record.co.kr/api/diary/${diaryId}`, {
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
+      })
+      .then(res => {
+        setDiaryInfo(res.data)
+      })
+  }, [diaryId])
 
   const openSelectDialog = () => {
     setOpenDialog(true)
@@ -64,7 +55,7 @@ function DiaryDetail() {
       <div className="bg-white-right">
         <div className="diarydetail-box">
           <div className="diarydetail-header">
-            {loginUser === homePageHost ? (
+            {loginUserInfo.name === homePageHostInfo.name ? (
               <button
                 type="button"
                 className="make-diary-btn"
