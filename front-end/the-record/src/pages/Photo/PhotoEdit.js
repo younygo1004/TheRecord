@@ -8,7 +8,7 @@ import Switch from '@mui/material/Switch'
 import Navigation from '../../components/Navigation'
 import PhotoList from '../../components/Album/PhotoList'
 // import PhotoUpload from '../../components/Album/PhotoUpload';
-import '../../styles/photo/album.css'
+import '../../styles/photo/photo-edit.css'
 
 function PhotoEdit() {
   const navigate = useNavigate()
@@ -118,35 +118,49 @@ function PhotoEdit() {
   }
 
   return (
-    <div id="album">
+    <div id="album" className="photo-edit">
       <div className="bg-white-left">
         <div className="album-photolist">
           <PhotoList />
         </div>
       </div>
       <div className="bg-white-right">
-        <input
-          placeholder={photoDto.title}
-          id="title"
-          onChange={onChangTitle}
-        />
-        <div>
-          <p>나만 보기</p>
-          <AntSwitch
-            checked={checked}
-            onChange={event => handleChange(event)}
-            inputProps={{ 'aria-label': 'ant design' }}
-          />
+        <div className="photo-edit-box">
+          <div className="edit-info-box">
+            <div className="photo-edit-header">
+              <input
+                placeholder={photoDto.title}
+                id="title"
+                onChange={onChangTitle}
+              />
+              <div>
+                <div className="private-btn">
+                  <p>나만 보기</p>
+                  <AntSwitch
+                    checked={checked}
+                    onChange={event => handleChange(event)}
+                    inputProps={{ 'aria-label': 'ant design' }}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="photo-edit-img">
+              <img
+                alt="DecoImg"
+                src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${state.photoDetail.mediaUrl}`}
+              />
+            </div>
+          </div>
+          <button
+            type="button"
+            className="photo-edit-btn"
+            onClick={saveModifyPhoto}
+          >
+            수정완료
+          </button>
+          {/* <PhotoUpload /> */}
+          <Navigation />
         </div>
-        <img
-          alt="DecoImg"
-          src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${state.photoDetail.mediaUrl}`}
-        />
-        <button type="button" onClick={saveModifyPhoto}>
-          사진첩에 저장하기
-        </button>
-        {/* <PhotoUpload /> */}
-        <Navigation />
       </div>
     </div>
   )

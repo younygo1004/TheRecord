@@ -56,17 +56,28 @@ class PhotoBooth extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload)
     this.joinSession()
-    const { peopleNum, backgroundColor, loginUserInfo } =
+    const { peopleNum, backgroundColor, loginUserInfo, roomcode } =
       this.props.location.state
 
     console.log(loginUserInfo)
-    this.setState({
-      peopleNum,
-      backgroundColor,
-      mySessionId: loginUserInfo.userId,
-      myUserName: loginUserInfo.name,
-      loginUserInfo,
-    })
+    console.log(roomcode)
+
+    if (roomcode)
+      this.setState({
+        peopleNum,
+        backgroundColor,
+        mySessionId: roomcode,
+        myUserName: loginUserInfo.name,
+        loginUserInfo,
+      })
+    else
+      this.setState({
+        peopleNum,
+        backgroundColor,
+        mySessionId: loginUserInfo.userId,
+        myUserName: loginUserInfo.name,
+        loginUserInfo,
+      })
   }
 
   // componentDidUpdate() {
@@ -335,43 +346,43 @@ class PhotoBooth extends Component {
         formData.append('image_file_b64', imageUrl)
 
         // 배경 없애기 remove.bg
-        // axios({
-        //   method: 'post',
-        //   url: 'https://api.remove.bg/v1.0/removebg',
-        //   data: formData,
-        //   responseType: 'arraybuffer',
-        //   headers: {
-        //     ...formData.getHeaders,
-        //     'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
-        //   },
-        //   encoding: null,
-        // })
-        //   .then(response => {
-        //     if (response.status !== 200)
-        //       return console.error(
-        //         'Error:',
-        //         response.status,
-        //         response.statusText,
-        //       );
-        //     const arrayBufferView = new Uint8Array(response.data);
-        //     const blob = new Blob([arrayBufferView], { type: 'image/png' });
-        //     const urlCreator = window.URL || window.webkitURL;
-        //     const imgUrl = urlCreator.createObjectURL(blob);
-        //     const img = document.createElement('img');
-        //     img.src = imgUrl;
+        axios({
+          method: 'post',
+          url: 'https://api.remove.bg/v1.0/removebg',
+          data: formData,
+          responseType: 'arraybuffer',
+          headers: {
+            ...formData.getHeaders,
+            'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
+          },
+          encoding: null,
+        })
+          .then(response => {
+            if (response.status !== 200)
+              return console.error(
+                'Error:',
+                response.status,
+                response.statusText,
+              )
+            const arrayBufferView = new Uint8Array(response.data)
+            const blob = new Blob([arrayBufferView], { type: 'image/png' })
+            const urlCreator = window.URL || window.webkitURL
+            const imgUrl = urlCreator.createObjectURL(blob)
+            const img = document.createElement('img')
+            img.src = imgUrl
 
-        //     img.addEventListener('load', e => {
-        //       ctx.drawImage(img, 20, element.clientHeight * index + 20);
-        //     });
-        //   })
-        //   .then(() => {
-        //     this.setState(state => {
-        //       return { donePhoto: state.donePhoto + 1 };
-        //     });
-        //   })
-        //   .catch(error => {
-        //     return console.error('Request failed:', error);
-        //   });
+            img.addEventListener('load', e => {
+              ctx.drawImage(img, 20, element.clientHeight * index + 20)
+            })
+          })
+          .then(() => {
+            this.setState(state => {
+              return { donePhoto: state.donePhoto + 1 }
+            })
+          })
+          .catch(error => {
+            return console.error('Request failed:', error)
+          })
         ctx.fillStyle = this.state.backgroundColor
         ctx.fillRect(
           15,
@@ -381,10 +392,10 @@ class PhotoBooth extends Component {
         )
 
         // api 사용시 이후부터 삭제
-        ctx.drawImage(element, 20, element.clientHeight * index + 20)
-        this.setState(state => {
-          return { donePhoto: state.donePhoto + 1 }
-        })
+        // ctx.drawImage(element, 20, element.clientHeight * index + 20)
+        // this.setState(state => {
+        //   return { donePhoto: state.donePhoto + 1 }
+        // })
       })
     } else {
       alert('네번의 촬영을 완료해주세요!')
@@ -397,6 +408,8 @@ class PhotoBooth extends Component {
 
     return (
       <div id="photobooth">
+        <div>{this.state.mySessionId}</div>
+        {/* <div>{this.state.roomcode}</div> */}
         <div className="bg-white-left">
           <div className="photo-preview-box">
             <canvas id="canvas-0" />
