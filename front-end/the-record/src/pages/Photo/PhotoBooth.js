@@ -37,6 +37,7 @@ class PhotoBooth extends Component {
       mainStreamManager: undefined,
       publisher: undefined,
       subscribers: [],
+      joinPeople: [],
       photoNum: 0,
       donePhoto: 0,
     }
@@ -49,13 +50,14 @@ class PhotoBooth extends Component {
     this.handleMainVideoStream = this.handleMainVideoStream.bind(this)
     this.onbeforeunload = this.onbeforeunload.bind(this)
 
+    this.deleteRoom = this.deleteRoom.bind(this)
     this.takePhoto = this.takePhoto.bind(this)
     this.finishPhoto = this.finishPhoto.bind(this)
   }
 
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload)
-    this.joinSession()
+
     const { peopleNum, backgroundColor, loginUserInfo, roomcode } =
       this.props.location.state
 
@@ -75,6 +77,10 @@ class PhotoBooth extends Component {
         myUserName: loginUserInfo.name,
         loginUserInfo,
       })
+
+    console.log('-------------- joinPeople', this.state.joinPeople)
+    this.joinSession()
+    console.log('-------------- publisher', this.state.publisher)
   }
 
   // componentDidUpdate() {
@@ -87,18 +93,25 @@ class PhotoBooth extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     console.log('참여자들', this.state.subscribers)
+    console.log(this.state.donePhoto)
     if (
       this.state.donePhoto >= 4 &&
       this.state.donePhoto !== prevState.donePhoto
     ) {
       setTimeout(() => {
-        this.leaveSession()
         this.props.navigate('/album/photoframe', {
           state: {
             doneImg: document.querySelector('#show').toDataURL('image/png'),
           },
         })
       }, 3000)
+      this.leaveSession()
+      if (!this.state.roomcode) {
+        callApi({
+          method: 'put',
+          url: `/api/photobooth/${this.state.loginUserInfo.userId}`,
+        })
+      }
     }
   }
 
@@ -159,7 +172,9 @@ class PhotoBooth extends Component {
           // so OpenVidu doesn't create an HTML video by its own
           const subscriber = mySession.subscribe(event.stream, undefined)
           const { subscribers } = this.state
+          console.log('추가되는 인원', subscribers)
           subscribers.push(subscriber)
+          this.state.joinPeople.push(subscriber.stream.session.connection.data)
 
           // Update the state with the new subscribers
           this.setState({
@@ -232,11 +247,13 @@ class PhotoBooth extends Component {
   }
 
   leaveSession() {
+    console.log('방 떠나기')
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
     const mySession = this.state.session
 
     if (mySession) {
+      console.log('삭제 활성화------------------------')
       mySession.disconnect()
     }
 
@@ -245,16 +262,20 @@ class PhotoBooth extends Component {
     this.setState({
       session: undefined,
       subscribers: [],
-      mySessionId: 'SessionA',
+      mySessionId: '',
       myUserName: `Participant${Math.floor(Math.random() * 100)}`,
       mainStreamManager: undefined,
       publisher: undefined,
     })
+  }
 
-    callApi({
-      method: 'put',
-      url: `/api/photobooth/${this.state.loginUserInfo.userId}`,
-    })
+  deleteRoom() {
+    if (!this.state.roomcode) {
+      callApi({
+        method: 'put',
+        url: `/api/photobooth/${this.state.loginUserInfo.userId}`,
+      })
+    }
     this.props.navigate('/album')
   }
 
@@ -344,43 +365,43 @@ class PhotoBooth extends Component {
         formData.append('image_file_b64', imageUrl)
 
         // 배경 없애기 remove.bg
-        axios({
-          method: 'post',
-          url: 'https://api.remove.bg/v1.0/removebg',
-          data: formData,
-          responseType: 'arraybuffer',
-          headers: {
-            ...formData.getHeaders,
-            'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
-          },
-          encoding: null,
-        })
-          .then(response => {
-            if (response.status !== 200)
-              return console.error(
-                'Error:',
-                response.status,
-                response.statusText,
-              )
-            const arrayBufferView = new Uint8Array(response.data)
-            const blob = new Blob([arrayBufferView], { type: 'image/png' })
-            const urlCreator = window.URL || window.webkitURL
-            const imgUrl = urlCreator.createObjectURL(blob)
-            const img = document.createElement('img')
-            img.src = imgUrl
+        // axios({
+        //   method: 'post',
+        //   url: 'https://api.remove.bg/v1.0/removebg',
+        //   data: formData,
+        //   responseType: 'arraybuffer',
+        //   headers: {
+        //     ...formData.getHeaders,
+        //     'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
+        //   },
+        //   encoding: null,
+        // })
+        //   .then(response => {
+        //     if (response.status !== 200)
+        //       return console.error(
+        //         'Error:',
+        //         response.status,
+        //         response.statusText,
+        //       )
+        //     const arrayBufferView = new Uint8Array(response.data)
+        //     const blob = new Blob([arrayBufferView], { type: 'image/png' })
+        //     const urlCreator = window.URL || window.webkitURL
+        //     const imgUrl = urlCreator.createObjectURL(blob)
+        //     const img = document.createElement('img')
+        //     img.src = imgUrl
 
-            img.addEventListener('load', e => {
-              ctx.drawImage(img, 20, element.clientHeight * index + 20)
-            })
-          })
-          .then(() => {
-            this.setState(state => {
-              return { donePhoto: state.donePhoto + 1 }
-            })
-          })
-          .catch(error => {
-            return console.error('Request failed:', error)
-          })
+        //     img.addEventListener('load', e => {
+        //       ctx.drawImage(img, 20, element.clientHeight * index + 20)
+        //     })
+        //   })
+        //   .then(() => {
+        //     this.setState(state => {
+        //       return { donePhoto: state.donePhoto + 1 }
+        //     })
+        //   })
+        //   .catch(error => {
+        //     return console.error('Request failed:', error)
+        //   })
         ctx.fillStyle = this.state.backgroundColor
         ctx.fillRect(
           15,
@@ -390,10 +411,10 @@ class PhotoBooth extends Component {
         )
 
         // api 사용시 이후부터 삭제
-        // ctx.drawImage(element, 20, element.clientHeight * index + 20)
-        // this.setState(state => {
-        // return { donePhoto: state.donePhoto + 1 }
-        // })
+        ctx.drawImage(element, 20, element.clientHeight * index + 20)
+        this.setState(state => {
+          return { donePhoto: state.donePhoto + 1 }
+        })
       })
     } else {
       alert('네번의 촬영을 완료해주세요!')
@@ -463,7 +484,7 @@ class PhotoBooth extends Component {
                     }}
                     type="button"
                     id="buttonLeaveSession"
-                    onClick={this.leaveSession}
+                    onClick={() => [this.leaveSession(), this.deleteRoom()]}
                     value="방 떠나기"
                   />
                 </div>
@@ -507,34 +528,34 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
-              <button
-                className="take-photo-btn"
-                onClick={this.takePhoto}
-                type="button"
-              >
-                찰칵
-              </button>
-              {/* {this.state.peopleNum === this.state.subscribers.length ? (
-                <button
-                  className="take-photo-btn"
-                  onClick={this.takePhoto}
-                  type="button"
-                >
-                  찰칵
-                </button>
+              {this.state.peopleNum <= this.state.subscribers.length + 1 &&
+              this.state.mySessionId === this.state.loginUserInfo.userId ? (
+                <>
+                  <button
+                    className="take-photo-btn"
+                    onClick={this.takePhoto}
+                    type="button"
+                  >
+                    찰칵
+                  </button>
+                  <button
+                    className="finish-photo-btn"
+                    onClick={this.finishPhoto}
+                    type="button"
+                  >
+                    사진촬영 완료
+                  </button>
+                </>
               ) : (
-                <button disabled className="disable-photo-btn" type="button">
-                  찰칵
-                </button>
-              )} */}
-
-              <button
-                className="finish-photo-btn"
-                onClick={this.finishPhoto}
-                type="button"
-              >
-                사진촬영 완료
-              </button>
+                <>
+                  <button disabled className="disable-photo-btn" type="button">
+                    찰칵
+                  </button>
+                  <button disabled className="disable-photo-btn" type="button">
+                    사진촬영 완료
+                  </button>
+                </>
+              )}
               <canvas id="show" />
             </div>
           </div>

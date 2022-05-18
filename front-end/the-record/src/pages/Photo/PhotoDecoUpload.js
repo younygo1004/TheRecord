@@ -188,7 +188,6 @@ function PhotoDecoUpload() {
           >
             사진첩에 저장하기
           </button>
-          {/* <PhotoUpload /> */}
           <Navigation />
         </div>
       </div>

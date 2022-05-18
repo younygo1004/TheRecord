@@ -13,13 +13,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 30px;
+  justify-content: space-between;
+  padding: 20px 30px;
 }
 
 .photo-upload .photo-upload-box .upload-info-box {
   width: 90%;
-  height: 100%;
+  height: 80%;
   padding: 10px;
   border: 2px solid rgba(0, 0, 0, 0.15);
   border-radius: 10px;
@@ -77,10 +77,9 @@
 
 .photo-upload .photo-upload-btn {
   width: 260px;
-  height: 60px;
+  height: 50px;
   background: rgba(75, 182, 209, 0.87);
-  border-radius: 16px;
-  margin-top: 15px;
+  border-radius: 20px;
   border: none;
   font-family: 'dunggeunmo';
   font-size: 16px;
@@ -100,5 +99,11 @@
     height: 50px;
     margin-right: 35px;
     font-size: 16px;
+  }
+
+  .photo-upload .photo-upload-btn {
+    height: 55px;
+    border-radius: 20px;
+    font-size: 18px;
   }
 }

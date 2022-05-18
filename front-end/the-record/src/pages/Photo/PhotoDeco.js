@@ -124,20 +124,11 @@ function PhotoDeco() {
             ref={editorRef}
             includeUI={{
               theme: myTheme,
-              menu: [
-                'crop',
-                'flip',
-                'rotate',
-                'draw',
-                'shape',
-                'icon',
-                'text',
-                'filter',
-              ],
+              menu: ['crop', 'flip', 'rotate', 'draw', 'shape', 'icon', 'text'],
               initMenu: 'filter',
               uiSize: {
                 width: '100%',
-                height: '90%',
+                height: '100%',
               },
               menuBarPosition: 'left',
             }}

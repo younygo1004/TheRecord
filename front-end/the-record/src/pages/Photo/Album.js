@@ -21,13 +21,6 @@ function Album() {
       </div>
       <div className="bg-white-right">
         <div className="album-btns">
-          {/* <button type="button" className="album-btn">
-            <CloudUploadOutlinedIcon
-              className="album-btn-icon"
-              fontSize="small"
-            />
-            업로드 하기
-          </button> */}
           {loginUserInfo.name === homePageHostInfo.name ? (
             <UploadButton />
           ) : (
