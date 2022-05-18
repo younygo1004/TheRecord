@@ -71,7 +71,7 @@ function PhotoPreview() {
   }
 
   return (
-    <div>
+    <div id="photopreview">
       <div className="photopreview">
         {totalPage > 0 && page !== 0 ? (
           <button
@@ -85,7 +85,7 @@ function PhotoPreview() {
           <ArrowLeftOutlinedIcon className="preview-no-btn" />
         )}
         {photolist.length === 0 ? (
-          <div>아직 업로드한 사진이 없습니다</div>
+          <div style={{ marginTop: '20px' }}>아직 업로드한 사진이 없습니다</div>
         ) : (
           photolist.map(photo => (
             <div
@@ -102,7 +102,9 @@ function PhotoPreview() {
                 alt="인생네컷"
                 className="preview-img"
               />
-              <div className="preview-date">{photo.record_dt}</div>
+              <div className="preview-date">
+                {photo.recordDt.replace('-', '.').replace('-', '.')}
+              </div>
             </div>
           ))
         )}

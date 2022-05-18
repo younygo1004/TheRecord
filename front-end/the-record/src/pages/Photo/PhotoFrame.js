@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import iro from '@jaames/iro'
 import Navigation from '../../components/Navigation'
 import darkLogo from '../../assets/dark_logo.png'
@@ -7,6 +7,7 @@ import lightLogo from '../../assets/light_logo.png'
 
 function PhotoFrame() {
   const { state } = useLocation()
+  const navigate = useNavigate()
   const [frameColor, setFrameColor] = useState('rgb(0,0,0)')
   const [previewImg, setpreviewImg] = useState()
   const [colorPicker, setColorPicker] = useState()
@@ -106,6 +107,10 @@ function PhotoFrame() {
     }, 3000)
   }
 
+  const moveDeco = () => {
+    navigate('/album/photodeco')
+  }
+
   return (
     <div id="photo-frame">
       <div className="bg-white-left">
@@ -144,7 +149,9 @@ function PhotoFrame() {
             <button type="button" onClick={() => downloadImg()}>
               다운 받기
             </button>
-            <button type="button">꾸미러 가기</button>
+            <button type="button" onClick={() => moveDeco()}>
+              꾸미러 가기
+            </button>
           </div>
           <canvas id="done-img" hidden />
         </div>

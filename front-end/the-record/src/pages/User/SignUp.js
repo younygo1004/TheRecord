@@ -201,31 +201,32 @@ function SignUp() {
       .then(() => {
         alert('인증번호를 전송했습니다.')
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
+        alert('이미 인증번호를 전송했습니다. 메일을 확인해주세요')
       })
   }
 
   const checkNum = () => {
     // 인증번호 확인 api 연결
     axios({
-      method: 'POST',
-      url: '',
+      method: 'post',
+      url: 'https://the-record.co.kr/api/user/email-check',
       data: {
         certificateNum: form.certification,
+        userEmail: form.email,
       },
     })
       .then(res => {
-        console.log('인증번호 확인')
-        if (res.data === 'SUCCESS') {
+        if (res.data === 'success') {
           checkValid({ category: 'validConfirmPassword', status: true })
           alert('인증되었습니다.')
+        } else {
+          checkValid({ category: 'validConfirmPassword', status: false })
+          alert('인증번호를 다시 입력해주세요')
         }
-        checkValid({ category: 'validConfirmPassword', status: false })
-        alert('인증번호를 다시 입력해주세요')
       })
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
+        alert('인증번호와 이메일을 다시 입력해주세요')
       })
   }
 
@@ -233,12 +234,13 @@ function SignUp() {
     // 회원가입 api 연결
     axios({
       method: 'post',
-      url: 'https://the-record.co.kr:8080/api/user/signup',
+      url: 'https://the-record.co.kr/api/user/signup',
       data: {
         userId: form.userId,
         name: form.name,
         email: form.email,
         password: form.password,
+        certificateNum: form.certification,
       },
     })
       .then(() => {
