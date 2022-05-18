@@ -1,4 +1,4 @@
-# 🎥 The Record - 당신의 소중한 기억을 기록하는 서비스
+# 🎥 The Record - 당신의 소중한 추억을 기록하는 서비스
 
 <div align="center">
 <div>
