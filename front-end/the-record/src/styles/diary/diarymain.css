@@ -160,6 +160,13 @@
   margin: 5px 0px;
 }
 
+.diarymain-box .diarymain-no-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+
 .diary-folder-dialog .folder-dialog-body {
   background-color: #ffffff;
   margin: 10px;
