@@ -507,14 +507,14 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
-              {/* <button
+              <button
                 className="take-photo-btn"
                 onClick={this.takePhoto}
                 type="button"
               >
                 찰칵
-              </button> */}
-              {this.state.peopleNum === this.state.subscribers.length ? (
+              </button>
+              {/* {this.state.peopleNum === this.state.subscribers.length ? (
                 <button
                   className="take-photo-btn"
                   onClick={this.takePhoto}
@@ -526,7 +526,7 @@ class PhotoBooth extends Component {
                 <button disabled className="disable-photo-btn" type="button">
                   찰칵
                 </button>
-              )}
+              )} */}
 
               <button
                 className="finish-photo-btn"
