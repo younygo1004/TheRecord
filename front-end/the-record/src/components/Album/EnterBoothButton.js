@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import '../../styles/photo/album.css'
 import LinkedCameraOutlinedIcon from '@mui/icons-material/LinkedCameraOutlined'
@@ -6,40 +7,35 @@ import Button from '@mui/material/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
-import axios from 'axios'
 import enterPhotoBooth from '../../assets/enterPhotoBooth.png'
+import callApi from '../../common/api'
 
 function EnterBoothButton() {
   const navigate = useNavigate()
   const [enterBoothDialogOpen, setenterBoothDialogOpen] = useState(false)
   const [roomcode, setRoomcode] = useState('')
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const handleClose = () => {
     setenterBoothDialogOpen(false)
     setRoomcode('')
   }
-  const movePhotobooth = () => {
+  const movePhotobooth = async () => {
+    console.log(loginUserInfo)
     // 방 코드 유효성 검사 필요
-    axios.get(
-      'url',
-      {
-        // headers: { 'x-auth-token': sessiontStorage.getItem('jwt') },
-      }
-        .then(res => {
-          console.log(res)
-          if (roomcode === res) {
-            navigate('/album/subscribersphotobooth', {
-              state: {
-                roomcode,
-              },
-            })
-          } else {
-            alert('룸 코드를 확인해주세요')
-          }
-        })
-        .catch(error => {
-          alert(error)
-        }),
-    )
+    const isExist = await callApi({
+      url: `/api/photobooth/${roomcode}`,
+    })
+    if (isExist === 'TRUE') {
+      console.log(loginUserInfo.userId)
+      navigate('/album/photobooth', {
+        state: {
+          roomcode,
+          loginUserInfo,
+        },
+      })
+    } else {
+      alert('방이 생성되어 있지 않습니다.')
+    }
   }
 
   useEffect(() => {
