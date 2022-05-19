@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { types } from '../../actions/common'
 import callApi from '../../common/api'
@@ -9,7 +9,6 @@ function Profile() {
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
 
-  useEffect(() => {})
   const handleEnter = sentence => {
     const newSentence = sentence.split('\n').map((line, index) => {
       return (

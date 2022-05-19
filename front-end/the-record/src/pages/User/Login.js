@@ -66,8 +66,7 @@ function Login() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-start',
-              paddingTop: '25px',
+              paddingTop: '45px',
               paddingLeft: '10px',
               paddingRight: '35px',
               width: '400px',
@@ -96,7 +95,6 @@ function Login() {
             }}
           >
             <LoginButton onClick={() => onSubmitAccount()}>로그인</LoginButton>
-            <ForgotPwd>비밀번호를 잊으셨나요?</ForgotPwd>
           </div>
         </DivStyle>
         <DivStyle2>
@@ -222,13 +220,6 @@ const GoogleLoginButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-`
-
-const ForgotPwd = styled.div`
-  margin: 5px 0px 14px 0px;
-  font-size: 15px;
-  text-align: right;
-  cursor: pointer;
 `
 
 const OrDiv = styled.div`

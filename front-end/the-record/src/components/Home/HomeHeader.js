@@ -1,17 +1,22 @@
-import React from 'react'
+/* eslint-disable jsx-a11y/media-has-caption */
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import EditProfile from './EditProfile'
 import '../../styles/home/home-header.css'
 import store from '../../store'
 import { actions } from '../../actions/common'
+import backgroundMusic from '../../assets/background_music.mp3'
 
 function HomeHeader() {
   const navigate = useNavigate()
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
-
-  // 현재 보고있는 홈피 주인 이름
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
+
+  useEffect(() => {
+    const audio = document.querySelector('audio')
+    audio.volume = 0.08
+  }, [])
 
   const moveMyPage = () => {
     store.dispatch(actions.setValue('homePageHostInfo', loginUserInfo))
@@ -21,6 +26,7 @@ function HomeHeader() {
 
   const logOut = () => {
     navigate('')
+    store.dispatch(actions.setValue('navPage', 'nav-home'))
     sessionStorage.clear()
   }
 
@@ -44,7 +50,7 @@ function HomeHeader() {
           <EditProfile />
         </div>
         <button
-          className="header-right-button"
+          className="header-right-button-logout"
           type="button"
           onClick={() => logOut()}
         >
@@ -57,7 +63,12 @@ function HomeHeader() {
   return (
     <div id="home-header">
       <p className="header-left">{homePageHostInfo.name} 님의 미니홈피</p>
-      <div>{headerProfileButton()}</div>
+      <div className="header-right-container">
+        <div>{headerProfileButton()}</div>
+        <audio autoPlay controls controlsList="nodownload" loop id="playAudio">
+          <source src={backgroundMusic} />
+        </audio>
+      </div>
     </div>
   )
 }
