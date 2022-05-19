@@ -11,11 +11,11 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
   const [isUpdate, setIsUpdate] = useState(false)
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
-  const info = {
+  const [info, setInfo] = useState({
     title: diaryInfo.title,
     folder: diaryInfo.folderName,
     visible: diaryInfo.visible === 'PRIVATE',
-  }
+  })
   const [diaryDto, setDiaryDto] = useState({})
 
   useEffect(() => {
@@ -98,7 +98,12 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
   }
 
   const updateDiary = () => {
-    console.log(diaryDto)
+    setInfo({
+      title: diaryDto.title,
+      folder: diaryDto.folderName,
+      visible: diaryDto.visible === 'PRIVATE',
+    })
+    console.log('여기', diaryDto)
     axios({
       method: 'PUT',
       url: 'https://the-record.co.kr/api/diary',

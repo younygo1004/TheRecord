@@ -7,6 +7,7 @@ function RecordVoice({ sendVoice, sendText }) {
   const [speechRecognizer, setSpeechRecognizer] = useState({})
   const [recordingText, setRecordingText] = useState('')
   const [localStream, setLocalStream] = useState('')
+  const [isFinished, setIsFinished] = useState(false)
 
   const voiceTextStart = () => {
     if ('webkitSpeechRecognition' in window) {
@@ -64,6 +65,7 @@ function RecordVoice({ sendVoice, sendText }) {
 
   const voiceRecordStop = () => {
     console.log('중지')
+    setIsFinished(true)
     speechRecognizer.stop()
     localStream.getTracks()[0].stop()
     media.ondataavailable = e => {
@@ -175,6 +177,8 @@ function RecordVoice({ sendVoice, sendText }) {
       </div>
       <div className="record-text-div">
         <textarea
+          // eslint-disable-next-line
+          disabled={isFinished ? false : true}
           className="record-text"
           defaultValue={recordingText}
           onChange={e => sendText(e.target.value)}
