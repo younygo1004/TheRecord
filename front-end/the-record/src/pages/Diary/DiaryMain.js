@@ -122,7 +122,7 @@ function DiaryMain() {
           <div className="diarymain-content">
             {diarys.length === 0 ? (
               <div className="diarymain-no-content">
-                아직 업로드한 일기가 없습니다.
+                아직 업로드한 일기가 없습니다
               </div>
             ) : (
               <>
