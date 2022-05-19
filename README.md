@@ -52,30 +52,46 @@
 
 ### 메인 페이지
 
+<img src="./assets/MainPage.png"/> 
+
 - 최신 일기 목록
 - 이번 달 업데이트 현황
 - 최신 인생 네 컷 목록
 
 ### 🌟일촌 관리
+<img src="./assets/illChon.gif"/>
+<br/>
 
-- 일촌 검색
-- 일촌 목록
-- 일촌 추가
+- 일촌 검색 <br/>
+- 일촌 목록 <br/>
+- 일촌 추가 <br/>
 
 ### 다이어리
+
+<img src="./assets/PhotoDiary.gif"/>
+<img src="./assets/SpeechDiary.gif"/>
+<img src="./assets/VideoDiary.gif"/>
 
 - 폴더 추가 및 수정, 삭제
 - 사진, 영상, 음성으로 일기 작성
 
 ### 사진첩
 
+<img src="./assets/fphoto_pub_01.gif"/>
+<img src="./assets/fphoto_pub_02.gif"/>
+<img src="./assets/fphoto_pub_03.gif"/>
+<img src="./assets/fphoto_user.gif"/>
+
 - 인생 네 컷 목록
 - 포토부스 생성 및 입장
 - 인생 네 컷 꾸미기 & 업로드
 
 ### 마이페이지
+<img src="./assets/ProfileFix.gif"/> 
+<br/>
 
-- 내 정보 수정 - 프로필 사진, 자기소개
+- 내 정보 수정
+- 프로필 사진, 자기소개
 
 ## 📊 Gantt Chart
 
