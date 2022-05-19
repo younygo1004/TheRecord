@@ -52,46 +52,51 @@
 
 ### 메인 페이지
 
-<img src="./assets/MainPage.png"/> 
-
 - 최신 일기 목록
 - 이번 달 업데이트 현황
 - 최신 인생 네 컷 목록
+<img src="./assets/MainPage.png"/> 
 
 ### 🌟일촌 관리
-<img src="./assets/illChon.gif"/>
-<br/>
 
-- 일촌 검색 <br/>
-- 일촌 목록 <br/>
-- 일촌 추가 <br/>
+- 일촌 검색 후 추가
+<img src="./assets/illChon.gif"/>  
 
 ### 다이어리
+ 
+- 사진&글 일기 작성  
+<img src="./assets/PhotoDiary.gif"/> 
+<br/>  
 
-<img src="./assets/PhotoDiary.gif"/>
-<img src="./assets/SpeechDiary.gif"/>
-<img src="./assets/VideoDiary.gif"/>
+- 음성 일기 작성 
+<img src="./assets/SpeechDiary.gif"/> 
+<br/>  
 
-- 폴더 추가 및 수정, 삭제
-- 사진, 영상, 음성으로 일기 작성
+- 영상 일기 작성  
+<img src="./assets/VideoDiary.gif"/>  
 
 ### 사진첩
 
+- 포토부스 생성, 배경색 선택 후 입장
 <img src="./assets/fphoto_pub_01.gif"/>
-<img src="./assets/fphoto_pub_02.gif"/>
-<img src="./assets/fphoto_pub_03.gif"/>
-<img src="./assets/fphoto_user.gif"/>
-
-- 인생 네 컷 목록
-- 포토부스 생성 및 입장
-- 인생 네 컷 꾸미기 & 업로드
-
-### 마이페이지
-<img src="./assets/ProfileFix.gif"/> 
 <br/>
 
-- 내 정보 수정
-- 프로필 사진, 자기소개
+- 인생 네 컷 로고 & 사진틀 배경색 선택
+<img src="./assets/fphoto_pub_02.gif"/>
+<br/>
+
+- 인생 네 컷 꾸미기 & 업로드
+<img src="./assets/fphoto_pub_03.gif"/>
+<br/>
+
+- (방장이 아닌 경우) 방 코드 입력 후 포토부스 입장
+<img src="./assets/fphoto_user.gif"/>
+
+### 마이페이지
+
+- 프로필 사진 & 자기소개 수정
+<img src="./assets/ProfileFix.gif"/> 
+<br/>
 
 ## 📊 Gantt Chart
 
