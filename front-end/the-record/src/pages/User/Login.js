@@ -78,12 +78,23 @@ function Login() {
               name="id"
               placeholder="아이디"
               onChange={onChangeAccount}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  onSubmitAccount()
+                }
+              }}
             />
             <Input
+              type="password"
               id="password"
               name="password"
               placeholder="비밀번호"
               onChange={onChangeAccount}
+              onKeyDown={e => {
+                if (e.keyCode === 13) {
+                  onSubmitAccount()
+                }
+              }}
             />
           </div>
           <div
