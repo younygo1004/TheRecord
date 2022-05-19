@@ -89,7 +89,9 @@
 ### 마이페이지
 <img src="./assets/ProfileFix.gif"/> 
 <br/>
-- 내 정보 수정 - 프로필 사진, 자기소개
+
+- 내 정보 수정
+- 프로필 사진, 자기소개
 
 ## 📊 Gantt Chart
 
