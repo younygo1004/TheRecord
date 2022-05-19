@@ -136,6 +136,7 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
             onChange={event => [
               setChecked(event.target.checked),
               sendVisible(event.target.checked),
+              console.log(info),
             ]}
             inputProps={{ 'aria-label': 'ant design' }}
           />

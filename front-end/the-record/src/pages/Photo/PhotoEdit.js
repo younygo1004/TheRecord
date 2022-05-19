@@ -74,13 +74,13 @@ function PhotoEdit() {
   }
   useEffect(() => {
     // 접근 권한이 바뀔 때
-    if (state.photoDetail.visible === 'PUBLIC') setChecked(true)
-    else setChecked(false)
+    if (state.photoDetail.visible === 'PUBLIC') setChecked(false)
+    else setChecked(true)
   }, [state.photoDetail.visible])
 
   useEffect(() => {
     // 토글이 바뀔 때
-    if (checked) {
+    if (!checked) {
       setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }))
     } else {
       setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }))

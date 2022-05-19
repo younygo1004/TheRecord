@@ -5,6 +5,8 @@ import jwtDecode from 'jwt-decode'
 import fetchLogin from './service'
 import store from '../../store'
 import { types } from '../../actions/common'
+import loginLogo from '../../assets/login_logo.svg'
+import googleIcon from '../../assets/google_icon.svg'
 
 function Login() {
   const navigate = useNavigate()
@@ -54,13 +56,20 @@ function Login() {
   return (
     <Container>
       <Container2>
+        <img
+          src={loginLogo}
+          style={{ width: '340px', marginBottom: 40 }}
+          alt="로고"
+        />
         <DivStyle>
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'flex-start',
-              padding: '20px',
+              paddingTop: '25px',
+              paddingLeft: '10px',
+              paddingRight: '35px',
               width: '400px',
             }}
           >
@@ -79,6 +88,7 @@ function Login() {
           </div>
           <div
             style={{
+              height: '200px',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'center',
@@ -90,11 +100,28 @@ function Login() {
           </div>
         </DivStyle>
         <DivStyle2>
-          <hr style={{ width: '300px' }} />
+          <hr
+            style={{
+              width: '290px',
+              height: '1.5px',
+              border: 'none',
+              backgroundColor: 'black',
+            }}
+          />
           <OrDiv>또는</OrDiv>
-          <hr width="300px" />
+          <hr
+            style={{
+              width: '290px',
+              height: '1.5px',
+              border: 'none',
+              backgroundColor: 'black',
+            }}
+          />
         </DivStyle2>
-        <GoogleLoginButton>구글 로그인</GoogleLoginButton>
+        <GoogleLoginButton onClick={() => alert('준비중인 기능입니다.')}>
+          <img src={googleIcon} style={{ width: 40 }} alt="구글아이콘" />
+          구글 로그인
+        </GoogleLoginButton>
         <JoinText>
           아직 계정이 없으신가요?{' '}
           <Join onClick={() => navigate('signup')}>가입하기</Join>
@@ -117,7 +144,7 @@ const Container = styled.div`
 `
 
 const Container2 = styled.div`
-  width: 60%;
+  width: 55%;
   max-width: 1200px;
   min-width: 1000px;
   height: 60%;
@@ -130,6 +157,7 @@ const Container2 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `
 
 const Input = styled.input`
@@ -137,21 +165,21 @@ const Input = styled.input`
   height: 45px;
   padding: 20px;
   margin-bottom: 20px;
-
-  border: solid 1px #dadada;
+  font-family: 'dunggeunmo';
+  font-size: 15px;
+  border: solid 2px #dadada;
   background: #fff;
-  box-sizing: border-box;
   border-radius: 10px;
   &:focus {
     border: none;
-    outline: 1px solid rgba(75, 182, 209, 0.87);
+    outline: 2px solid rgba(75, 182, 209, 0.87);
   }
 `
 const DivStyle = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 180px;
+  justify-content: center;
+  align-items: flex-start;
+  height: 190px;
 `
 
 const DivStyle2 = styled.div`
@@ -159,53 +187,58 @@ const DivStyle2 = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 30px;
+  margin-top: 18px;
 `
 
 const LoginButton = styled.button`
   font-size: 21px;
-  font-weight: 600;
   margin-bottom: 10px;
 
-  width: 155px;
-  height: 140px;
+  width: 150px;
+  height: 135px;
 
   cursor: pointer;
   text-align: center;
   color: #fff;
   border: none;
   background-color: rgba(75, 182, 209, 0.87);
-  border-radius: 10px;
+  border-radius: 15px;
+  font-family: 'dunggeunmo';
 `
 const GoogleLoginButton = styled.button`
   display: block;
-  font-size: 21px;
-  font-weight: 600;
-  margin: 36px auto;
-  width: 394px;
-  height: 73px;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  width: 360px;
+  height: 65px;
 
   cursor: pointer;
   color: #fff;
   border: none;
   background-color: rgba(75, 182, 209, 0.87);
-  border-radius: 10px;
+  border-radius: 15px;
+  font-family: 'dunggeunmo';
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const ForgotPwd = styled.div`
-  margin: 24px 0px 24px 0px;
-  font-size: 16px;
+  margin: 5px 0px 14px 0px;
+  font-size: 15px;
   text-align: right;
   cursor: pointer;
 `
 
 const OrDiv = styled.div`
   text-align: center;
-  margin: 0 20px;
+  margin: 0 15px;
 `
 
 const JoinText = styled.div`
   text-align: center;
+  font-size: 15px;
 `
 
 const Join = styled.a`
