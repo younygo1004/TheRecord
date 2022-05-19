@@ -9,10 +9,12 @@
 }
 
 .calendar-div .calendar-today {
-  width: 15%;
+  width: 13%;
   color: #1d8eae;
   font-size: 23px;
   padding: 10px 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .calendar-div .calendar-day-first {
