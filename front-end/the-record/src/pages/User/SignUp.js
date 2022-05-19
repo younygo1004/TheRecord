@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Grid, TextField, FormHelperText } from '@mui/material'
+import { TextField, FormHelperText } from '@mui/material'
 import '../../styles/signup.css'
 import { makeStyles } from '@mui/styles'
 import axios from 'axios'
@@ -9,8 +9,10 @@ function SignUp() {
   const useStyles = makeStyles({
     root: {
       '& .MuiOutlinedInput-root': {
+        fontFamily: 'dunggeunmo',
+        fontSize: '15px',
         '& fieldset': {
-          borderColor: 'rgb(133, 133, 133)',
+          borderColor: '#dadada',
           borderWidth: 2.5,
           borderRadius: 8,
         },
@@ -318,166 +320,162 @@ function SignUp() {
   return (
     <div className="signup-page">
       <form className="signup-div">
-        <Grid item sm={1} md={4} />
-        <Grid item sm={10} md={4}>
-          <div className="signup-content">
-            <div className="signup-title">회원가입</div>
-            <div className="signup-textfield">
-              <TextField
-                classes={useStyles()}
-                error={!valid.validId}
-                type="text"
-                variant="outlined"
-                placeholder="아이디"
-                name="userId"
-                onChange={e => {
-                  onChange(e)
-                  idValidation(e)
-                }}
-                size="small"
-                fullWidth
-                value={userId}
-              />
-              {valid.validId ? (
-                <FormHelperText sx={{ color: 'green' }}>
-                  <IdHelperText />
-                </FormHelperText>
-              ) : (
-                <FormHelperText sx={{ color: 'red' }}>
-                  <IdHelperText />
-                </FormHelperText>
-              )}
-            </div>
-            <div className="signup-textfield">
-              <TextField
-                classes={useStyles()}
-                error={!valid.validName}
-                fullWidth
-                size="small"
-                type="text"
-                variant="outlined"
-                placeholder="이름"
-                name="name"
-                onChange={e => {
-                  onChange(e)
-                }}
-                onBlur={() => nameValidation()}
-                value={name}
-              />
-              <FormHelperText sx={{ color: 'red' }}>
-                <NameHelperText />
-              </FormHelperText>
-            </div>
-            <div className="signup-emailfield">
-              <TextField
-                classes={useStyles()}
-                style={{ width: '80%' }}
-                error={!valid.validEmail}
-                size="small"
-                type="text"
-                variant="outlined"
-                placeholder="이메일"
-                name="email"
-                onChange={e => {
-                  onChange(e)
-                  emailValidation(e)
-                }}
-                value={email}
-              />
-              {sendEmailButton()}
-            </div>
-            {valid.validEmail ? (
+        <div className="signup-content">
+          <div className="signup-title">회원가입</div>
+          <div className="signup-textfield">
+            <TextField
+              classes={useStyles()}
+              error={!valid.validId}
+              type="text"
+              variant="outlined"
+              placeholder="아이디"
+              name="userId"
+              onChange={e => {
+                onChange(e)
+                idValidation(e)
+              }}
+              size="small"
+              fullWidth
+              value={userId}
+            />
+            {valid.validId ? (
               <FormHelperText sx={{ color: 'green' }}>
-                <EmailHelperText />
+                <IdHelperText />
               </FormHelperText>
             ) : (
               <FormHelperText sx={{ color: 'red' }}>
-                <EmailHelperText />
+                <IdHelperText />
               </FormHelperText>
             )}
-            <div className="signup-numberfield">
-              <TextField
-                classes={useStyles()}
-                style={{ width: '80%' }}
-                error={!valid.validCertification}
-                helperText="이메일로 발송된 번호를 입력해주세요"
-                size="small"
-                type="text"
-                variant="outlined"
-                placeholder="인증번호"
-                name="certification"
-                onChange={e => {
-                  onChange(e)
-                }}
-                value={certification}
-              />
-              {checkNumberButton()}
-            </div>
-            <div className="signup-textfield">
-              <TextField
-                classes={useStyles()}
-                error={!valid.validPassword}
-                size="small"
-                fullWidth
-                type="password"
-                variant="outlined"
-                placeholder="비밀번호"
-                name="password"
-                onChange={e => {
-                  onChange(e)
-                  pwValidation(e)
-                }}
-                value={password}
-                autoComplete="off"
-              />
-              {valid.validPassword ? (
-                <FormHelperText sx={{ color: 'green' }}>
-                  <PwHelperText />
-                </FormHelperText>
-              ) : (
-                <FormHelperText sx={{ color: 'red' }}>
-                  <PwHelperText />
-                </FormHelperText>
-              )}
-            </div>
-            <div className="signup-textfield">
-              <TextField
-                classes={useStyles()}
-                error={!valid.validConfirmPassword}
-                size="small"
-                fullWidth
-                type="password"
-                variant="outlined"
-                placeholder="비밀번호 확인"
-                name="confirmPassword"
-                onChange={e => {
-                  onChange(e)
-                  checkPwValidation(e)
-                }}
-                value={confirmPassword}
-                autoComplete="off"
-              />
-              {valid.validConfirmPassword ? (
-                <FormHelperText sx={{ color: 'green' }}>
-                  <CheckPwHelperText />
-                </FormHelperText>
-              ) : (
-                <FormHelperText sx={{ color: 'red' }}>
-                  <CheckPwHelperText />
-                </FormHelperText>
-              )}
-            </div>
-            <hr className="signup-line" />
-            {signupButton()}
-            <div className="login-text">
-              <span>이미 계정이 있으신가요? &nbsp;</span>
-              <a className="text-go" href="/">
-                로그인 하러가기
-              </a>
-            </div>
           </div>
-        </Grid>
-        <Grid item sm={1} md={4} />
+          <div className="signup-textfield">
+            <TextField
+              classes={useStyles()}
+              error={!valid.validName}
+              fullWidth
+              size="small"
+              type="text"
+              variant="outlined"
+              placeholder="이름"
+              name="name"
+              onChange={e => {
+                onChange(e)
+              }}
+              onBlur={() => nameValidation()}
+              value={name}
+            />
+            <FormHelperText sx={{ color: 'red' }}>
+              <NameHelperText />
+            </FormHelperText>
+          </div>
+          <div className="signup-emailfield">
+            <TextField
+              classes={useStyles()}
+              style={{ width: '80%' }}
+              error={!valid.validEmail}
+              size="small"
+              type="text"
+              variant="outlined"
+              placeholder="이메일"
+              name="email"
+              onChange={e => {
+                onChange(e)
+                emailValidation(e)
+              }}
+              value={email}
+            />
+            {sendEmailButton()}
+          </div>
+          {valid.validEmail ? (
+            <FormHelperText sx={{ color: 'green' }}>
+              <EmailHelperText />
+            </FormHelperText>
+          ) : (
+            <FormHelperText sx={{ color: 'red' }}>
+              <EmailHelperText />
+            </FormHelperText>
+          )}
+          <div className="signup-numberfield">
+            <TextField
+              classes={useStyles()}
+              style={{ width: '80%' }}
+              error={!valid.validCertification}
+              helperText="이메일로 발송된 번호를 입력해주세요"
+              size="small"
+              type="text"
+              variant="outlined"
+              placeholder="인증번호"
+              name="certification"
+              onChange={e => {
+                onChange(e)
+              }}
+              value={certification}
+            />
+            {checkNumberButton()}
+          </div>
+          <div className="signup-textfield">
+            <TextField
+              classes={useStyles()}
+              error={!valid.validPassword}
+              size="small"
+              fullWidth
+              type="password"
+              variant="outlined"
+              placeholder="비밀번호"
+              name="password"
+              onChange={e => {
+                onChange(e)
+                pwValidation(e)
+              }}
+              value={password}
+              autoComplete="off"
+            />
+            {valid.validPassword ? (
+              <FormHelperText sx={{ color: 'green' }}>
+                <PwHelperText />
+              </FormHelperText>
+            ) : (
+              <FormHelperText sx={{ color: 'red' }}>
+                <PwHelperText />
+              </FormHelperText>
+            )}
+          </div>
+          <div className="signup-textfield">
+            <TextField
+              classes={useStyles()}
+              error={!valid.validConfirmPassword}
+              size="small"
+              fullWidth
+              type="password"
+              variant="outlined"
+              placeholder="비밀번호 확인"
+              name="confirmPassword"
+              onChange={e => {
+                onChange(e)
+                checkPwValidation(e)
+              }}
+              value={confirmPassword}
+              autoComplete="off"
+            />
+            {valid.validConfirmPassword ? (
+              <FormHelperText sx={{ color: 'green' }}>
+                <CheckPwHelperText />
+              </FormHelperText>
+            ) : (
+              <FormHelperText sx={{ color: 'red' }}>
+                <CheckPwHelperText />
+              </FormHelperText>
+            )}
+          </div>
+          {/* <hr className="signup-line" /> */}
+          {signupButton()}
+          <div className="login-text">
+            <span>이미 계정이 있으신가요? &nbsp;</span>
+            <a className="text-go" href="/">
+              로그인 하러가기
+            </a>
+          </div>
+        </div>
       </form>
     </div>
   )
