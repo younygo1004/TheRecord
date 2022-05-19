@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
                     .name(userDto.getName())
                     .email(userDto.getEmail())
                     .profile("default.png")
+                    .roomIsOpen(TrueAndFalse.FALSE)
                     .introduce("자기소개가 아직 없습니다.")
                     .userRole(UserRole.valueOf("ROLE_USER")).build();
 
