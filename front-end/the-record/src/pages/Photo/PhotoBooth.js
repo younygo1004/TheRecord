@@ -475,21 +475,7 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
-              <button
-                className="take-photo-btn"
-                onClick={this.takePhoto}
-                type="button"
-              >
-                찰칵
-              </button>
-              <button
-                className="finish-photo-btn"
-                onClick={this.finishPhoto}
-                type="button"
-              >
-                사진촬영 완료
-              </button>
-              {/* {this.state.peopleNum <= this.state.subscribers.length + 1 &&
+              {this.state.peopleNum <= this.state.subscribers.length + 1 &&
               this.state.mySessionId === this.state.loginUserInfo.userId ? (
                 <>
                   <button
@@ -516,7 +502,7 @@ class PhotoBooth extends Component {
                     사진촬영 완료
                   </button>
                 </>
-              )} */}
+              )}
               <canvas id="show" />
             </div>
           </div>
