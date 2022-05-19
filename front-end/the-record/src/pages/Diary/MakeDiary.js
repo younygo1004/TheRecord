@@ -22,7 +22,7 @@ function MakeDiary() {
   const [diaryInfo, setDiaryInfo] = useState({
     folderId: '',
     title: '',
-    visible: 'PRIVATE',
+    visible: 'PUBLIC',
   })
   const [form, setForm] = useState()
   const info = {
@@ -116,7 +116,7 @@ function MakeDiary() {
     setOtherDto({
       folderId: '',
       content: '',
-      visible: 'PRIVATE',
+      visible: 'PUBLIC',
     })
     setForm()
   }
