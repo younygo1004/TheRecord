@@ -41,10 +41,7 @@ function MakeDiary() {
     if (category === 'VIDEO') {
       return (
         <RecordVideo
-          sendVideo={e => [
-            setForm(e),
-            // setDto({ item: 'category', value: 'VIDEO' }),
-          ]}
+          sendVideo={e => [setForm(e)]}
           sendText={e => setDto({ item: 'content', value: e })}
         />
       )
@@ -52,20 +49,14 @@ function MakeDiary() {
     if (category === 'PICTURE') {
       return (
         <UploadPicture
-          sendPhoto={e => [
-            setForm(e),
-            // setDto({ item: 'category', value: 'PICTURE' }),
-          ]}
+          sendPhoto={e => [setForm(e)]}
           sendText={e => setDto({ item: 'content', value: e })}
         />
       )
     }
     return (
       <RecordVoice
-        sendVoice={e => [
-          setForm(e),
-          // setDto({ item: 'category', value: 'VOICE' }),
-        ]}
+        sendVoice={e => [setForm(e)]}
         sendText={e => setDto({ item: 'content', value: e })}
       />
     )

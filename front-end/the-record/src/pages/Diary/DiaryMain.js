@@ -18,21 +18,64 @@ function DiaryMain() {
   const [openDialog, setOpenDialog] = useState(false)
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
-
-  // 전체 다이어리 목록 조회 api 연결 -> 인피니티 스크롤 필요
   const [diarys, setDiarys] = useState([])
 
+  const [offset, setOffset] = useState(0)
+  const [target, setTarget] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [stop, setStop] = useState(false)
+
+  const getMoreItem = () => {
+    setIsLoaded(false)
+  }
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && isLoaded) {
+      observer.unobserve(entry.target)
+      await getMoreItem()
+      observer.observe(entry.target)
+    }
+  }
+
   useEffect(() => {
-    axios
-      .get(`https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/0`, {
-        headers: {
-          'x-auth-token': sessionStorage.getItem('jwt'),
-        },
+    let observer
+    if (target && !stop) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 1,
+        root: document.querySelector('.diarymain-box'),
       })
-      .then(res => {
-        setDiarys(res.data)
-      })
-  }, [diarys])
+      observer.observe(target)
+    }
+    return () => observer && observer.disconnect()
+  }, [target, isLoaded])
+
+  useEffect(() => {
+    if (!isLoaded && !stop) {
+      axios
+        .get(
+          `https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/${offset}`,
+          {
+            headers: {
+              'x-auth-token': sessionStorage.getItem('jwt'),
+            },
+          },
+        )
+        .then(res => {
+          console.log(res.data)
+          // eslint-disable-next-line
+          setDiarys(diarys => diarys.concat(res.data))
+          // eslint-disable-next-line
+          setOffset(offset => offset + 1)
+          setIsLoaded(true)
+          if (res.data.length < 10) {
+            setStop(true)
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  }, [diarys, isLoaded])
 
   const openSelectDialog = () => {
     setOpenDialog(true)
@@ -44,6 +87,10 @@ function DiaryMain() {
 
   const moveMakeDiary = category => {
     navigate('/diary/makediary', { state: category })
+  }
+
+  const setDiaryCalendar = e => {
+    setDiarys(e)
   }
 
   return (
@@ -71,18 +118,25 @@ function DiaryMain() {
               ''
             )}
           </div>
-          {/* <Calender /> */}
+          <Calender sendDiary={e => setDiaryCalendar(e)} />
           <div className="diarymain-content">
             {diarys.length === 0 ? (
               <div className="diarymain-no-content">
                 아직 업로드한 일기가 없습니다.
               </div>
             ) : (
-              diarys.map(diary => (
-                <div key={diary.diaryId} className="diarymain-item-content">
-                  <DiaryDetailContainer diaryInfo={diary} />
-                </div>
-              ))
+              <>
+                {diarys.map(diary => (
+                  <div key={diary.diaryId} className="diarymain-item-content">
+                    <DiaryDetailContainer diaryInfo={diary} />
+                  </div>
+                ))}
+                <div
+                  ref={setTarget}
+                  className="div-tag"
+                  style={{ height: '10px' }}
+                />
+              </>
             )}
           </div>
         </div>
