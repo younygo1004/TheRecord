@@ -29,9 +29,6 @@ function EditProfile() {
   const handleProfileImg = e => {
     if (e.target.files[0]) {
       setImageFile(e.target.files[0])
-    } else {
-      console.log('취소')
-      return
     }
 
     const reader = new FileReader()

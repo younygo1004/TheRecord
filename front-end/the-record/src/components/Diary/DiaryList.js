@@ -46,7 +46,6 @@ function DiaryList({ sendDelete }) {
   }
 
   const resetFolder = () => {
-    console.log('reset')
     axios
       .get(
         `https://the-record.co.kr:8080/api/folder/${homePageHostInfo.userPk}`,
@@ -61,9 +60,7 @@ function DiaryList({ sendDelete }) {
       })
   }
 
-  // id가 있을 경우 -> 폴더 이름 수정
   const changeFolderName = id => {
-    console.log('수정')
     if (folderName.length === 0) {
       alert('폴더 이름을 입력해주세요')
     } else {
@@ -77,14 +74,9 @@ function DiaryList({ sendDelete }) {
         headers: {
           'x-auth-token': sessionStorage.getItem('jwt'),
         },
+      }).then(() => {
+        resetFolder()
       })
-        .then(() => {
-          console.log('수정 성공')
-          resetFolder()
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   }
 
@@ -105,16 +97,11 @@ function DiaryList({ sendDelete }) {
         headers: {
           'x-auth-token': sessionStorage.getItem('jwt'),
         },
+      }).then(res => {
+        if (res.data === 'success') {
+          resetFolder()
+        }
       })
-        .then(res => {
-          if (res.data === 'success') {
-            console.log('삭제 성공')
-            resetFolder()
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
     } else {
       alert('폴더는 한 개 이상 있어야합니다')
     }
@@ -130,13 +117,9 @@ function DiaryList({ sendDelete }) {
       headers: {
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
+    }).then(() => {
+      resetFolder()
     })
-      .then(() => {
-        resetFolder()
-      })
-      .catch(err => {
-        console.log(err)
-      })
   }
 
   const openSelectDialog = () => {
@@ -157,7 +140,7 @@ function DiaryList({ sendDelete }) {
     <div className="diarylist">
       <div className="diarylist-header">
         <p className="diarylist-text">일기목록</p>
-        {loginUserInfo.name === homePageHostInfo.name ? (
+        {loginUserInfo.userPk === homePageHostInfo.userPk ? (
           <button
             type="button"
             className="diarylist-folder-btn"

@@ -34,7 +34,6 @@ function Calendar({ sendDiary }) {
   const getDiary = (y, m, d) => {
     if (m < 10 && d < 10) {
       const now = `${y}-0${m}-0${d}`
-      console.log(now)
       axios
         .get(
           `https://the-record.co.kr:8080/api/diary/${homePageHostInfo.userPk}/date/${now}`,
@@ -46,13 +45,11 @@ function Calendar({ sendDiary }) {
         )
         .then(res => {
           sendDiary(res.data)
-          console.log(res.data)
         })
       return
     }
     if (m < 10) {
       const now = `${y}-0${m}-${d}`
-      console.log(now)
       axios
         .get(
           `https://the-record.co.kr:8080/api/diary/${homePageHostInfo.userPk}/date/${now}`,
@@ -64,13 +61,11 @@ function Calendar({ sendDiary }) {
         )
         .then(res => {
           sendDiary(res.data)
-          console.log(res.data)
         })
       return
     }
     if (d < 10) {
       const now = `${y}-${m}-0${d}`
-      console.log(now)
       axios
         .get(
           `https://the-record.co.kr:8080/api/diary/${homePageHostInfo.userPk}/date/${now}`,
@@ -82,11 +77,9 @@ function Calendar({ sendDiary }) {
         )
         .then(res => {
           sendDiary(res.data)
-          console.log(res.data)
         })
     } else {
       const now = `${y}-${m}-${d}`
-      console.log(now)
       axios
         .get(
           `https://the-record.co.kr:8080/api/diary/${homePageHostInfo.userPk}/date/${now}`,
@@ -98,7 +91,6 @@ function Calendar({ sendDiary }) {
         )
         .then(res => {
           sendDiary(res.data)
-          console.log(res.data)
         })
     }
   }

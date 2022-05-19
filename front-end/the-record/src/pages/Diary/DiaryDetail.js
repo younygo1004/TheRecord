@@ -21,7 +21,6 @@ function DiaryDetail() {
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
 
   useEffect(() => {
-    console.log(diaryId)
     axios
       .get(`https://the-record.co.kr/api/diary/${diaryId}`, {
         headers: {
@@ -55,7 +54,7 @@ function DiaryDetail() {
       <div className="bg-white-right">
         <div className="diarydetail-box">
           <div className="diarydetail-header">
-            {loginUserInfo.name === homePageHostInfo.name ? (
+            {loginUserInfo.userPk === homePageHostInfo.userPk ? (
               <button
                 type="button"
                 className="make-diary-btn"

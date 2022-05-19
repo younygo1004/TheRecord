@@ -22,9 +22,7 @@ function PhotoDeco() {
 
   const uploadPhotoList = () => {
     const canvas = document.querySelector('.lower-canvas')
-    console.log(canvas)
     const dataURL = canvas.toDataURL('image/png')
-    console.log(dataURL)
 
     navigate('/album/photodeco/upload', { state: dataURL })
   }

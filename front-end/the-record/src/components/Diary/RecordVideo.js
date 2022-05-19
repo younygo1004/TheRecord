@@ -11,7 +11,6 @@ function RecordVideo({ sendVideo, sendText }) {
 
   const voiceTextStart = () => {
     if ('webkitSpeechRecognition' in window) {
-      console.log('텍스트 시작')
       // eslint-disable-next-line
       const NewSpeechRecognizer = new window.webkitSpeechRecognition()
       NewSpeechRecognizer.continuous = true
@@ -39,15 +38,10 @@ function RecordVideo({ sendVideo, sendText }) {
           sendText(finalTranscripts)
         }
       }
-
-      NewSpeechRecognizer.onerror = () => {
-        console.log('error')
-      }
     }
   }
 
   const recordingStart = mediaStream => {
-    console.log('video capture start')
     voiceTextStart()
     const videoData = []
     const newVideoRecorder = new MediaRecorder(mediaStream, {
@@ -63,15 +57,12 @@ function RecordVideo({ sendVideo, sendText }) {
     newVideoRecorder.onstop = () => {
       const videoBlob = new Blob(videoData, { type: 'video/mp4' })
       setrecordedVideoURL(window.URL.createObjectURL(videoBlob))
-      // api 전송
       const formdata = new FormData()
       formdata.append('file', videoBlob)
       sendVideo(formdata)
-      console.log('video capture end')
     }
 
     newVideoRecorder.start()
-    console.log(newVideoRecorder)
     setVideoRecorder(newVideoRecorder)
   }
 
@@ -93,11 +84,9 @@ function RecordVideo({ sendVideo, sendText }) {
         setRecorded(true)
         recordingStart(mediaStream)
       })
-      .catch(err => console.log(err))
   }
 
   const VideoCaptureEnd = () => {
-    console.log('녹화 끝')
     speechRecognizer.stop()
     const tracks = videoRef.current.srcObject.getTracks()
     tracks.forEach(track => {

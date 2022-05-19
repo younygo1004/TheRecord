@@ -27,11 +27,7 @@ export default function callApi({
     params,
     data,
     witchCredentials: true,
+  }).then(response => {
+    return response.data
   })
-    .then(response => {
-      return response.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
 }

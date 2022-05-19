@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Navigation from '../../components/Navigation'
 import PhotoList from '../../components/Album/PhotoList'
-// import PhotoUpload from '../../components/Album/PhotoUpload';
 import '../../styles/photo/photo-edit.css'
 
 function PhotoEdit() {
@@ -20,12 +19,10 @@ function PhotoEdit() {
 
   const [checked, setChecked] = useState()
 
-  // 토글
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
     padding: 0,
-    // display: 'flex',
     '&:active': {
       '& .MuiSwitch-thumb': {
         width: 15,
@@ -68,18 +65,15 @@ function PhotoEdit() {
     },
   }))
 
-  // 접근 권한
   const handleChange = event => {
     setChecked(event.target.checked)
   }
   useEffect(() => {
-    // 접근 권한이 바뀔 때
     if (state.photoDetail.visible === 'PUBLIC') setChecked(false)
     else setChecked(true)
   }, [state.photoDetail.visible])
 
   useEffect(() => {
-    // 토글이 바뀔 때
     if (!checked) {
       setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }))
     } else {
@@ -87,12 +81,10 @@ function PhotoEdit() {
     }
   }, [checked])
 
-  // 제목 변경
   const onChangTitle = e => {
     setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  // 사진첩 저장
   const saveModifyPhoto = () => {
     axios({
       method: 'put',
@@ -107,13 +99,11 @@ function PhotoEdit() {
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
     })
-      .then(res => {
-        console.log(res)
+      .then(() => {
         navigate('/album')
       })
-      .catch(res => {
+      .catch(() => {
         alert('문제가 발생했습니다.')
-        console.log(res)
       })
   }
 

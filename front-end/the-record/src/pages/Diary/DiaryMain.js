@@ -49,10 +49,7 @@ function DiaryMain() {
   }, [target, isLoaded])
 
   useEffect(() => {
-    console.log(isLoaded, stop, offset)
     if (!isLoaded && !stop) {
-      console.log('재로드')
-
       axios
         .get(
           `https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/${offset}`,
@@ -63,7 +60,6 @@ function DiaryMain() {
           },
         )
         .then(res => {
-          console.log(res.data)
           // eslint-disable-next-line
           setDiarys(diarys => diarys.concat(res.data))
           // eslint-disable-next-line
@@ -72,9 +68,6 @@ function DiaryMain() {
           if (res.data.length < 10) {
             setStop(true)
           }
-        })
-        .catch(err => {
-          console.log(err)
         })
     }
   }, [diarys, isLoaded])
@@ -113,7 +106,7 @@ function DiaryMain() {
         <div className="diarymain-box">
           <div className="diarymain-header">
             <p className="diarymain-header-title">전체 일기</p>
-            {loginUserInfo.name === homePageHostInfo.name ? (
+            {loginUserInfo.userPk === homePageHostInfo.userPk ? (
               <button
                 type="button"
                 className="make-diary-btn"

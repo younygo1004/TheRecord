@@ -7,7 +7,6 @@ import { styled } from '@mui/material/styles'
 import Switch from '@mui/material/Switch'
 import Navigation from '../../components/Navigation'
 import PhotoList from '../../components/Album/PhotoList'
-// import PhotoUpload from '../../components/Album/PhotoUpload';
 import '../../styles/photo/photo-upload.css'
 
 function PhotoDecoUpload() {
@@ -19,12 +18,10 @@ function PhotoDecoUpload() {
   })
   const [checked, setChecked] = useState(true)
 
-  // 토글
   const AntSwitch = styled(Switch)(({ theme }) => ({
     width: 28,
     height: 16,
     padding: 0,
-    // display: 'flex',
     '&:active': {
       '& .MuiSwitch-thumb': {
         width: 15,
@@ -67,13 +64,11 @@ function PhotoDecoUpload() {
     },
   }))
 
-  // 접근 권한
   const handleChange = event => {
     setChecked(event.target.checked)
   }
 
   useEffect(() => {
-    // 토글이 바뀔 때
     if (checked) {
       setPhotoDto(prev => ({ ...prev, visible: 'PUBLIC' }))
     } else {
@@ -82,30 +77,17 @@ function PhotoDecoUpload() {
   }, [checked])
 
   useEffect(() => {
-    // 접근 권한이 바뀔 때
-    if (photoDto.visible === 'PUBLIC') {
-      console.log(photoDto)
-      console.log('트루')
-    } else {
+    if (photoDto.visible === 'PRIVATE') {
       setPhotoDto(prev => ({ ...prev, visible: 'PRIVATE' }))
-      console.log(photoDto)
-      console.log('페일')
     }
   }, [photoDto.visible])
 
-  // 제목 변경
   const onChangTitle = e => {
     setPhotoDto(prev => ({ ...prev, [e.target.id]: e.target.value }))
   }
 
-  useEffect(() => {
-    console.log(photoDto)
-  }, [photoDto.title])
-
-  // 사진첩 저장
   const saveDecoPhoto = () => {
-    // base64 -> 파일화
-    const blobBin = atob(state.split(',')[1]) // base64 데이터 디코딩
+    const blobBin = atob(state.split(',')[1])
     const array = []
     for (let i = 0; i < blobBin.length; i += 1) {
       array.push(blobBin.charCodeAt(i))
@@ -115,23 +97,12 @@ function PhotoDecoUpload() {
       type: 'image/png',
     })
 
-    const formData = new FormData() // formData 생성
+    const formData = new FormData()
     formData.append('file', file)
-    // 'key'라는 이름으로 위에서 담은 data를 formData에 append한다. type은 json
     formData.append(
       'photoDto',
       new Blob([JSON.stringify(photoDto)], { type: 'application/json' }),
     )
-
-    console.log(file)
-    console.log(photoDto)
-    // console.log(...formData.getHeaders());
-    console.log(sessionStorage.getItem('jwt'))
-    // formData 확인
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of formData.keys()) {
-      console.log(key)
-    }
 
     axios({
       method: 'post',
@@ -142,13 +113,11 @@ function PhotoDecoUpload() {
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
     })
-      .then(res => {
-        console.log(res)
+      .then(() => {
         navigate('/album')
       })
-      .catch(res => {
+      .catch(() => {
         alert('문제가 발생했습니다.')
-        console.log(res)
       })
   }
 

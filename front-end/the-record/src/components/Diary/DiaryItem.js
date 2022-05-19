@@ -6,7 +6,6 @@ import axios from 'axios'
 
 function DiaryItem({ folder }) {
   const navigate = useNavigate()
-  //  폴더명으로 일기 목록 조회 api 연결
   const [diaryItems, setDiaryItems] = useState([])
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
   useEffect(() => {
@@ -25,7 +24,6 @@ function DiaryItem({ folder }) {
   }, [])
 
   const moveDiaryDetail = diaryId => {
-    console.log(diaryId)
     navigate('/diary/diarydetail', {
       state: diaryId,
     })

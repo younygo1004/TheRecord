@@ -73,17 +73,12 @@ function MakeDiary() {
   }
 
   const uploadDiary = () => {
-    console.log('일기 저장')
-    console.log(diaryDto)
-    console.log(form)
     if (form && diaryInfo.folderId && diaryInfo.title) {
       const result = { ...diaryDto, ...diaryInfo }
       form.append(
         'diaryDto',
         new Blob([JSON.stringify(result)], { type: 'application/json' }),
       )
-      console.log(result)
-      // 일기 저장 api 연결
       axios({
         method: 'POST',
         url: 'https://the-record.co.kr:8080/api/diary',
@@ -95,16 +90,14 @@ function MakeDiary() {
       })
         .then(res => {
           if (res.data === 'success') {
-            console.log('성공')
             navigate('/diary')
           }
         })
-        .catch(err => {
-          console.log(err)
-          alert('일기 내용을 입력하세요')
+        .catch(() => {
+          alert('모든 항목을 채워주세요')
         })
     } else {
-      alert('일기 내용을 입력하세요')
+      alert('모든 항목을 채워주세요')
     }
   }
 

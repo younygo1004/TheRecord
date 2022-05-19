@@ -64,12 +64,9 @@ function MakeBoothButton() {
 
   const moveColorDialog = () => {
     setColorDialogOpen(true)
-    // 모달 넘어갈 때 깜빡여서 수정
-    // setmakeBoothDialogOpen(false);
   }
 
   const movePhotobooth = async () => {
-    // 방 생성 여부 확인, 생성시 DB에 저장
     const isExist = await callApi({
       url: `/api/photobooth/${loginUserInfo.userId}`,
     })
@@ -86,7 +83,6 @@ function MakeBoothButton() {
         },
       })
         .then(res => {
-          console.log(res)
           if (res.data === 'success') {
             setColorDialogOpen(false)
             setPeopleNum(4)
@@ -100,9 +96,8 @@ function MakeBoothButton() {
             })
           }
         })
-        .catch(err => {
+        .catch(() => {
           alert('방이 이미 생성되어 있습니다.')
-          console.log(err)
         })
     } else {
       alert('이미 방을 생성하셨습니다. 입장해주세요')

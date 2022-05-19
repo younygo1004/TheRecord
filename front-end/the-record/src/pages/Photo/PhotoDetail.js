@@ -28,7 +28,6 @@ function PhotoDetail() {
       })
   }, [photoInfo])
 
-  // 사진 수정
   const modifyPhoto = () => {
     navigate('/album/photoedit', {
       state: {
@@ -37,7 +36,6 @@ function PhotoDetail() {
     })
   }
 
-  // 사진 삭제
   const deletePhoto = () => {
     axios({
       method: 'delete',
@@ -46,13 +44,9 @@ function PhotoDetail() {
         'Content-Type': 'application/json',
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
+    }).then(() => {
+      navigate('/album')
     })
-      .then(() => {
-        navigate('/album')
-      })
-      .catch(() => {
-        alert('삭제를 실패하였습니다. 다시 시도해주세요.')
-      })
   }
   return (
     <div id="album" className="photo-detail">

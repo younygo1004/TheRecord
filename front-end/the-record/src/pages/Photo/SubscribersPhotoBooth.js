@@ -22,8 +22,6 @@ import UserVideoComponent from '../../components/Album/UserVideoComponent'
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443'
 const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET
 const { REACT_APP_REMOVEBG_API_TOKEN } = process.env
-// const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
-// const OPENVIDU_SERVER_SECRET = 'MY_SECRET';
 
 class SubscribersPhotoBooth extends Component {
   constructor(props) {
@@ -55,20 +53,7 @@ class SubscribersPhotoBooth extends Component {
   componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload)
     this.joinSession()
-    console.log(this.props.location.state)
-
-    // 방 만든사람과 사용자가 일치할 경우만
-    // if () {
-    //   this.setState({
-    //     peopleNum: this.props.location.state.peopleNum,
-    //     backgroundColor: this.props.location.state.backgroundColor,
-    //   });
-    // }
   }
-
-  // componentDidUpdate() {
-  //   this.joinSession();
-  // }
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
@@ -207,13 +192,6 @@ class SubscribersPhotoBooth extends Component {
                 publisher,
               })
             })
-            .catch(error => {
-              console.log(
-                'There was an error connecting to the session:',
-                error.code,
-                error.message,
-              )
-            })
         })
       },
     )
@@ -273,8 +251,8 @@ class SubscribersPhotoBooth extends Component {
           })
         }
       }
-    } catch (e) {
-      console.error(e)
+    } catch {
+      alert('에러가 발생했습니다')
     }
   }
 
@@ -324,45 +302,6 @@ class SubscribersPhotoBooth extends Component {
         const formData = new FormData()
         formData.append('size', 'auto')
         formData.append('image_file_b64', imageUrl)
-
-        // 배경 없애기 remove.bg
-        // axios({
-        //   method: 'post',
-        //   url: 'https://api.remove.bg/v1.0/removebg',
-        //   data: formData,
-        //   responseType: 'arraybuffer',
-        //   headers: {
-        //     ...formData.getHeaders,
-        //     'X-Api-Key': REACT_APP_REMOVEBG_API_TOKEN,
-        //   },
-        //   encoding: null,
-        // })
-        //   .then(response => {
-        //     if (response.status !== 200)
-        //       return console.error(
-        //         'Error:',
-        //         response.status,
-        //         response.statusText,
-        //       );
-        //     const arrayBufferView = new Uint8Array(response.data);
-        //     const blob = new Blob([arrayBufferView], { type: 'image/png' });
-        //     const urlCreator = window.URL || window.webkitURL;
-        //     const imgUrl = urlCreator.createObjectURL(blob);
-        //     const img = document.createElement('img');
-        //     img.src = imgUrl;
-
-        //     img.addEventListener('load', e => {
-        //       ctx.drawImage(img, 20, element.clientHeight * index + 20);
-        //     });
-        //   })
-        //   .then(() => {
-        //     this.setState(state => {
-        //       return { donePhoto: state.donePhoto + 1 };
-        //     });
-        //   })
-        //   .catch(error => {
-        //     return console.error('Request failed:', error);
-        //   });
         ctx.fillStyle = 'rgb(194, 225, 255)'
         ctx.fillRect(
           15,
@@ -371,7 +310,6 @@ class SubscribersPhotoBooth extends Component {
           element.clientHeight - 14,
         )
 
-        // api 사용시 이후부터 삭제
         ctx.drawImage(element, 20, element.clientHeight * index + 20)
         this.setState(state => {
           return { donePhoto: state.donePhoto + 1 }
@@ -531,7 +469,6 @@ class SubscribersPhotoBooth extends Component {
           },
         })
         .then(response => {
-          console.log('CREATE SESION', response)
           resolve(response.data.id)
         })
         .catch(response => {
@@ -539,7 +476,6 @@ class SubscribersPhotoBooth extends Component {
           if (error?.response?.status === 409) {
             resolve(sessionId)
           } else {
-            console.log(error)
             console.warn(
               `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL} OPENVIDU_SERVER_SECRET:${OPENVIDU_SERVER_SECRET}`,
             )
@@ -575,7 +511,6 @@ class SubscribersPhotoBooth extends Component {
           },
         )
         .then(response => {
-          console.log('TOKEN', response)
           resolve(response.data.token)
         })
         .catch(error => reject(error))
