@@ -87,8 +87,12 @@ function UpdatedNews() {
               </td>
             </tr>
             <tr>
-              <td>방명록</td>
-              <td>0/0</td>
+              <td>TOTAL</td>
+              <td>
+                {updatedMonth.diaryCurrentMonthCnt +
+                  updatedMonth.photoCurrentMonthCnt}
+                /{updatedMonth.diaryAllCount + updatedMonth.photoAllCount}
+              </td>
             </tr>
           </tbody>
         </table>
