@@ -60,9 +60,11 @@
 
 ### 🌟일촌 관리
 <img src="./assets/illChon.gif"/>
-- 일촌 검색
-- 일촌 목록
-- 일촌 추가
+<br/>
+
+- 일촌 검색 <br/>
+- 일촌 목록 <br/>
+- 일촌 추가 <br/>
 
 ### 다이어리
 
@@ -75,10 +77,10 @@
 
 ### 사진첩
 
-<img src="./assets/인생네컷_방장_01.gif"/>
-<img src="./assets/인생네컷_방장_02.gif"/>
-<img src="./assets/인생네컷_방장_03.gif"/>
-<img src="./assets/인생네컷_입장.gif"/>
+<img src="./assets/fphoto_pub_01.gif"/>
+<img src="./assets/fphoto_pub_02.gif"/>
+<img src="./assets/fphoto_pub_03.gif"/>
+<img src="./assets/fphoto_user.gif"/>
 
 - 인생 네 컷 목록
 - 포토부스 생성 및 입장
@@ -86,7 +88,7 @@
 
 ### 마이페이지
 <img src="./assets/ProfileFix.gif"/> 
-
+<br/>
 - 내 정보 수정 - 프로필 사진, 자기소개
 
 ## 📊 Gantt Chart
