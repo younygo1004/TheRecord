@@ -78,9 +78,7 @@ class PhotoBooth extends Component {
         loginUserInfo,
       })
 
-    console.log('-------------- joinPeople', this.state.joinPeople)
     this.joinSession()
-    console.log('-------------- publisher', this.state.publisher)
   }
 
   componentWillUnmount() {
@@ -88,19 +86,18 @@ class PhotoBooth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('참여자들', this.state.subscribers)
-    console.log(this.state.donePhoto)
     if (
       this.state.donePhoto >= 4 &&
       this.state.donePhoto !== prevState.donePhoto
     ) {
+      alert('사진 생성중... 잠시만 기다려주세요!')
       setTimeout(() => {
         this.props.navigate('/album/photoframe', {
           state: {
             doneImg: document.querySelector('#show').toDataURL('image/png'),
           },
         })
-      }, 3000)
+      }, 3500)
       this.leaveSession()
       if (!this.state.roomcode) {
         callApi({
@@ -243,13 +240,11 @@ class PhotoBooth extends Component {
   }
 
   leaveSession() {
-    console.log('방 떠나기')
     // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
 
     const mySession = this.state.session
 
     if (mySession) {
-      console.log('삭제 활성화------------------------')
       mySession.disconnect()
     }
 
@@ -333,6 +328,7 @@ class PhotoBooth extends Component {
           element.clientHeight,
         )
       })
+
       canvas.toDataURL('image/png')
       this.setState(state => {
         return { photoNum: state.photoNum + 1 }
@@ -345,8 +341,6 @@ class PhotoBooth extends Component {
   finishPhoto() {
     if (this.state.photoNum >= 4) {
       const fourPhoto = document.querySelectorAll('canvas')
-
-      // const canvas = document.createElement('canvas');
       const canvas = document.querySelector('#show')
       const ctx = canvas.getContext('2d')
       canvas.width = 220
@@ -387,7 +381,7 @@ class PhotoBooth extends Component {
             img.src = imgUrl
 
             img.addEventListener('load', e => {
-              ctx.drawImage(img, 20, element.clientHeight * index + 20)
+              ctx.drawImage(img, 15, element.clientHeight * index + 20)
             })
           })
           .then(() => {
@@ -407,7 +401,7 @@ class PhotoBooth extends Component {
         )
 
         // api 사용시 이후부터 삭제
-        // ctx.drawImage(element, 20, element.clientHeight * index + 20)
+        // ctx.drawImage(element, 15, element.clientHeight * index + 20)
         // this.setState(state => {
         //   return { donePhoto: state.donePhoto + 1 }
         // })
@@ -433,38 +427,9 @@ class PhotoBooth extends Component {
         </div>
         <div className="bg-white-right">
           <div className="container">
-            {/* {this.state.session === undefined ? (
-              <form onSubmit={event => this.joinSession(event)}>
-                <p>
-                  <label> 참가자이름: </label>
-                  <input
-                    type="text"
-                    id="userName"
-                    value={myUserName}
-                    onChange={this.handleChangeUserName}
-                    required
-                  />
-                </p>
-                <p>
-                  <label> 방장 아이디: </label>
-                  <input
-                    type="text"
-                    id="sessionId"
-                    value={mySessionId}
-                    onChange={this.handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p>
-                  <input name="commit" type="submit" value="입장하기" />
-                </p>
-              </form>
-            ) : null} */}
-
             {this.state.session !== undefined ? (
               <div id="session">
                 <div id="session-header">
-                  {/* <h1 id="session-title">{mySessionId}</h1> */}
                   <input
                     style={{
                       width: 130,
@@ -484,20 +449,6 @@ class PhotoBooth extends Component {
                     value="방 떠나기"
                   />
                 </div>
-
-                {/* {this.state.mainStreamManager !== undefined ? (
-                  <div id="main-video">
-                    <UserVideoComponent
-                      streamManager={this.state.mainStreamManager}
-                    />
-                    <input
-                      type="button"
-                      id="buttonSwitchCamera"
-                      onClick={this.switchCamera}
-                      value="Switch Camera"
-                    />
-                  </div>
-                ) : null} */}
                 <div id="video-container">
                   {this.state.publisher !== undefined ? (
                     <div
@@ -524,7 +475,21 @@ class PhotoBooth extends Component {
               </div>
             ) : null}
             <div className="photo-btn-group">
-              {this.state.peopleNum <= this.state.subscribers.length + 1 &&
+              <button
+                className="take-photo-btn"
+                onClick={this.takePhoto}
+                type="button"
+              >
+                찰칵
+              </button>
+              <button
+                className="finish-photo-btn"
+                onClick={this.finishPhoto}
+                type="button"
+              >
+                사진촬영 완료
+              </button>
+              {/* {this.state.peopleNum <= this.state.subscribers.length + 1 &&
               this.state.mySessionId === this.state.loginUserInfo.userId ? (
                 <>
                   <button
@@ -551,7 +516,7 @@ class PhotoBooth extends Component {
                     사진촬영 완료
                   </button>
                 </>
-              )}
+              )} */}
               <canvas id="show" />
             </div>
           </div>
