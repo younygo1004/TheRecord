@@ -139,7 +139,7 @@ function RecordVideo({ sendVideo, sendText }) {
 
       <div className="record-video-box">
         {recordedVideoURL === null ? (
-          <video ref={videoRef} autoPlay className="video-div">
+          <video ref={videoRef} autoPlay className="video-div" muted>
             <track kind="captions" />
           </video>
         ) : null}

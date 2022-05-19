@@ -190,12 +190,11 @@ function DiaryDetailContainer(props) {
       ) : (
         <div className="diaryinfo-content">
           <div className="diaryinfo-media">{checkMedia()}</div>
-
-          <div className="diaryinfo-text">
+          <div className="diaryinfo-no-text">
             {diaryDto.content
               ? diaryDto.content.split('\n').map(line => {
                   return (
-                    <span key={line}>
+                    <span key={line} style={{ height: 100 }}>
                       {line}
                       <br />
                     </span>

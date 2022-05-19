@@ -35,7 +35,7 @@ function UpdatedNews() {
 
   const goDiaryDetails = diaryId => {
     store.dispatch(actions.setValue('navPage', 'nav-diary'))
-    navigate('/diary/detail', { state: diaryId })
+    navigate('/diary/diarydetail', { state: diaryId })
   }
 
   const goPhotoDetails = photo => {

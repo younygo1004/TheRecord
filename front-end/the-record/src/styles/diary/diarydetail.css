@@ -140,6 +140,10 @@
   padding-right: 10px;
 }
 
+.diarydetail-container .diaryinfo-media > img {
+  max-height: 250px;
+}
+
 .diarydetail-container .diaryinfo-update-text {
   display: flex;
   flex-direction: column;
@@ -186,6 +190,17 @@
   margin-top: 20px;
   padding: 0 20px;
   font-size: 15px;
+  /* background-size: cover;
+  min-height: 100px;
+  background-image: url('../../assets/note.jpg');
+  background-repeat: no-repeat; */
+}
+
+.diarydetail-container .diaryinfo-no-text {
+  margin-top: 20px;
+  padding: 0 20px;
+  font-size: 15px;
+  background-size: cover;
 }
 
 .diarydetail-container .diaryinfo-content-update {
