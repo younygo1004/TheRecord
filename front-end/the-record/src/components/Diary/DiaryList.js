@@ -11,7 +11,7 @@ import ModeOutlinedIcon from '@mui/icons-material/ModeOutlined'
 import DeleteIcon from '@mui/icons-material/Delete'
 import DiaryItem from './DiaryItem'
 
-function DiaryList() {
+function DiaryList({ sendDelete }) {
   const [open, setOpen] = useState(false)
   const [openDialog, setOpenDialog] = useState(false)
   const [openCheckDialog, setOpenCheckDialog] = useState(false)
@@ -89,27 +89,35 @@ function DiaryList() {
   }
 
   const checkDelete = id => {
-    setOpenCheckDialog(true)
-    setDeleteFolderId(id)
+    if (diarylist.length > 1) {
+      setOpenCheckDialog(true)
+      setDeleteFolderId(id)
+    } else {
+      alert('폴더는 한 개 이상 있어야 합니다')
+    }
   }
 
   const deleteFolder = () => {
-    axios({
-      method: 'delete',
-      url: `https://the-record.co.kr/api/folder/${deleteFolderId}`,
-      headers: {
-        'x-auth-token': sessionStorage.getItem('jwt'),
-      },
-    })
-      .then(res => {
-        if (res.data === 'success') {
-          console.log('삭제 성공')
-          resetFolder()
-        }
+    if (diarylist.length > 1) {
+      axios({
+        method: 'delete',
+        url: `https://the-record.co.kr/api/folder/${deleteFolderId}`,
+        headers: {
+          'x-auth-token': sessionStorage.getItem('jwt'),
+        },
       })
-      .catch(err => {
-        console.log(err)
-      })
+        .then(res => {
+          if (res.data === 'success') {
+            console.log('삭제 성공')
+            resetFolder()
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    } else {
+      alert('폴더는 한 개 이상 있어야합니다')
+    }
   }
 
   const addFolder = () => {
@@ -138,6 +146,7 @@ function DiaryList() {
   const handleClose = () => {
     resetFolder()
     setOpenDialog(false)
+    sendDelete()
   }
 
   const handleCloseCheck = () => {

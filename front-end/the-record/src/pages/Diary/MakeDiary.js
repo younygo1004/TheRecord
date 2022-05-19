@@ -15,10 +15,12 @@ function MakeDiary() {
   const category = useLocation().state
   const navigate = useNavigate()
   const [diaryDto, setDiaryDto] = useState({
-    folderId: '',
     // eslint-disable-next-line
     category: category,
     content: '',
+  })
+  const [diaryInfo, setDiaryInfo] = useState({
+    folderId: '',
     title: '',
     visible: 'PRIVATE',
   })
@@ -35,6 +37,14 @@ function MakeDiary() {
       [item]: value,
     }
     setDiaryDto(newDto)
+  }
+
+  const setOtherDto = ({ item, value }) => {
+    const newDto = {
+      ...diaryInfo,
+      [item]: value,
+    }
+    setDiaryInfo(newDto)
   }
 
   const checkCategory = () => {
@@ -66,12 +76,13 @@ function MakeDiary() {
     console.log('일기 저장')
     console.log(diaryDto)
     console.log(form)
-    if (form && diaryDto.folderId && diaryDto.folderId) {
+    if (form && diaryInfo.folderId && diaryInfo.title) {
+      const result = { ...diaryDto, ...diaryInfo }
       form.append(
         'diaryDto',
-        new Blob([JSON.stringify(diaryDto)], { type: 'application/json' }),
+        new Blob([JSON.stringify(result)], { type: 'application/json' }),
       )
-      console.log(diaryDto)
+      console.log(result)
       // 일기 저장 api 연결
       axios({
         method: 'POST',
@@ -99,10 +110,12 @@ function MakeDiary() {
 
   const cancelUpload = () => {
     setDiaryDto({
-      folderId: '',
       category: '',
-      content: '',
       title: '',
+    })
+    setOtherDto({
+      folderId: '',
+      content: '',
       visible: 'PRIVATE',
     })
     setForm()
@@ -120,10 +133,10 @@ function MakeDiary() {
           <div className="make-diary-box">
             <MakeDiaryHeader
               info={info}
-              sendTitle={e => setDto({ item: 'title', value: e })}
-              sendFolder={e => setDto({ item: 'folderId', value: e })}
+              sendTitle={e => setOtherDto({ item: 'title', value: e })}
+              sendFolder={e => setOtherDto({ item: 'folderId', value: e })}
               sendVisible={e =>
-                setDto({
+                setOtherDto({
                   item: 'visible',
                   value: e === false ? 'PUBLIC' : 'PRIVATE',
                 })

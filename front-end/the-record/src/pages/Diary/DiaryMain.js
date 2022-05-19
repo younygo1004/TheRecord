@@ -19,7 +19,6 @@ function DiaryMain() {
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
   const [diarys, setDiarys] = useState([])
-
   const [offset, setOffset] = useState(0)
   const [target, setTarget] = useState(null)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -50,7 +49,10 @@ function DiaryMain() {
   }, [target, isLoaded])
 
   useEffect(() => {
+    console.log(isLoaded, stop, offset)
     if (!isLoaded && !stop) {
+      console.log('재로드')
+
       axios
         .get(
           `https://the-record.co.kr/api/diary/${homePageHostInfo.userPk}/${offset}`,
@@ -93,11 +95,18 @@ function DiaryMain() {
     setDiarys(e)
   }
 
+  const resetMain = () => {
+    setOffset(0)
+    setStop(false)
+    setIsLoaded(false)
+    setDiarys([])
+  }
+
   return (
     <div id="diarymain">
       <div className="bg-white-left">
         <div className="diary-diarylist">
-          <DiaryList />
+          <DiaryList sendDelete={() => resetMain()} />
         </div>
       </div>
       <div className="bg-white-right">
@@ -128,7 +137,10 @@ function DiaryMain() {
               <>
                 {diarys.map(diary => (
                   <div key={diary.diaryId} className="diarymain-item-content">
-                    <DiaryDetailContainer diaryInfo={diary} />
+                    <DiaryDetailContainer
+                      diaryInfo={diary}
+                      sendDelete={() => resetMain()}
+                    />
                   </div>
                 ))}
                 <div
