@@ -30,6 +30,18 @@
   cursor: pointer;
 }
 
+#home-header .header-right-button-gomyhome {
+  background-color: transparent;
+  border: none;
+  font-family: 'dunggeunmo';
+  font-size: 13px;
+  cursor: pointer;
+  width: 190px;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+}
+
 #home-header .header-right-button {
   width: 100px;
   margin-right: 10px;
@@ -63,5 +75,10 @@
 
   #home-header .header-right-container {
     width: 450px;
+  }
+
+  #home-header .header-right-button-gomyhome {
+    font-size: 15px;
+    padding-right: 25px;
   }
 }

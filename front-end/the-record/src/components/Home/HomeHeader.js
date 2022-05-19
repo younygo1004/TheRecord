@@ -34,7 +34,7 @@ function HomeHeader() {
     if (loginUserInfo.name !== homePageHostInfo.name) {
       return (
         <button
-          className="header-right-button"
+          className="header-right-button-gomyhome"
           type="button"
           onClick={() => {
             moveMyPage()
