@@ -94,6 +94,11 @@ function EnterBoothButton() {
                 onChange={e => {
                   setRoomcode(e.target.value)
                 }}
+                onKeyDown={e => {
+                  if (e.keyCode === 13) {
+                    movePhotobooth()
+                  }
+                }}
               />
               {roomcode ? (
                 <button
