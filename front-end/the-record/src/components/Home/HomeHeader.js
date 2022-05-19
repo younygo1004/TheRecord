@@ -31,7 +31,7 @@ function HomeHeader() {
   }
 
   const headerProfileButton = () => {
-    if (loginUserInfo.name !== homePageHostInfo.name) {
+    if (loginUserInfo.userPk !== homePageHostInfo.userPk) {
       return (
         <button
           className="header-right-button-gomyhome"

@@ -1,4 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useLocation, useNavigate } from 'react-router-dom'
 import Navigation from '../../components/Navigation'
@@ -10,6 +12,8 @@ function PhotoDetail() {
   const navigate = useNavigate()
   const { photoInfo } = location.state
   const [photoDetail, setPhotoDetail] = useState([])
+  const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
+  const loginUserInfo = useSelector(state => state.common.loginUserInfo)
 
   useEffect(() => {
     axios
@@ -20,7 +24,6 @@ function PhotoDetail() {
         },
       })
       .then(res => {
-        console.log(res.data)
         setPhotoDetail(res.data)
       })
   }, [photoInfo])
@@ -38,18 +41,17 @@ function PhotoDetail() {
   const deletePhoto = () => {
     axios({
       method: 'delete',
-      url: `https://the-record.co.kr:8080/api/photo/${photoInfo.photoId}`,
+      url: `https://the-record.co.kr:8080/api/photo/${photoDetail.photoId}`,
       headers: {
         'Content-Type': 'application/json',
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
     })
-      .then(res => {
-        console.log(res)
+      .then(() => {
         navigate('/album')
       })
-      .catch(res => {
-        console.log(res)
+      .catch(() => {
+        alert('삭제를 실패하였습니다. 다시 시도해주세요.')
       })
   }
   return (
@@ -70,26 +72,30 @@ function PhotoDetail() {
                 </div>
               </div>
               <div>
-                <button
-                  className="photo-detail-btn"
-                  type="button"
-                  onClick={modifyPhoto}
-                >
-                  수정
-                </button>
-                <span style={{ color: '#848484' }}>|</span>
-                <button
-                  className="photo-detail-btn"
-                  type="button"
-                  onClick={deletePhoto}
-                >
-                  삭제
-                </button>
+                {homePageHostInfo.userPk === loginUserInfo.userPk ? (
+                  <>
+                    <button
+                      className="photo-detail-btn"
+                      type="button"
+                      onClick={modifyPhoto}
+                    >
+                      수정
+                    </button>
+                    <span style={{ color: '#848484' }}>|</span>
+                    <button
+                      className="photo-detail-btn"
+                      type="button"
+                      onClick={deletePhoto}
+                    >
+                      삭제
+                    </button>
+                  </>
+                ) : null}
               </div>
             </div>
             <hr />
             <div className="photo-detail-private">
-              {photoInfo.visible === 'PUBLIC' ? (
+              {photoDetail.visible === 'PUBLIC' ? (
                 <div>전체공개</div>
               ) : (
                 <div>나만보기</div>

@@ -50,7 +50,7 @@ function Profile() {
   }
 
   const handleNeighborButton = () => {
-    if (loginUserInfo.name !== homePageHostInfo.name) {
+    if (loginUserInfo.userPk !== homePageHostInfo.userPk) {
       if (homePageHostInfo.neighbor) {
         return (
           <button disabled type="button" className="already-ilchon-button">
