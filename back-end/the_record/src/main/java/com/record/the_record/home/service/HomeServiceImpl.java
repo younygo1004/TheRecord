@@ -10,6 +10,7 @@ import com.record.the_record.home.dto.RecentPhotoDto;
 import com.record.the_record.home.dto.UpdateStatusDto;
 import com.record.the_record.photo.repository.PhotoRepository;
 import com.record.the_record.user.repository.UserRepository;
+import com.record.the_record.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,8 @@ import java.util.List;
 public class HomeServiceImpl implements HomeService {
 
     private final UserRepository userRepository;
+    private final UserService userService;
+
     private final DiaryRepository diaryRepository;
     private final PhotoRepository photoRepository;
 
@@ -32,10 +35,18 @@ public class HomeServiceImpl implements HomeService {
     @Transactional(readOnly = true)
     public List<RecentDiaryDto> findRecentDiaryList(Long userPk) {
 
-        User user = userRepository.findById(userPk).orElseThrow(null);
+        Long loginUser = userService.currentUser();
+        User host = userRepository.findByPk(userPk);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
-        List<Diary> recentDiaryList = diaryRepository.findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
+
+        List<Diary> recentDiaryList;
         List<RecentDiaryDto> recentDiaryDtoList = new ArrayList<>();
+
+        if(loginUser != userPk) {
+            recentDiaryList = diaryRepository.findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(host, visibleStatus);
+        } else {
+            recentDiaryList = diaryRepository.findTop4ByUser_PkOrderByRecordDtDesc(userPk);
+        }
 
         recentDiaryList.forEach(v ->  recentDiaryDtoList.add(RecentDiaryDto.builder()
                 .diaryId(v.getId())
@@ -50,10 +61,18 @@ public class HomeServiceImpl implements HomeService {
     @Transactional(readOnly = true)
     public List<RecentPhotoDto> findRecentPhotoList(Long userPk) {
 
-        User user = userRepository.findById(userPk).orElseThrow(null);
+        Long loginUser = userService.currentUser();
+        User host = userRepository.findByPk(userPk);
         VisibleStatus visibleStatus = VisibleStatus.valueOf("PUBLIC");
-        List<Photo> recentPhotoList = photoRepository.findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(user, visibleStatus);
+
+        List<Photo> recentPhotoList;
         List<RecentPhotoDto> recentPhotoDtoList = new ArrayList<>();
+
+        if(loginUser != userPk) {
+            recentPhotoList = photoRepository.findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(host, visibleStatus);
+        } else {
+            recentPhotoList = photoRepository.findTop3ByUser_PkOrderByRecordDtDesc(userPk);
+        }
 
         recentPhotoList.forEach(v -> recentPhotoDtoList.add(RecentPhotoDto.builder()
                 .photoId(v.getId())
@@ -69,7 +88,7 @@ public class HomeServiceImpl implements HomeService {
     @Transactional(readOnly = true)
     public UpdateStatusDto findUpdateStatus(Long userPk) {
 
-        User user = userRepository.findById(userPk).orElseThrow(null);
+        User user = userRepository.findByPk(userPk);
         UpdateStatusDto updateStatusDto = new UpdateStatusDto();
         LocalDateTime currentDate = LocalDateTime.of(LocalDate.now(), LocalTime.of(0,0));
         LocalDateTime startDate = currentDate.withDayOfMonth(1);

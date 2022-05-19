@@ -16,6 +16,8 @@ import java.util.Optional;
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
     List<Photo> findTop3ByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
+    List<Photo> findTop3ByUser_PkOrderByRecordDtDesc(Long userPk);
+
     Long countByUser(User user);
     Long countByUserAndRecordDtBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
 
