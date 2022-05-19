@@ -101,10 +101,10 @@ function MakeDiary() {
         })
         .catch(err => {
           console.log(err)
-          alert('일기 내용을 입력하세요')
+          alert('모든 항목을 채워주세요')
         })
     } else {
-      alert('일기 내용을 입력하세요')
+      alert('모든 항목을 채워주세요')
     }
   }
 

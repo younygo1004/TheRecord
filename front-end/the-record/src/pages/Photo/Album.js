@@ -21,12 +21,14 @@ function Album() {
       </div>
       <div className="bg-white-right">
         <div className="album-btns">
-          {loginUserInfo.name === homePageHostInfo.name ? (
+          {loginUserInfo.userPk === homePageHostInfo.userPk ? (
             <UploadButton />
           ) : (
             <div />
           )}
-          {loginUserInfo.name === homePageHostInfo.name && <MakeBoothButton />}
+          {loginUserInfo.userPk === homePageHostInfo.userPk && (
+            <MakeBoothButton />
+          )}
           <EnterBoothButton />
         </div>
         <PhotoPreview />

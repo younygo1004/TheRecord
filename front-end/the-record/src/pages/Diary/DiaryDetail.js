@@ -55,7 +55,7 @@ function DiaryDetail() {
       <div className="bg-white-right">
         <div className="diarydetail-box">
           <div className="diarydetail-header">
-            {loginUserInfo.name === homePageHostInfo.name ? (
+            {loginUserInfo.userPk === homePageHostInfo.userPk ? (
               <button
                 type="button"
                 className="make-diary-btn"

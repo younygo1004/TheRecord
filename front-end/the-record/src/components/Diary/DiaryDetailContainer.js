@@ -145,7 +145,7 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
               <div className="diaryinfo-header-title">{diaryDto.title}</div>
               <div className="diaryinfo-header-date">{diaryDto.recordDt}</div>
             </div>
-            {loginUserInfo.name === homePageHostInfo.name ? (
+            {loginUserInfo.userPk === homePageHostInfo.userPk ? (
               <div>
                 <button
                   className="diaryinfo-header-btn"

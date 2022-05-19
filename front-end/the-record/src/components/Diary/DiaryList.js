@@ -157,7 +157,7 @@ function DiaryList({ sendDelete }) {
     <div className="diarylist">
       <div className="diarylist-header">
         <p className="diarylist-text">일기목록</p>
-        {loginUserInfo.name === homePageHostInfo.name ? (
+        {loginUserInfo.userPk === homePageHostInfo.userPk ? (
           <button
             type="button"
             className="diarylist-folder-btn"

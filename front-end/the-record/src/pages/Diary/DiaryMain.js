@@ -113,7 +113,7 @@ function DiaryMain() {
         <div className="diarymain-box">
           <div className="diarymain-header">
             <p className="diarymain-header-title">전체 일기</p>
-            {loginUserInfo.name === homePageHostInfo.name ? (
+            {loginUserInfo.userPk === homePageHostInfo.userPk ? (
               <button
                 type="button"
                 className="make-diary-btn"
