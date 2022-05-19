@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import FaceIcon from '@mui/icons-material/Face'
+import axios from 'axios'
 import EditButton from '../../assets/edit_button.png'
 import '../../styles/home/edit-profile.css'
 import callApi from '../../common/api'
@@ -33,7 +34,6 @@ function EditProfile() {
       return
     }
 
-    // 화면에 프로필 사진 표시
     const reader = new FileReader()
     reader.onload = () => {
       if (reader.readyState === 2) {
@@ -47,12 +47,16 @@ function EditProfile() {
     if (imageFile !== null) {
       const formData = new FormData()
       formData.append('profile', imageFile)
-      await callApi({
-        method: 'put',
-        url: `/api/user/profile`,
-        data: formData,
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+      await axios
+        .put(`https://the-record.co.kr:8080/api/user/profile`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-auth-token': sessionStorage.getItem('jwt'),
+          },
+        })
+        .catch(() => {
+          alert('사진 용량을 초과하였습니다')
+        })
     }
 
     if (profileText !== homePageHostInfo.introduce) {
