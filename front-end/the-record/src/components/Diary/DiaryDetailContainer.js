@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import MakeDiaryHeader from './MakeDiaryHeader'
 import '../../styles/diary/diarydetail.css'
 import '../../styles/diary/makediary.css'
 
-function DiaryDetailContainer(props) {
-  const { diaryInfo } = props
-  const navigate = useNavigate()
+function DiaryDetailContainer({ diaryInfo, sendDelete }) {
+  // const navigate = useNavigate()
   const [isUpdate, setIsUpdate] = useState(false)
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
@@ -52,7 +51,8 @@ function DiaryDetailContainer(props) {
       .then(res => {
         if (res.data === 'success') {
           console.log('삭제 성공')
-          navigate('/diary')
+          // navigate('/diary')
+          sendDelete()
         }
       })
       .catch(err => console.log(err))
