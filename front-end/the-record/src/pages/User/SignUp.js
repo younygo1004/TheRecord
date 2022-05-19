@@ -65,11 +65,9 @@ function SignUp() {
 
   const goLogin = () => {
     navigate('/')
-    // 회원가입
   }
 
   const idValidation = e => {
-    // 존재하는 아이디 확인 api 연결
     if (form.userId.trim().length > 0) {
       if (timer) {
         clearTimeout(timer)
@@ -86,8 +84,8 @@ function SignUp() {
               }
               return checkValid({ category: 'validId', status: true })
             })
-        } catch (err) {
-          console.error('error', err)
+        } catch {
+          alert('에러가 발생했습니다')
         }
       }, 500)
       setTimer(newTimer)
@@ -194,8 +192,6 @@ function SignUp() {
   }
 
   const sendNum = () => {
-    // 인증번호 전송 api 연결
-    console.log(form.email)
     axios
       .post('https://the-record.co.kr/api/user/email/number', {
         userEmail: form.email,
@@ -209,7 +205,6 @@ function SignUp() {
   }
 
   const checkNum = () => {
-    // 인증번호 확인 api 연결
     axios({
       method: 'post',
       url: 'https://the-record.co.kr/api/user/email-check',
@@ -233,7 +228,6 @@ function SignUp() {
   }
 
   const onSubmit = () => {
-    // 회원가입 api 연결
     axios({
       method: 'post',
       url: 'https://the-record.co.kr/api/user/signup',

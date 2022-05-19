@@ -15,7 +15,6 @@ function PhotoPreview() {
   const [page, setPage] = React.useState(0)
   const [totalPage, setTotalPage] = useState(0)
 
-  // 일기목록 페이지 별로 불러오는 api 연결
   useEffect(() => {
     axios
       .get(
@@ -31,7 +30,7 @@ function PhotoPreview() {
         setPhotolist(res.data)
       })
   }, [page])
-  // 인생네컷 전체 페이지 수 불러오는 api 연결
+
   useEffect(() => {
     axios
       .get(
@@ -48,7 +47,6 @@ function PhotoPreview() {
       })
   }, [])
   const changePage = (event, value) => {
-    console.log(page)
     setPage(value - 1)
   }
 

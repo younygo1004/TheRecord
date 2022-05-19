@@ -22,7 +22,6 @@ function EnterBoothButton() {
   }
 
   const movePhotobooth = async () => {
-    // 방 코드 유효성 검사 필요
     const isExist = await callApi({
       url: `/api/photobooth/${roomcode}`,
     })
@@ -37,10 +36,6 @@ function EnterBoothButton() {
       alert('방이 생성되어 있지 않습니다.')
     }
   }
-
-  // useEffect(() => {
-  //   console.log(roomcode)
-  // }, [roomcode])
 
   return (
     <div>

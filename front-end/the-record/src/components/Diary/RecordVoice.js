@@ -11,7 +11,6 @@ function RecordVoice({ sendVoice, sendText }) {
 
   const voiceTextStart = () => {
     if ('webkitSpeechRecognition' in window) {
-      console.log('텍스트 시작')
       // eslint-disable-next-line
       const NewSpeechRecognizer = new window.webkitSpeechRecognition()
       NewSpeechRecognizer.continuous = true
@@ -38,10 +37,6 @@ function RecordVoice({ sendVoice, sendText }) {
           sendText(finalTranscripts)
         }
       }
-
-      NewSpeechRecognizer.onerror = () => {
-        console.log('error')
-      }
     }
   }
 
@@ -58,13 +53,10 @@ function RecordVoice({ sendVoice, sendText }) {
         voiceTextStart()
         mediaRecorder.start()
         setMedia(mediaRecorder)
-        console.log(mediaRecorder)
       })
-      .catch(err => console.log(err))
   }
 
   const voiceRecordStop = () => {
-    console.log('중지')
     setIsFinished(true)
     speechRecognizer.stop()
     localStream.getTracks()[0].stop()

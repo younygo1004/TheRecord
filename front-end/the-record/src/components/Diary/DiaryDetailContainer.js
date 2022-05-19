@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
 import MakeDiaryHeader from './MakeDiaryHeader'
 import '../../styles/diary/diarydetail.css'
 import '../../styles/diary/makediary.css'
 
 function DiaryDetailContainer({ diaryInfo, sendDelete }) {
-  // const navigate = useNavigate()
   const [isUpdate, setIsUpdate] = useState(false)
   const loginUserInfo = useSelector(state => state.common.loginUserInfo)
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
@@ -32,7 +30,6 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
   }, [diaryInfo.diaryId])
 
   const setDto = ({ item, value }) => {
-    console.log(value)
     const newDto = {
       ...diaryDto,
       [item]: value,
@@ -47,15 +44,11 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
       headers: {
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
+    }).then(res => {
+      if (res.data === 'success') {
+        sendDelete()
+      }
     })
-      .then(res => {
-        if (res.data === 'success') {
-          console.log('삭제 성공')
-          // navigate('/diary')
-          sendDelete()
-        }
-      })
-      .catch(err => console.log(err))
   }
 
   const moveUpdate = () => {
@@ -103,7 +96,6 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
       folder: diaryDto.folderName,
       visible: diaryDto.visible === 'PRIVATE',
     })
-    console.log('여기', diaryDto)
     axios({
       method: 'PUT',
       url: 'https://the-record.co.kr/api/diary',
@@ -111,17 +103,11 @@ function DiaryDetailContainer({ diaryInfo, sendDelete }) {
       headers: {
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
+    }).then(res => {
+      if (res.data === 'success') {
+        setIsUpdate(false)
+      }
     })
-      .then(res => {
-        if (res.data === 'success') {
-          console.log('수정 성공')
-          console.log(diaryInfo.diaryId)
-          setIsUpdate(false)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
   }
 
   return (

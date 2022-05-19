@@ -110,7 +110,7 @@ function UpdatedNews() {
                 key={`p-${photo.photoId}`}
                 onClick={() => goPhotoDetails(photo)}
               >
-                <p>{`< ${photo.title} >`}</p>
+                <p>{photo.title}</p>
                 <img
                   src={`https://s3.ap-northeast-2.amazonaws.com/the-record.bucket/${photo.mediaUrl}`}
                   alt="네컷 사진"

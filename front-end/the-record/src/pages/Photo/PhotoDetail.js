@@ -20,12 +20,10 @@ function PhotoDetail() {
         },
       })
       .then(res => {
-        console.log(res.data)
         setPhotoDetail(res.data)
       })
   }, [photoInfo])
 
-  // 사진 수정
   const modifyPhoto = () => {
     navigate('/album/photoedit', {
       state: {
@@ -34,7 +32,6 @@ function PhotoDetail() {
     })
   }
 
-  // 사진 삭제
   const deletePhoto = () => {
     axios({
       method: 'delete',
@@ -43,14 +40,9 @@ function PhotoDetail() {
         'Content-Type': 'application/json',
         'x-auth-token': sessionStorage.getItem('jwt'),
       },
+    }).then(() => {
+      navigate('/album')
     })
-      .then(res => {
-        console.log(res)
-        navigate('/album')
-      })
-      .catch(res => {
-        console.log(res)
-      })
   }
   return (
     <div id="album" className="photo-detail">

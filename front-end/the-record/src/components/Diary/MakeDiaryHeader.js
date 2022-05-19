@@ -11,7 +11,6 @@ const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 28,
   height: 16,
   padding: 0,
-  // display: 'flex',
   '&:active': {
     '& .MuiSwitch-thumb': {
       width: 15,
@@ -70,12 +69,10 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
       },
     })
       .then(res => {
-        console.log(res.data)
         setFolderlist(res.data)
       })
-      .catch(res => {
+      .catch(() => {
         alert('문제가 발생했습니다.')
-        console.log(res)
       })
   }, [])
 
@@ -136,7 +133,6 @@ function MakeDiaryHeader({ sendTitle, sendFolder, sendVisible, info }) {
             onChange={event => [
               setChecked(event.target.checked),
               sendVisible(event.target.checked),
-              console.log(info),
             ]}
             inputProps={{ 'aria-label': 'ant design' }}
           />

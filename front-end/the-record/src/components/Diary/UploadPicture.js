@@ -18,7 +18,6 @@ function UploadPicture({ sendPhoto, sendText }) {
       reader.readAsDataURL(event.target.files[0])
       reader.onloadend = e => {
         setPhoto(e.target.result)
-        // 미리 보기 끝
       }
       const formdata = new FormData()
       formdata.append('file', event.target.files[0])

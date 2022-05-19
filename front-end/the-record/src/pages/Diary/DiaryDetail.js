@@ -21,7 +21,6 @@ function DiaryDetail() {
   const homePageHostInfo = useSelector(state => state.common.homePageHostInfo)
 
   useEffect(() => {
-    console.log(diaryId)
     axios
       .get(`https://the-record.co.kr/api/diary/${diaryId}`, {
         headers: {

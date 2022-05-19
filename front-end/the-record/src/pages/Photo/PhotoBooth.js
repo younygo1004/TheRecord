@@ -23,8 +23,6 @@ import callApi from '../../common/api'
 const OPENVIDU_SERVER_URL = 'https://the-record.co.kr:4443'
 const OPENVIDU_SERVER_SECRET = process.env.REACT_APP_SERVER_SECRET
 const { REACT_APP_REMOVEBG_API_TOKEN } = process.env
-// const OPENVIDU_SERVER_URL = `https://${window.location.hostname}:4443`;
-// const OPENVIDU_SERVER_SECRET = 'MY_SECRET'
 
 class PhotoBooth extends Component {
   constructor(props) {
@@ -78,9 +76,7 @@ class PhotoBooth extends Component {
         loginUserInfo,
       })
 
-    console.log('-------------- joinPeople', this.state.joinPeople)
     this.joinSession()
-    console.log('-------------- publisher', this.state.publisher)
   }
 
   componentWillUnmount() {
@@ -88,8 +84,6 @@ class PhotoBooth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('참여자들', this.state.subscribers)
-    console.log(this.state.donePhoto)
     if (
       this.state.donePhoto >= 4 &&
       this.state.donePhoto !== prevState.donePhoto
@@ -168,7 +162,6 @@ class PhotoBooth extends Component {
           // so OpenVidu doesn't create an HTML video by its own
           const subscriber = mySession.subscribe(event.stream, undefined)
           const { subscribers } = this.state
-          console.log('추가되는 인원', subscribers)
           subscribers.push(subscriber)
           this.state.joinPeople.push(subscriber.stream.session.connection.data)
 
@@ -230,26 +223,15 @@ class PhotoBooth extends Component {
                 publisher,
               })
             })
-            .catch(error => {
-              console.log(
-                'There was an error connecting to the session:',
-                error.code,
-                error.message,
-              )
-            })
         })
       },
     )
   }
 
   leaveSession() {
-    console.log('방 떠나기')
-    // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-
     const mySession = this.state.session
 
     if (mySession) {
-      console.log('삭제 활성화------------------------')
       mySession.disconnect()
     }
 
@@ -308,8 +290,8 @@ class PhotoBooth extends Component {
           })
         }
       }
-    } catch (e) {
-      console.error(e)
+    } catch {
+      alert('에러가 발생했습니다')
     }
   }
 
@@ -395,9 +377,6 @@ class PhotoBooth extends Component {
               return { donePhoto: state.donePhoto + 1 }
             })
           })
-          .catch(error => {
-            return console.error('Request failed:', error)
-          })
         ctx.fillStyle = this.state.backgroundColor
         ctx.fillRect(
           15,
@@ -405,12 +384,6 @@ class PhotoBooth extends Component {
           element.clientWidth,
           element.clientHeight - 14,
         )
-
-        // api 사용시 이후부터 삭제
-        // ctx.drawImage(element, 20, element.clientHeight * index + 20)
-        // this.setState(state => {
-        //   return { donePhoto: state.donePhoto + 1 }
-        // })
       })
     } else {
       alert('네번의 촬영을 완료해주세요!')
@@ -592,7 +565,6 @@ class PhotoBooth extends Component {
           },
         })
         .then(response => {
-          // console.log('CREATE SESION', response)
           resolve(response.data.id)
         })
         .catch(response => {
@@ -600,7 +572,6 @@ class PhotoBooth extends Component {
           if (error?.response?.status === 409) {
             resolve(sessionId)
           } else {
-            console.log(error)
             console.warn(
               `No connection to OpenVidu Server. This may be a certificate error at ${OPENVIDU_SERVER_URL} OPENVIDU_SERVER_SECRET:${OPENVIDU_SERVER_SECRET}`,
             )
@@ -636,7 +607,6 @@ class PhotoBooth extends Component {
           },
         )
         .then(response => {
-          // console.log('TOKEN', response)
           resolve(response.data.token)
         })
         .catch(error => reject(error))
