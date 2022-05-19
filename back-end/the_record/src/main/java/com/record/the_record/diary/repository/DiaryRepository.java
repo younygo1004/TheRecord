@@ -16,6 +16,8 @@ import java.util.List;
 public interface DiaryRepository extends JpaRepository<Diary,Long> {
 
     List<Diary> findTop4ByUserAndVisibleStatusOrderByRecordDtDesc(User user, VisibleStatus visibleStatus);
+    List<Diary> findTop4ByUser_PkOrderByRecordDtDesc(Long userPk);
+
     Long countByUser(User user);
     Long countByUserAndRecordDtBetween(User user, LocalDateTime startDate, LocalDateTime endDate);
 
