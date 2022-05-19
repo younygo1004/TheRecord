@@ -17,7 +17,7 @@
   padding-top: 20px;
 }
 
-#home-header #playAudio{
+#home-header #playAudio {
   -webkit-appearance: none;
   width: 90%;
   height: 27px;
@@ -26,11 +26,9 @@
   background-color: #f6f6f6;
 }
 
-
-#home-header 
-audio::-webkit-media-controls-time-remaining-display, 
-audio::-webkit-media-controls-current-time-display {
-  display:none;
+#home-header #playAudio::-webkit-media-controls-time-remaining-display,
+#playAudio::-webkit-media-controls-current-time-display {
+  display: none;
 }
 
 #home #profile .profile-info {
@@ -155,7 +153,6 @@ audio::-webkit-media-controls-current-time-display {
   margin-right: 20px;
 }
 
-
 #updated-news td {
   width: 50%;
   height: 35px;
@@ -198,7 +195,11 @@ audio::-webkit-media-controls-current-time-display {
   font-family: 'dunggeunmo';
 }
 
-#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p:nth-of-type(1) {
+#updated-news
+  .updated-news-bottom
+  .updated-photo-zone
+  .photo-preview
+  > p:nth-of-type(1) {
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -208,11 +209,14 @@ audio::-webkit-media-controls-current-time-display {
   text-align: center;
 }
 
-#updated-news .updated-news-bottom .updated-photo-zone .photo-preview > p:nth-of-type(2) {
+#updated-news
+  .updated-news-bottom
+  .updated-photo-zone
+  .photo-preview
+  > p:nth-of-type(2) {
   width: 100%;
   font-size: 14px;
 }
-
 
 #updated-news .updated-news-bottom .updated-photo-zone .photo-preview > img {
   width: 100%;
