@@ -15,7 +15,7 @@ function HomeHeader() {
 
   useEffect(() => {
     const audio = document.querySelector('audio')
-    audio.volume = 0.08
+    audio.volume = 0.05
   }, [])
 
   const moveMyPage = () => {
