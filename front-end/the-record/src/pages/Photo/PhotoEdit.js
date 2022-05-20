@@ -119,9 +119,10 @@ function PhotoEdit() {
           <div className="edit-info-box">
             <div className="photo-edit-header">
               <input
-                placeholder={photoDto.title}
+                defaultValue={photoDto.title}
                 id="title"
                 onChange={onChangTitle}
+                maxLength="20"
               />
               <div>
                 <div className="private-btn">

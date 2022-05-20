@@ -136,6 +136,7 @@ function PhotoDecoUpload() {
                 placeholder="제목을 입력해주세요"
                 id="title"
                 onChange={onChangTitle}
+                maxLength="20"
               />
               <div className="private-btn">
                 <p>나만 보기</p>
